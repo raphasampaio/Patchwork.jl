@@ -4,45 +4,51 @@ using Rhinestone
 
 # Define chart placeholders with metadata for Chart.js
 tabs = [
-    Tab("Performance Metrics", [
-        ChartPlaceholder("cpu-chart", "CPU Usage Over Time",
-            metadata=Dict{String,Any}(
-                "type" => "line",
-                "data" => Dict(
-                    "labels" => ["00:00", "01:00", "02:00", "03:00", "04:00"],
-                    "datasets" => [Dict(
-                        "label" => "CPU %",
-                        "data" => [45.2, 52.1, 38.7, 61.3, 42.9]
-                    )]
-                )
-            )
-        ),
-        ChartPlaceholder("memory-chart", "Memory Usage by Process",
-            metadata=Dict{String,Any}(
-                "type" => "bar",
-                "data" => Dict(
-                    "labels" => ["Process A", "Process B", "Process C", "Process D"],
-                    "datasets" => [Dict(
-                        "label" => "Memory (MB)",
-                        "data" => [256.0, 512.0, 128.0, 1024.0]
-                    )]
-                )
-            )
-        )
-    ]),
-    Tab("System Analysis", [
-        ChartPlaceholder("disk-chart", "Disk Space Distribution",
-            metadata=Dict{String,Any}(
-                "type" => "pie",
-                "data" => Dict(
-                    "labels" => ["OS", "Applications", "Documents", "Media", "Other"],
-                    "datasets" => [Dict(
-                        "data" => [25.0, 35.0, 15.0, 20.0, 5.0]
-                    )]
-                )
-            )
-        )
-    ])
+    Tab(
+        "Performance Metrics",
+        [
+            ChartPlaceholder("cpu-chart", "CPU Usage Over Time",
+                metadata = Dict{String, Any}(
+                    "type" => "line",
+                    "data" => Dict(
+                        "labels" => ["00:00", "01:00", "02:00", "03:00", "04:00"],
+                        "datasets" => [Dict(
+                            "label" => "CPU %",
+                            "data" => [45.2, 52.1, 38.7, 61.3, 42.9],
+                        )],
+                    ),
+                ),
+            ),
+            ChartPlaceholder("memory-chart", "Memory Usage by Process",
+                metadata = Dict{String, Any}(
+                    "type" => "bar",
+                    "data" => Dict(
+                        "labels" => ["Process A", "Process B", "Process C", "Process D"],
+                        "datasets" => [Dict(
+                            "label" => "Memory (MB)",
+                            "data" => [256.0, 512.0, 128.0, 1024.0],
+                        )],
+                    ),
+                ),
+            ),
+        ],
+    ),
+    Tab(
+        "System Analysis",
+        [
+            ChartPlaceholder("disk-chart", "Disk Space Distribution",
+                metadata = Dict{String, Any}(
+                    "type" => "pie",
+                    "data" => Dict(
+                        "labels" => ["OS", "Applications", "Documents", "Media", "Other"],
+                        "datasets" => [Dict(
+                            "data" => [25.0, 35.0, 15.0, 20.0, 5.0],
+                        )],
+                    ),
+                ),
+            ),
+        ],
+    ),
 ]
 
 # Chart.js initialization script
@@ -132,13 +138,13 @@ custom_css = """
 config = DashboardConfig(
     "Performance Dashboard",
     tabs,
-    custom_css=custom_css,
-    chart_init_script=chart_init_script,
-    cdn_urls=Dict(
+    custom_css = custom_css,
+    chart_init_script = chart_init_script,
+    cdn_urls = Dict(
         "tailwind" => "https://cdn.tailwindcss.com/3.4.0",
         "vue" => "https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js",
-        "chartjs" => "https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"
-    )
+        "chartjs" => "https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js",
+    ),
 )
 
 # Generate the dashboard

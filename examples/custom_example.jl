@@ -4,40 +4,46 @@ using Rhinestone
 
 # Define chart placeholders
 tabs = [
-    Tab("Simple Charts", [
-        ChartPlaceholder("progress-chart", "Progress Indicator",
-            height="12rem",
-            metadata=Dict{String,Any}(
-                "type" => "progress",
-                "value" => 75,
-                "max" => 100,
-                "color" => "#3b82f6"
-            )
-        ),
-        ChartPlaceholder("metric-chart", "Key Metric",
-            height="12rem",
-            metadata=Dict{String,Any}(
-                "type" => "metric",
-                "value" => 1234,
-                "label" => "Total Sales",
-                "change" => "+12.5%"
-            )
-        )
-    ]),
-    Tab("Data Tables", [
-        ChartPlaceholder("table-chart", "Data Table",
-            height="auto",
-            metadata=Dict{String,Any}(
-                "type" => "table",
-                "headers" => ["Name", "Value", "Status"],
-                "rows" => [
-                    ["Item A", "100", "Active"],
-                    ["Item B", "200", "Pending"],
-                    ["Item C", "150", "Active"]
-                ]
-            )
-        )
-    ])
+    Tab(
+        "Simple Charts",
+        [
+            ChartPlaceholder("progress-chart", "Progress Indicator",
+                height = "12rem",
+                metadata = Dict{String, Any}(
+                    "type" => "progress",
+                    "value" => 75,
+                    "max" => 100,
+                    "color" => "#3b82f6",
+                ),
+            ),
+            ChartPlaceholder("metric-chart", "Key Metric",
+                height = "12rem",
+                metadata = Dict{String, Any}(
+                    "type" => "metric",
+                    "value" => 1234,
+                    "label" => "Total Sales",
+                    "change" => "+12.5%",
+                ),
+            ),
+        ],
+    ),
+    Tab(
+        "Data Tables",
+        [
+            ChartPlaceholder("table-chart", "Data Table",
+                height = "auto",
+                metadata = Dict{String, Any}(
+                    "type" => "table",
+                    "headers" => ["Name", "Value", "Status"],
+                    "rows" => [
+                        ["Item A", "100", "Active"],
+                        ["Item B", "200", "Pending"],
+                        ["Item C", "150", "Active"],
+                    ],
+                ),
+            ),
+        ],
+    ),
 ]
 
 # Custom chart rendering without external libraries
@@ -137,7 +143,7 @@ function renderTableChart(container, metadata) {
 config = DashboardConfig(
     "Custom Dashboard",
     tabs,
-    chart_init_script=chart_init_script
+    chart_init_script = chart_init_script,
 )
 
 # Generate the dashboard
