@@ -2,31 +2,6 @@
     generate_dashboard(config::DashboardConfig, output_path::String)
 
 Generate a self-contained HTML dashboard file from the configuration.
-
-# Arguments
-- `config::DashboardConfig`: Dashboard configuration
-- `output_path::String`: Path to output HTML file
-
-# Example
-```julia
-tabs = [
-    Tab("Performance", [
-        ChartPlaceholder("cpu-chart", "CPU Usage"),
-        ChartPlaceholder("memory-chart", "Memory Usage")
-    ])
-]
-
-config = DashboardConfig("My Dashboard", tabs,
-    chart_init_script = \"\"\"
-    function initializeChart(chartId, metadata) {
-        // Your chart library code here
-        const container = document.getElementById(chartId);
-        // Render chart using metadata
-    }
-    \"\"\")
-
-generate_dashboard(config, "dashboard.html")
-```
 """
 function generate_dashboard(config::DashboardConfig, output_path::String)
     html = generate_html(config)
@@ -331,14 +306,14 @@ function generate_tabs_json(tabs::Vector{Tab})
                 "id" => chart.id,
                 "title" => chart.title,
                 "height" => chart.height,
-                "metadata" => chart.metadata
+                "metadata" => chart.metadata,
             )
             push!(charts_array, chart_dict)
         end
 
         tab_dict = Dict(
             "label" => tab.label,
-            "charts" => charts_array
+            "charts" => charts_array,
         )
         push!(tabs_array, tab_dict)
     end
@@ -403,7 +378,7 @@ end
 
 Generate script tags for all CDN URLs.
 """
-function generate_cdn_scripts(cdn_urls::Dict{String,String})
+function generate_cdn_scripts(cdn_urls::Dict{String, String})
     scripts = String[]
     for (name, url) in cdn_urls
         push!(scripts, "    <script src=\"$(url)\"></script>")
