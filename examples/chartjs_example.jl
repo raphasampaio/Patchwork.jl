@@ -141,8 +141,6 @@ config = DashboardConfig(
     custom_css = custom_css,
     chart_init_script = chart_init_script,
     cdn_urls = Dict(
-        "tailwind" => "https://cdn.tailwindcss.com/3.4.0",
-        "vue" => "https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js",
         "chartjs" => "https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js",
     ),
 )
