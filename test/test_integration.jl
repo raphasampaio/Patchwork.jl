@@ -45,7 +45,14 @@ using Rhinestone
             const container = document.getElementById(chartId);
             const canvas = document.createElement('canvas');
             container.appendChild(canvas);
-            // Chart.js would initialize here
+            new Chart(canvas, {
+                type: metadata.type,
+                data: metadata.data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
         }
         """
 
@@ -75,7 +82,7 @@ using Rhinestone
 
         # Verify init script
         @test occursin("initializeChart", content)
-        @test occursin("Chart.js would initialize here", content)
+        @test occursin("new Chart(canvas", content)
 
         # Verify metadata is embedded
         @test occursin("00:00", content)
