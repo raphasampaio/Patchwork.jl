@@ -226,6 +226,16 @@ $(generate_cdn_scripts(config.cdn_urls))
             background: #94a3b8;
         }
 
+        .chart-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-container > div {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
         $(config.custom_css)
     </style>
 
