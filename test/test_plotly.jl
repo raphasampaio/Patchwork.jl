@@ -7,7 +7,7 @@ using Rhinestone
     output_path = joinpath(@__DIR__, "output", "test_plotly.html")
     mkpath(dirname(output_path))
 
-    chart = ChartPlaceholder("plotly-chart", "Plotly Test Chart",
+    chart = ChartPlaceholder("plotly-chart", "Square Numbers",
         metadata = Dict{String, Any}(
             "data" => [
                 Dict(
@@ -15,11 +15,10 @@ using Rhinestone
                     "y" => [1, 4, 9, 16, 25],
                     "type" => "scatter",
                     "mode" => "lines+markers",
-                    "name" => "Square Numbers",
+                    "name" => "Values",
                 ),
             ],
             "layout" => Dict(
-                "title" => "Square Numbers",
                 "xaxis" => Dict("title" => "Number"),
                 "yaxis" => Dict("title" => "Square"),
             ),
