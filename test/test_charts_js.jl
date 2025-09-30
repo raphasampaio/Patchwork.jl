@@ -1,7 +1,9 @@
+module TestChartJs 
+
 using Test
 using Rhinestone
 
-@testset "Integration Tests" begin
+@testset "Chart.js" begin
     output_path = joinpath(@__DIR__, "test_output", "test_integration.html")
     mkpath(dirname(output_path))
 
@@ -48,4 +50,6 @@ using Rhinestone
     @test occursin("Performance Dashboard", content)
     @test occursin("cpu-chart", content)
     @test occursin("new Chart(canvas", content)
+end
+
 end

@@ -1,7 +1,9 @@
+module TestTemplate
+
 using Test
 using Rhinestone
 
-@testset "Template Generation" begin
+@testset "Template" begin
     @test Rhinestone.escape_html("plain text") == "plain text"
     @test Rhinestone.escape_html("<script>") == "&lt;script&gt;"
     @test Rhinestone.escape_json("\"quote\"") == "\\\"quote\\\""
@@ -52,4 +54,6 @@ end
 
     generate_dashboard(config, output_path)
     @test isfile(output_path)
+end
+
 end
