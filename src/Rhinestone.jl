@@ -1,0 +1,3 @@
+module Rhinestone
+
+end
