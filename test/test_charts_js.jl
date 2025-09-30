@@ -1,4 +1,4 @@
-module TestChartJs 
+module TestChartJs
 
 using Test
 using Rhinestone
