@@ -27,4 +27,4 @@ Manifest.toml
 .claude
 
 # Test output directory
-test/test_output/
+test/output/

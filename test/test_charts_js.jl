@@ -4,7 +4,7 @@ using Test
 using Rhinestone
 
 @testset "Chart.js" begin
-    output_path = joinpath(@__DIR__, "test_output", "test_integration.html")
+    output_path = joinpath(@__DIR__, "output", "test_chart_js.html")
     mkpath(dirname(output_path))
 
     chart = ChartPlaceholder("cpu-chart", "CPU Usage",

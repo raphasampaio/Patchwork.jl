@@ -66,11 +66,15 @@ struct DashboardConfig
     function DashboardConfig(title::String, tabs::Vector{Tab};
         custom_css::String = "",
         chart_init_script::String = "",
-        cdn_urls::Dict{String, String} = Dict(
-            "tailwind" => "https://cdn.tailwindcss.com/3.4.0",
+        cdn_urls::Dict{String, String} = Dict{String, String}())
+        # Always include Vue and Tailwind as base dependencies
+        default_urls = Dict(
             "vue" => "https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js",
-        ))
-        return new(title, tabs, custom_css, chart_init_script, cdn_urls)
+            "tailwind" => "https://cdn.tailwindcss.com/3.4.0",
+        )
+        # Merge user-provided URLs with defaults (user URLs take precedence)
+        merged_urls = merge(default_urls, cdn_urls)
+        return new(title, tabs, custom_css, chart_init_script, merged_urls)
     end
 end
 

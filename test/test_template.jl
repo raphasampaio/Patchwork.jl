@@ -14,7 +14,7 @@ using Rhinestone
 end
 
 @testset "Generate HTML" begin
-    output_path = joinpath(@__DIR__, "test_output", "test_template.html")
+    output_path = joinpath(@__DIR__, "output", "test_template.html")
     mkpath(dirname(output_path))
 
     chart = ChartPlaceholder("template-chart", "Template Test Chart",
