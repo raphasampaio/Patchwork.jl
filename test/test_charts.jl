@@ -15,7 +15,7 @@ using Rhinestone.RhinestoneHighcharts
         "cpu-chart",
         "CPU Usage",
         "line",
-        Dict(
+        Dict{String, Any}(
             "labels" => ["00:00", "01:00", "02:00", "03:00", "04:00"],
             "datasets" => [Dict("label" => "CPU %", "data" => [45, 52, 38, 61, 42])]
         )
