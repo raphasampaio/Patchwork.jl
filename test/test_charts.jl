@@ -32,6 +32,7 @@ using Rhinestone
             "layout" => Dict(
                 "xaxis" => Dict("title" => "Number"),
                 "yaxis" => Dict("title" => "Square"),
+                "margin" => Dict("l" => 50, "r" => 20, "t" => 20, "b" => 50),
             ),
         ))
 
