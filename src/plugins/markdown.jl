@@ -18,7 +18,7 @@ css_deps(::Type{PatchworkMarkdown}) = [
 js_deps(::Type{PatchworkMarkdown}) = [
     "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/julia.min.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/lua.min.js"
+    "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/lua.min.js",
 ]
 
 init_script(::Type{PatchworkMarkdown}) = """
