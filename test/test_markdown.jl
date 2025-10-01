@@ -58,27 +58,30 @@ dashboard = Dashboard(
             "Documentation",
             [
                 PatchworkMarkdown(
-                    "# PatchworkMarkdown Content Example\n" *
-                    "This demonstrates the **PatchworkMarkdown plugin** for Patchwork.\n" *
-                    "\n" *
-                    "## Features\n" *
-                    "- Easy formatting\n" *
-                    "- Code blocks\n" *
-                    "- Lists and emphasis\n" *
-                    "\n" *
-                    "### Code Example\n" *
-                    "```julia\n" *
-                    "function greet(name)\n" *
-                    "    println(\"Hello, \$name!\")\n" *
-                    "end\n" *
-                    "greet(\"World\")\n" *
-                    "```\n" *
-                    "\n" *
-                    "## Formatting\n" *
-                    "You can use *italic*, **bold**, and ***bold italic*** text.\n" *
-                    "> This is a blockquote.\n" *
-                    "\n" *
-                    "Links work too: [Patchwork](https://github.com)\n"),
+                    """
+# PatchworkMarkdown Content Example
+This demonstrates the **PatchworkMarkdown plugin** for Patchwork.
+
+## Features
+- Easy formatting
+- Code blocks
+- Lists and emphasis
+
+### Code Example
+```julia
+function greet(name)
+    println(\"Hello, \$name!\")
+end
+greet(\"World\")
+```
+
+## Formatting
+You can use *italic*, **bold**, and ***bold italic*** text.
+> This is a blockquote.
+>
+
+Links work too: [Patchwork](https://github.com)
+"""),
             ],
         ),
         Tab(

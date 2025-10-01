@@ -103,13 +103,16 @@ using Patchwork
     end
 
     @testset "HTML contains multiple items per tab" begin
-        dashboard = Dashboard("Multi", [
-            Tab("Tab", [
-                Html("<p>first</p>"),
-                Html("<p>second</p>"),
-                PatchworkMarkdown("# Third"),
-            ]),
-        ])
+        dashboard = Dashboard(
+            "Multi",
+            [
+                Tab("Tab", [
+                    Html("<p>first</p>"),
+                    Html("<p>second</p>"),
+                    PatchworkMarkdown("# Third"),
+                ]),
+            ],
+        )
         html = Patchwork.generate_html(dashboard)
 
         @test occursin("first", html)
