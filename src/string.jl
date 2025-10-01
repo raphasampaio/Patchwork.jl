@@ -5,4 +5,3 @@ function escape_html(s::String)
     s = replace(s, "\"" => "&quot;")
     return s
 end
-
