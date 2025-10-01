@@ -30,7 +30,7 @@ end
 css_deps(::Type{PatchworkHighcharts}) = String[]
 
 js_deps(::Type{PatchworkHighcharts}) = [
-    "https://cdnjs.cloudflare.com/ajax/libs/highcharts/12.4.0/highcharts.js",
+    "https://code.highcharts.com/highcharts.js",
 ]
 
 init_script(::Type{PatchworkHighcharts}) = """
