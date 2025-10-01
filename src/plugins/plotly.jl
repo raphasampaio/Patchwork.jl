@@ -12,13 +12,14 @@ struct PatchworkPlotly <: Item
     layout::Dict{String, Any}
     config::Dict{String, Any}
 
-    PatchworkPlotly(
+    function PatchworkPlotly(
         title::String,
         data::Vector{Dict{String, Any}};
         layout::Dict{String, Any} = Dict{String, Any}(),
         config::Dict{String, Any} = Dict{String, Any}(),
-    ) =
-        new(title, data, layout, config)
+    )
+        return new(title, data, layout, config)
+    end
 end
 
 function to_html(item::PatchworkPlotly)
@@ -37,7 +38,11 @@ function to_html(item::PatchworkPlotly)
     """
 end
 
-js_deps(::Type{PatchworkPlotly}) = ["https://cdn.plot.ly/plotly-2.27.0.min.js"]
+css_deps(::Type{PatchworkPlotly}) = String[]
+
+js_deps(::Type{PatchworkPlotly}) = [
+    "https://cdn.plot.ly/plotly-2.27.0.min.js",
+]
 
 init_script(::Type{PatchworkPlotly}) = """
     document.querySelectorAll('.plotly-chart').forEach(container => {

@@ -10,7 +10,9 @@ struct PatchworkHighcharts <: Item
     title::String
     config::Dict{String, Any}
 
-    PatchworkHighcharts(title::String, config::Dict{String, Any}) = new(title, config)
+    function PatchworkHighcharts(title::String, config::Dict{String, Any})
+        return new(title, config)
+    end
 end
 
 function to_html(item::PatchworkHighcharts)
@@ -25,7 +27,11 @@ function to_html(item::PatchworkHighcharts)
     """
 end
 
-js_deps(::Type{PatchworkHighcharts}) = ["https://code.highcharts.com/highcharts.js"]
+css_deps(::Type{PatchworkHighcharts}) = String[]
+
+js_deps(::Type{PatchworkHighcharts}) = [
+    "https://code.highcharts.com/highcharts.js",
+]
 
 init_script(::Type{PatchworkHighcharts}) = """
     document.querySelectorAll('.highcharts-chart').forEach(container => {

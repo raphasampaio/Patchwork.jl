@@ -11,13 +11,14 @@ struct PatchworkChartJs <: Item
     data::Dict{String, Any}
     options::Dict{String, Any}
 
-    PatchworkChartJs(
+    function PatchworkChartJs(
         title::String,
         chart_type::String,
         data::Dict{String, Any};
         options::Dict{String, Any} = Dict{String, Any}(),
-    ) =
-        new(title, chart_type, data, options)
+    )
+        return new(title, chart_type, data, options)
+    end
 end
 
 function to_html(item::PatchworkChartJs)
@@ -41,7 +42,11 @@ function to_html(item::PatchworkChartJs)
     """
 end
 
-js_deps(::Type{PatchworkChartJs}) = ["https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"]
+css_deps(::Type{PatchworkChartJs}) = String[]
+
+js_deps(::Type{PatchworkChartJs}) = [
+    "https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js",
+]
 
 init_script(::Type{PatchworkChartJs}) = """
     document.querySelectorAll('.chartjs-chart').forEach(canvas => {
