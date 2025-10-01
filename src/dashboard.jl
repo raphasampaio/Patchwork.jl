@@ -72,12 +72,12 @@ function generate_html(dashboard::Dashboard)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>$(escape_html(dashboard.title))</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@3.5.12/dist/vue.global.js"></script>
-    <script src="https://cdn.tailwindcss.com/3.4.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 $(join(cdn_links, "\n"))
 </head>
 <body class="bg-gray-50">
     <div id="app" class="flex h-screen">
-        <div v-if="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 z-20 bg-black bg-opacity-50 lg:hidden"></div>
+        <div v-if="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 z-20 bg-black/50 lg:hidden"></div>
 
         <div :class="['bg-white border-r border-gray-200 w-80 flex flex-col transition-transform lg:translate-x-0', sidebarOpen ? 'translate-x-0 fixed inset-y-0 left-0 z-30' : '-translate-x-full fixed inset-y-0 left-0 z-30 lg:relative lg:translate-x-0']">
             <div class="p-6 border-b border-gray-200">
