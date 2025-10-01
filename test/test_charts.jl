@@ -9,7 +9,7 @@ using JSON
         chart = ChartJs(
             "Test Chart",
             "line",
-            Dict("labels" => ["A", "B"], "datasets" => [Dict("data" => [1, 2])]),
+            Dict{String,Any}("labels" => ["A", "B"], "datasets" => [Dict("data" => [1, 2])]),
         )
         @test chart isa Item
         @test chart.title == "Test Chart"
@@ -33,8 +33,8 @@ using JSON
         chart = ChartJs(
             "Custom Chart",
             "bar",
-            Dict("labels" => ["X"], "datasets" => [Dict("data" => [10])]),
-            options = Dict("plugins" => Dict("legend" => Dict("display" => false))),
+            Dict{String,Any}("labels" => ["X"], "datasets" => [Dict("data" => [10])]),
+            options = Dict{String,Any}("plugins" => Dict("legend" => Dict("display" => false))),
         )
 
         html_output = tohtml(chart)
@@ -44,7 +44,7 @@ using JSON
     @testset "Highcharts" begin
         chart = Highcharts(
             "Analytics",
-            Dict(
+            Dict{String,Any}(
                 "chart" => Dict("type" => "column"),
                 "series" => [Dict("data" => [1, 2, 3])],
             ),
@@ -87,9 +87,9 @@ using JSON
     @testset "Plotly with layout and config" begin
         chart = Plotly(
             "Custom Plot",
-            [Dict("y" => [1, 2, 3])],
-            layout = Dict("title" => "My Title"),
-            config = Dict("displayModeBar" => false),
+            [Dict{String,Any}("y" => [1, 2, 3])],
+            layout = Dict{String,Any}("title" => "My Title"),
+            config = Dict{String,Any}("displayModeBar" => false),
         )
 
         html_output = tohtml(chart)
@@ -105,7 +105,7 @@ dashboard = Dashboard("Charts Demo", [
         ChartJs(
             "Sales by Quarter",
             "bar",
-            Dict(
+            Dict{String,Any}(
                 "labels" => ["Q1", "Q2", "Q3", "Q4"],
                 "datasets" => [
                     Dict("label" => "2023", "data" => [120, 190, 130, 250], "backgroundColor" => "rgba(54, 162, 235, 0.5)"),
@@ -116,7 +116,7 @@ dashboard = Dashboard("Charts Demo", [
         ChartJs(
             "Traffic Sources",
             "doughnut",
-            Dict(
+            Dict{String,Any}(
                 "labels" => ["Direct", "Social", "Organic", "Referral"],
                 "datasets" => [Dict(
                     "data" => [300, 150, 200, 100],
@@ -128,7 +128,7 @@ dashboard = Dashboard("Charts Demo", [
     Tab("Highcharts", [
         Highcharts(
             "Monthly Performance",
-            Dict(
+            Dict{String,Any}(
                 "chart" => Dict("type" => "line"),
                 "title" => Dict("text" => ""),
                 "xAxis" => Dict("categories" => ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]),
@@ -141,7 +141,7 @@ dashboard = Dashboard("Charts Demo", [
         ),
         Highcharts(
             "Distribution",
-            Dict(
+            Dict{String,Any}(
                 "chart" => Dict("type" => "column"),
                 "xAxis" => Dict("categories" => ["Alpha", "Beta", "Gamma", "Delta"]),
                 "series" => [Dict("name" => "Values", "data" => [5, 3, 4, 7])]
@@ -151,29 +151,29 @@ dashboard = Dashboard("Charts Demo", [
     Tab("Plotly", [
         Plotly(
             "Scatter Analysis",
-            [Dict(
+            [Dict{String,Any}(
                 "x" => [1, 2, 3, 4, 5, 6],
                 "y" => [1, 4, 9, 16, 25, 36],
                 "mode" => "markers+lines",
                 "type" => "scatter",
                 "name" => "Quadratic"
             )],
-            layout = Dict("xaxis" => Dict("title" => "X"), "yaxis" => Dict("title" => "Y²"))
+            layout = Dict{String,Any}("xaxis" => Dict("title" => "X"), "yaxis" => Dict("title" => "Y²"))
         ),
         Plotly(
             "3D Surface",
-            [Dict(
+            [Dict{String,Any}(
                 "z" => [[1, 2, 3], [2, 3, 4], [3, 4, 5]],
                 "type" => "surface"
             )],
-            layout = Dict("title" => "3D Surface Plot")
+            layout = Dict{String,Any}("title" => "3D Surface Plot")
         )
     ]),
     Tab("Mixed Charts", [
         Markdown("## Chart Comparison\n\nThis tab shows different chart libraries side by side."),
-        ChartJs("Line Chart", "line", Dict("labels" => ["A", "B", "C"], "datasets" => [Dict("data" => [10, 20, 15])])),
-        Highcharts("Area Chart", Dict("chart" => Dict("type" => "area"), "series" => [Dict("data" => [10, 20, 15])])),
-        Plotly("Scatter Plot", [Dict("y" => [10, 20, 15], "type" => "scatter")])
+        ChartJs("Line Chart", "line", Dict{String,Any}("labels" => ["A", "B", "C"], "datasets" => [Dict("data" => [10, 20, 15])])),
+        Highcharts("Area Chart", Dict{String,Any}("chart" => Dict("type" => "area"), "series" => [Dict("data" => [10, 20, 15])])),
+        Plotly("Scatter Plot", [Dict{String,Any}("y" => [10, 20, 15], "type" => "scatter")])
     ])
 ])
 

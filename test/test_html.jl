@@ -58,7 +58,7 @@ using Rhinestone
     @testset "HTML includes CDN URLs from plugins" begin
         dashboard = Dashboard("Charts", [
             Tab("T", [
-                ChartJs("Chart", "line", Dict("labels" => [], "datasets" => [])),
+                ChartJs("Chart", "line", Dict{String,Any}("labels" => [], "datasets" => [])),
             ]),
         ])
         html = Rhinestone.generate_html(dashboard)
@@ -69,7 +69,7 @@ using Rhinestone
     @testset "HTML includes init scripts from plugins" begin
         dashboard = Dashboard("Charts", [
             Tab("T", [
-                ChartJs("Chart", "bar", Dict("labels" => [], "datasets" => [])),
+                ChartJs("Chart", "bar", Dict{String,Any}("labels" => [], "datasets" => [])),
             ]),
         ])
         html = Rhinestone.generate_html(dashboard)
@@ -120,7 +120,7 @@ using Rhinestone
                     [
                         Html("<div>HTML</div>"),
                         Markdown("**Markdown**"),
-                        ChartJs("Chart", "pie", Dict("labels" => ["A"], "datasets" => [Dict("data" => [1])])),
+                        ChartJs("Chart", "pie", Dict{String,Any}("labels" => ["A"], "datasets" => [Dict("data" => [1])])),
                     ],
                 ),
             ],
@@ -162,7 +162,7 @@ dashboard = Dashboard(
             ChartJs(
                 "Sample Chart",
                 "line",
-                Dict(
+                Dict{String,Any}(
                     "labels" => ["Mon", "Tue", "Wed", "Thu", "Fri"],
                     "datasets" => [Dict("label" => "Data", "data" => [12, 19, 3, 5, 2])]
                 )
