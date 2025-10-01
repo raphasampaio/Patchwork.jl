@@ -4,7 +4,7 @@ using UUIDs
 import JSON
 
 export Item, PatchworkTab, PatchworkDashboard, Html
-export render, to_html, css_deps, js_deps, init_script, css
+export save, to_html, css_deps, js_deps, init_script, css
 
 include("string.jl")
 include("item.jl")

@@ -64,7 +64,7 @@ end
 ### Functions
 
 ```julia
-render(dashboard::PatchworkDashboard, path::String)  # Generate HTML file
+save(dashboard::PatchworkDashboard, path::String)  # Generate HTML file
 to_html(item::Item)                          # Render item to HTML
 css_deps(::Type{<:Item})                     # Get CSS dependencies for item type
 js_deps(::Type{<:Item})                      # Get JS dependencies for item type

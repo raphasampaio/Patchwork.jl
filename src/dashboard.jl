@@ -8,7 +8,7 @@ struct PatchworkDashboard
     end
 end
 
-function render(dashboard::PatchworkDashboard, path::String)
+function save(dashboard::PatchworkDashboard, path::String)
     html = generate_html(dashboard)
     write(path, html)
     return path
@@ -17,17 +17,17 @@ end
 function generate_html(dashboard::PatchworkDashboard)
     all_types = unique([typeof(item) for tab in dashboard.tabs for item in tab.items])
 
-    css_links = String[]
+    css_urls = String[]
     for type in all_types
         for url in css_deps(type)
-            push!(css_links, "    <link rel=\"stylesheet\" href=\"$url\">")
+            push!(css_urls, "    <link rel=\"stylesheet\" href=\"$url\">")
         end
     end
 
-    js_links = String[]
+    js_urls = String[]
     for type in all_types
         for url in js_deps(type)
-            push!(js_links, "    <script src=\"$url\"></script>")
+            push!(js_urls, "    <script src=\"$url\"></script>")
         end
     end
 
@@ -47,9 +47,9 @@ function generate_html(dashboard::PatchworkDashboard)
         end
     end
 
-    tabs_data = []
+    tabs_data = Dict{String, Any}[]
     for tab in dashboard.tabs
-        items_data = []
+        items_data = Dict{String, Any}[]
         for item in tab.items
             item_id = "item-$(uuid4())"
             item_html = to_html(item)
@@ -76,8 +76,8 @@ function generate_html(dashboard::PatchworkDashboard)
     <title>$(escape_html(dashboard.title))</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@3.5.12/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-$(join(css_links, "\n"))
-$(join(js_links, "\n"))
+$(join(css_urls, "\n"))
+$(join(js_urls, "\n"))
 </head>
 <body class="bg-white">
     <div id="app" class="flex h-screen">

@@ -12,7 +12,7 @@ using Patchwork
                 PatchworkTab("Tab1", [Html("<p>content</p>")]),
             ])
 
-            result = render(dashboard, path)
+            result = save(dashboard, path)
 
             @test result == path
             @test isfile(path)
@@ -244,6 +244,6 @@ dashboard = PatchworkDashboard(
 )
 
 output_path = joinpath(@__DIR__, "output", "test_html.html")
-render(dashboard, output_path)
+save(dashboard, output_path)
 
 end

@@ -203,6 +203,6 @@ dashboard = PatchworkDashboard(
 )
 
 output_path = joinpath(@__DIR__, "output", "test_charts.html")
-render(dashboard, output_path)
+save(dashboard, output_path)
 
 end

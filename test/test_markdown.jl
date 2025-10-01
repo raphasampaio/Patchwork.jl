@@ -92,6 +92,6 @@ Links work too: [Patchwork](https://github.com)
 )
 
 output_path = joinpath(@__DIR__, "output", "test_markdown.html")
-render(dashboard, output_path)
+save(dashboard, output_path)
 
 end
