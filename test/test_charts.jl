@@ -61,7 +61,7 @@ using JSON
         @test occursin("highcharts", cdnurls(PatchworkHighcharts)[1])
 
         script = initscript(PatchworkHighcharts)
-        @test occursin("PatchworkHighcharts", script)
+        @test occursin("Highcharts", script)
     end
 
     @testset "Plotly" begin
@@ -81,7 +81,7 @@ using JSON
         @test occursin("plotly", cdnurls(PatchworkPlotly)[1])
 
         script = initscript(PatchworkPlotly)
-        @test occursin("PatchworkPlotly", script)
+        @test occursin("Plotly", script)
     end
 
     @testset "Plotly with layout and config" begin

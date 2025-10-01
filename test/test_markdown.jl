@@ -61,7 +61,7 @@ dashboard = Dashboard(
                 PatchworkMarkdown(
                     """
 # PatchworkMarkdown Content Example
-This demonstrates the **PatchworkMarkdown plugin** for Patchwork.
+This demonstrates the **Markdown plugin** for Patchwork.
 
 ## Features
 - Easy formatting
