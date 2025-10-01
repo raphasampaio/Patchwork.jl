@@ -15,6 +15,10 @@ struct PatchworkHighcharts <: Item
     end
 end
 
+function PatchworkHighcharts(title::String, config::AbstractString)
+    return new(title, JSON.parse(config))
+end
+
 function to_html(item::PatchworkHighcharts)
     chart_id = "chart-$(uuid4())"
     config_json = JSON.json(item.config)
