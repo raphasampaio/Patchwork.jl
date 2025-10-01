@@ -248,12 +248,27 @@ $(generate_cdn_scripts(config.cdn_urls))
 
         .chart-container {
             position: relative;
-            overflow: hidden;
+            width: 100%;
         }
 
         .chart-container > div {
             width: 100% !important;
             height: 100% !important;
+        }
+
+        /* Force Plotly to fit container */
+        .chart-container .js-plotly-plot {
+            width: 100% !important;
+        }
+
+        .chart-container .js-plotly-plot .plotly,
+        .chart-container .js-plotly-plot .plot-container {
+            width: 100% !important;
+        }
+
+        .chart-container svg {
+            width: 100% !important;
+            height: auto !important;
         }
 
         /* Markdown prose styling */

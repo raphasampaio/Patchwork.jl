@@ -78,7 +78,18 @@ using Rhinestone
         }
         // Plotly
         else if (metadata.data && Array.isArray(metadata.data) && metadata.data[0]?.type === 'scatter') {
-            Plotly.newPlot(container, metadata.data, metadata.layout, {responsive: true});
+            const config = {displayModeBar: false};
+            const layout = {
+                ...metadata.layout,
+                autosize: true
+            };
+
+            Plotly.newPlot(container, metadata.data, layout, config);
+
+            // Force resize after plot is created
+            window.addEventListener('load', function() {
+                Plotly.Plots.resize(container);
+            });
         }
         // Highcharts
         else if (metadata.chart || metadata.series) {
