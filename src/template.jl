@@ -166,7 +166,7 @@ $(generate_cdn_scripts(config.cdn_urls))
                             </div>
 
                             <!-- Markdown content -->
-                            <div v-if="item.type === 'markdown'" class="prose prose-slate max-w-none" v-html="item.html"></div>
+                            <div v-if="item.type === 'markdown'" class="prose" v-html="item.html"></div>
                         </div>
                     </div>
 
@@ -243,6 +243,97 @@ $(generate_cdn_scripts(config.cdn_urls))
         .chart-container > div {
             width: 100% !important;
             height: 100% !important;
+        }
+
+        /* Markdown prose styling */
+        .prose {
+            color: #374151;
+            max-width: none;
+        }
+
+        .prose h1 {
+            font-size: 2.25em;
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 0.8888889em;
+            line-height: 1.1111111;
+            color: #111827;
+        }
+
+        .prose h2 {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-top: 2em;
+            margin-bottom: 1em;
+            line-height: 1.3333333;
+            color: #111827;
+        }
+
+        .prose h3 {
+            font-size: 1.25em;
+            font-weight: 600;
+            margin-top: 1.6em;
+            margin-bottom: 0.6em;
+            line-height: 1.6;
+            color: #111827;
+        }
+
+        .prose p {
+            margin-top: 1.25em;
+            margin-bottom: 1.25em;
+            line-height: 1.75;
+        }
+
+        .prose strong {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .prose ul {
+            margin-top: 1.25em;
+            margin-bottom: 1.25em;
+            padding-left: 1.625em;
+            list-style-type: disc;
+        }
+
+        .prose ul li {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .prose ul li p {
+            margin-top: 0.75em;
+            margin-bottom: 0.75em;
+        }
+
+        .prose pre {
+            background-color: #1f2937;
+            color: #e5e7eb;
+            overflow-x: auto;
+            font-size: 0.875em;
+            line-height: 1.7142857;
+            margin-top: 1.7142857em;
+            margin-bottom: 1.7142857em;
+            border-radius: 0.375rem;
+            padding: 0.8571429em 1.1428571em;
+        }
+
+        .prose code {
+            color: #111827;
+            font-weight: 600;
+            font-size: 0.875em;
+        }
+
+        .prose pre code {
+            background-color: transparent;
+            border-width: 0;
+            border-radius: 0;
+            padding: 0;
+            font-weight: 400;
+            color: inherit;
+            font-size: inherit;
+            font-family: inherit;
+            line-height: inherit;
         }
 
         $(config.custom_css)

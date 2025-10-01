@@ -72,7 +72,7 @@ end
     @test occursin("Markdown Test Dashboard", content)
     @test occursin("Dashboard Overview", content)
     @test occursin("markdown", content)
-    @test occursin("typography", content)  # Check for Tailwind Typography CSS
+    @test occursin(".prose", content)  # Check for prose CSS styling
 end
 
 end
