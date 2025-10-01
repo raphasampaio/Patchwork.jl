@@ -1,9 +1,14 @@
 module Rhinestone
 
-export DashboardConfig, Tab, ChartPlaceholder, generate_dashboard
+export DashboardConfig, Tab, ChartPlaceholder, MarkdownContent, ContentItem, generate_dashboard
 
 """
-    ChartPlaceholder
+Abstract type for dashboard content items (charts, markdown, etc.)
+"""
+abstract type ContentItem end
+
+"""
+    ChartPlaceholder <: ContentItem
 
 Represents a chart placeholder with a unique ID and container specifications.
 The actual chart rendering is handled by user-provided JavaScript.
@@ -15,7 +20,7 @@ The actual chart rendering is handled by user-provided JavaScript.
   - `height::String`: CSS height value (default: "24rem")
   - `metadata::Dict{String,Any}`: Additional metadata for chart initialization
 """
-struct ChartPlaceholder
+struct ChartPlaceholder <: ContentItem
     id::String
     title::String
     height::String
@@ -29,18 +34,33 @@ struct ChartPlaceholder
 end
 
 """
+    MarkdownContent <: ContentItem
+
+Represents a markdown content block.
+
+# Fields
+
+  - `id::String`: Unique identifier for the content block
+  - `content::String`: Markdown content
+"""
+struct MarkdownContent <: ContentItem
+    id::String
+    content::String
+end
+
+"""
     Tab
 
-Represents a dashboard tab containing multiple chart placeholders.
+Represents a dashboard tab containing multiple content items (charts, markdown, etc.).
 
 # Fields
 
   - `label::String`: Tab display label
-  - `charts::Vector{ChartPlaceholder}`: Charts in this tab
+  - `items::Vector{ContentItem}`: Content items in this tab
 """
 struct Tab
     label::String
-    charts::Vector{ChartPlaceholder}
+    items::Vector{ContentItem}
 end
 
 """
@@ -67,10 +87,12 @@ struct DashboardConfig
         custom_css::String = "",
         chart_init_script::String = "",
         cdn_urls::Dict{String, String} = Dict{String, String}())
-        # Always include Vue and Tailwind as base dependencies
+        # Always include Vue, Tailwind (with typography), and Marked.js (for markdown) as base dependencies
         default_urls = Dict(
             "vue" => "https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js",
             "tailwind" => "https://cdn.tailwindcss.com/3.4.0",
+            "marked" => "https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js",
+            "typography" => "https://unpkg.com/@tailwindcss/typography@0.5.10/dist/typography.min.css",
         )
         # Merge user-provided URLs with defaults (user URLs take precedence)
         merged_urls = merge(default_urls, cdn_urls)

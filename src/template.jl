@@ -97,13 +97,13 @@ $(generate_cdn_scripts(config.cdn_urls))
                             ]"></div>
                             <span class="font-medium">{{ tab.label }}</span>
                         </div>
-                        <span v-if="searchQuery && getVisibleChartsCount(index) > 0" :class="[
+                        <span v-if="searchQuery && getVisibleItemsCount(index) > 0" :class="[
                                   'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium',
                                   activeTab === index
                                       ? 'bg-white/20 text-white'
                                       : 'bg-dashboard-blue text-white'
                               ]">
-                            {{ getVisibleChartsCount(index) }}
+                            {{ getVisibleItemsCount(index) }}
                         </span>
                     </button>
                 </div>
@@ -112,7 +112,7 @@ $(generate_cdn_scripts(config.cdn_urls))
             <!-- Footer -->
             <div class="p-4 border-t border-gray-200">
                 <div class="text-xs text-gray-500 text-center">
-                    {{ tabs.reduce((total, tab) => total + tab.charts.length, 0) }} charts across {{ tabs.length }} tabs
+                    {{ tabs.reduce((total, tab) => total + tab.items.length, 0) }} items across {{ tabs.length }} tabs
                 </div>
             </div>
         </div>
@@ -134,8 +134,8 @@ $(generate_cdn_scripts(config.cdn_urls))
                     <div v-for="(tab, tabIndex) in tabs" :key="tabIndex" v-show="activeTab === tabIndex">
                         <h2 class="text-xl font-semibold text-gray-800">{{ tab.label }}</h2>
                         <p class="text-sm text-gray-600 mt-1">
-                            {{ searchQuery ? getVisibleChartsCount(tabIndex) : tab.charts.length }}
-                            {{ searchQuery ? 'matching' : 'total' }} charts
+                            {{ searchQuery ? getVisibleItemsCount(tabIndex) : tab.items.length }}
+                            {{ searchQuery ? 'matching' : 'total' }} items
                         </p>
                     </div>
                 </div>
@@ -146,23 +146,30 @@ $(generate_cdn_scripts(config.cdn_urls))
                 <div v-for="(tab, tabIndex) in tabs" :key="tabIndex" v-show="activeTab === tabIndex"
                     class="animate-fadeIn h-full">
 
-                    <!-- Charts Grid -->
+                    <!-- Content Grid -->
                     <div class="space-y-6">
-                        <div v-for="(chart, chartIndex) in tab.charts" :key="'chart-' + tabIndex + '-' + chartIndex"
-                            v-show="isChartVisible(chart)"
+                        <div v-for="(item, itemIndex) in tab.items" :key="'item-' + tabIndex + '-' + itemIndex"
+                            v-show="isItemVisible(item)"
                             class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-                            <div class="mb-4">
-                                <h3 class="text-lg font-semibold text-gray-800"
-                                    v-html="highlightSearchTerm(chart.title)"></h3>
+
+                            <!-- Chart content -->
+                            <div v-if="item.type === 'chart'">
+                                <div class="mb-4">
+                                    <h3 class="text-lg font-semibold text-gray-800"
+                                        v-html="highlightSearchTerm(item.title)"></h3>
+                                </div>
+                                <div class="chart-container" :style="{ height: item.height }">
+                                    <div :id="item.id" class="w-full h-full"></div>
+                                </div>
                             </div>
-                            <div class="chart-container" :style="{ height: chart.height }">
-                                <div :id="chart.id" class="w-full h-full"></div>
-                            </div>
+
+                            <!-- Markdown content -->
+                            <div v-if="item.type === 'markdown'" class="prose prose-slate max-w-none" v-html="item.html"></div>
                         </div>
                     </div>
 
                     <!-- No Search Results -->
-                    <div v-if="searchQuery && getVisibleChartsCount(tabIndex) === 0"
+                    <div v-if="searchQuery && getVisibleItemsCount(tabIndex) === 0"
                         class="text-center py-12 bg-white rounded-xl border border-gray-200">
                         <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
                             <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,12 +177,12 @@ $(generate_cdn_scripts(config.cdn_urls))
                                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
                         </div>
-                        <h3 class="text-lg font-medium text-gray-900 mb-2">No charts found</h3>
-                        <p class="text-gray-500">No charts match your search query "{{ searchQuery }}"</p>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">No content found</h3>
+                        <p class="text-gray-500">No content matches your search query "{{ searchQuery }}"</p>
                     </div>
 
                     <!-- Empty State -->
-                    <div v-else-if="!searchQuery && tab.charts.length === 0"
+                    <div v-else-if="!searchQuery && tab.items.length === 0"
                         class="text-center py-12 bg-white rounded-xl border border-gray-200">
                         <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
                             <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -184,8 +191,8 @@ $(generate_cdn_scripts(config.cdn_urls))
                                 </path>
                             </svg>
                         </div>
-                        <h3 class="text-lg font-medium text-gray-900 mb-2">No charts available</h3>
-                        <p class="text-gray-500">This tab doesn't contain any charts yet.</p>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">No content available</h3>
+                        <p class="text-gray-500">This tab doesn't contain any content yet.</p>
                     </div>
                 </div>
             </div>
@@ -256,6 +263,7 @@ $(generate_cdn_scripts(config.cdn_urls))
             },
             mounted() {
                 this.\$nextTick(() => {
+                    this.initializeMarkdown();
                     this.initializeAllCharts();
                 });
             },
@@ -265,25 +273,39 @@ $(generate_cdn_scripts(config.cdn_urls))
                 }
             },
             methods: {
-                initializeAllCharts() {
+                initializeMarkdown() {
                     this.tabs.forEach((tab, tabIndex) => {
-                        tab.charts.forEach((chart, chartIndex) => {
-                            if (typeof initializeChart === 'function') {
-                                initializeChart(chart.id, chart.metadata);
+                        tab.items.forEach((item, itemIndex) => {
+                            if (item.type === 'markdown' && typeof marked !== 'undefined') {
+                                item.html = marked.parse(item.content);
                             }
                         });
                     });
                 },
-                isChartVisible(chart) {
+                initializeAllCharts() {
+                    this.tabs.forEach((tab, tabIndex) => {
+                        tab.items.forEach((item, itemIndex) => {
+                            if (item.type === 'chart' && typeof initializeChart === 'function') {
+                                initializeChart(item.id, item.metadata);
+                            }
+                        });
+                    });
+                },
+                isItemVisible(item) {
                     if (!this.searchQuery) return true;
 
                     const query = this.searchQuery.toLowerCase();
-                    return chart.title.toLowerCase().includes(query);
+                    if (item.type === 'chart') {
+                        return item.title.toLowerCase().includes(query);
+                    } else if (item.type === 'markdown') {
+                        return item.content.toLowerCase().includes(query);
+                    }
+                    return true;
                 },
-                getVisibleChartsCount(tabIndex) {
-                    if (!this.searchQuery) return this.tabs[tabIndex].charts.length;
+                getVisibleItemsCount(tabIndex) {
+                    if (!this.searchQuery) return this.tabs[tabIndex].items.length;
 
-                    return this.tabs[tabIndex].charts.filter(chart => this.isChartVisible(chart)).length;
+                    return this.tabs[tabIndex].items.filter(item => this.isItemVisible(item)).length;
                 },
                 highlightSearchTerm(text) {
                     if (!this.searchQuery) return text;
@@ -310,20 +332,32 @@ function generate_tabs_json(tabs::Vector{Tab})
     tabs_array = []
 
     for tab in tabs
-        charts_array = []
-        for chart in tab.charts
-            chart_dict = Dict(
-                "id" => chart.id,
-                "title" => chart.title,
-                "height" => chart.height,
-                "metadata" => chart.metadata,
-            )
-            push!(charts_array, chart_dict)
+        items_array = []
+        for item in tab.items
+            if item isa ChartPlaceholder
+                item_dict = Dict(
+                    "type" => "chart",
+                    "id" => item.id,
+                    "title" => item.title,
+                    "height" => item.height,
+                    "metadata" => item.metadata,
+                )
+                push!(items_array, item_dict)
+            elseif item isa MarkdownContent
+                # Convert markdown to HTML using marked.js (will be done client-side)
+                item_dict = Dict(
+                    "type" => "markdown",
+                    "id" => item.id,
+                    "content" => item.content,
+                    "html" => "", # Will be populated client-side by marked.js
+                )
+                push!(items_array, item_dict)
+            end
         end
 
         tab_dict = Dict(
             "label" => tab.label,
-            "charts" => charts_array,
+            "items" => items_array,
         )
         push!(tabs_array, tab_dict)
     end
@@ -386,12 +420,16 @@ end
 """
     generate_cdn_scripts(cdn_urls::Dict{String,String})
 
-Generate script tags for all CDN URLs.
+Generate script and link tags for all CDN URLs.
 """
 function generate_cdn_scripts(cdn_urls::Dict{String, String})
-    scripts = String[]
+    tags = String[]
     for (name, url) in cdn_urls
-        push!(scripts, "    <script src=\"$(url)\"></script>")
+        if endswith(url, ".css")
+            push!(tags, "    <link rel=\"stylesheet\" href=\"$(url)\">")
+        else
+            push!(tags, "    <script src=\"$(url)\"></script>")
+        end
     end
-    return join(scripts, "\n")
+    return join(tags, "\n")
 end
