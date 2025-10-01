@@ -21,7 +21,7 @@ struct Dashboard
     tabs::Vector{Tab}
     custom_css::String
 
-    Dashboard(title::String, tabs::Vector{Tab}; custom_css::String="") =
+    Dashboard(title::String, tabs::Vector{Tab}; custom_css::String = "") =
         new(title, tabs, custom_css)
 end
 

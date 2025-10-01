@@ -8,11 +8,16 @@ export Plotly
 
 struct Plotly <: Item
     title::String
-    data::Vector{Dict{String,Any}}
-    layout::Dict{String,Any}
-    config::Dict{String,Any}
+    data::Vector{Dict{String, Any}}
+    layout::Dict{String, Any}
+    config::Dict{String, Any}
 
-    Plotly(title::String, data::Vector{Dict{String,Any}}; layout::Dict{String,Any}=Dict{String,Any}(), config::Dict{String,Any}=Dict{String,Any}()) =
+    Plotly(
+        title::String,
+        data::Vector{Dict{String, Any}};
+        layout::Dict{String, Any} = Dict{String, Any}(),
+        config::Dict{String, Any} = Dict{String, Any}(),
+    ) =
         new(title, data, layout, config)
 end
 

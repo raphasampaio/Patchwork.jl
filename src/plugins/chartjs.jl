@@ -8,10 +8,15 @@ export ChartJs
 struct ChartJs <: Item
     title::String
     chart_type::String
-    data::Dict{String,Any}
-    options::Dict{String,Any}
+    data::Dict{String, Any}
+    options::Dict{String, Any}
 
-    ChartJs(title::String, chart_type::String, data::Dict{String,Any}; options::Dict{String,Any}=Dict{String,Any}()) =
+    ChartJs(
+        title::String,
+        chart_type::String,
+        data::Dict{String, Any};
+        options::Dict{String, Any} = Dict{String, Any}(),
+    ) =
         new(title, chart_type, data, options)
 end
 
@@ -21,8 +26,8 @@ function tohtml(item::ChartJs)
         "data" => item.data,
         "options" => merge(
             Dict("responsive" => true, "maintainAspectRatio" => false),
-            item.options
-        )
+            item.options,
+        ),
     )
     config_json = JSON.json(config)
 

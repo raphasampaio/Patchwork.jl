@@ -9,7 +9,7 @@ using Rhinestone
             path = joinpath(dir, "test.html")
 
             dashboard = Dashboard("Test", [
-                Tab("Tab1", [Html("<p>content</p>")])
+                Tab("Tab1", [Html("<p>content</p>")]),
             ])
 
             result = render(dashboard, path)
@@ -49,7 +49,7 @@ using Rhinestone
 
     @testset "HTML includes custom CSS" begin
         dashboard = Dashboard("App", [Tab("T", [Html("<p>x</p>")])],
-            custom_css=".custom { color: red; }")
+            custom_css = ".custom { color: red; }")
         html = Rhinestone.generate_html(dashboard)
 
         @test occursin(".custom { color: red; }", html)
@@ -58,8 +58,8 @@ using Rhinestone
     @testset "HTML includes CDN URLs from plugins" begin
         dashboard = Dashboard("Charts", [
             Tab("T", [
-                ChartJs("Chart", "line", Dict("labels" => [], "datasets" => []))
-            ])
+                ChartJs("Chart", "line", Dict("labels" => [], "datasets" => [])),
+            ]),
         ])
         html = Rhinestone.generate_html(dashboard)
 
@@ -69,8 +69,8 @@ using Rhinestone
     @testset "HTML includes init scripts from plugins" begin
         dashboard = Dashboard("Charts", [
             Tab("T", [
-                ChartJs("Chart", "bar", Dict("labels" => [], "datasets" => []))
-            ])
+                ChartJs("Chart", "bar", Dict("labels" => [], "datasets" => [])),
+            ]),
         ])
         html = Rhinestone.generate_html(dashboard)
 
@@ -78,11 +78,14 @@ using Rhinestone
     end
 
     @testset "HTML contains multiple tabs" begin
-        dashboard = Dashboard("Multi", [
-            Tab("Tab1", [Html("<p>one</p>")]),
-            Tab("Tab2", [Html("<p>two</p>")]),
-            Tab("Tab3", [Html("<p>three</p>")])
-        ])
+        dashboard = Dashboard(
+            "Multi",
+            [
+                Tab("Tab1", [Html("<p>one</p>")]),
+                Tab("Tab2", [Html("<p>two</p>")]),
+                Tab("Tab3", [Html("<p>three</p>")]),
+            ],
+        )
         html = Rhinestone.generate_html(dashboard)
 
         @test occursin("Tab1", html)
@@ -98,8 +101,8 @@ using Rhinestone
             Tab("Tab", [
                 Html("<p>first</p>"),
                 Html("<p>second</p>"),
-                Markdown("# Third")
-            ])
+                Markdown("# Third"),
+            ]),
         ])
         html = Rhinestone.generate_html(dashboard)
 
@@ -109,13 +112,19 @@ using Rhinestone
     end
 
     @testset "Mixed content types" begin
-        dashboard = Dashboard("Mixed", [
-            Tab("All", [
-                Html("<div>HTML</div>"),
-                Markdown("**Markdown**"),
-                ChartJs("Chart", "pie", Dict("labels" => ["A"], "datasets" => [Dict("data" => [1])]))
-            ])
-        ])
+        dashboard = Dashboard(
+            "Mixed",
+            [
+                Tab(
+                    "All",
+                    [
+                        Html("<div>HTML</div>"),
+                        Markdown("**Markdown**"),
+                        ChartJs("Chart", "pie", Dict("labels" => ["A"], "datasets" => [Dict("data" => [1])])),
+                    ],
+                ),
+            ],
+        )
         html = Rhinestone.generate_html(dashboard)
 
         @test occursin("HTML", html)

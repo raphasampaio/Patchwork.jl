@@ -26,7 +26,7 @@ using Rhinestone
         @test length(dashboard.tabs) == 1
         @test dashboard.custom_css == ""
 
-        dashboard_with_css = Dashboard("Styled", tabs, custom_css=".custom { color: red; }")
+        dashboard_with_css = Dashboard("Styled", tabs, custom_css = ".custom { color: red; }")
         @test dashboard_with_css.custom_css == ".custom { color: red; }"
     end
 end

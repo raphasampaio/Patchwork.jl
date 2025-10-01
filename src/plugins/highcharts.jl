@@ -8,9 +8,9 @@ export Highcharts
 
 struct Highcharts <: Item
     title::String
-    config::Dict{String,Any}
+    config::Dict{String, Any}
 
-    Highcharts(title::String, config::Dict{String,Any}) = new(title, config)
+    Highcharts(title::String, config::Dict{String, Any}) = new(title, config)
 end
 
 function tohtml(item::Highcharts)

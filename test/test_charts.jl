@@ -9,7 +9,7 @@ using JSON
         chart = ChartJs(
             "Test Chart",
             "line",
-            Dict("labels" => ["A", "B"], "datasets" => [Dict("data" => [1, 2])])
+            Dict("labels" => ["A", "B"], "datasets" => [Dict("data" => [1, 2])]),
         )
         @test chart isa Item
         @test chart.title == "Test Chart"
@@ -34,7 +34,7 @@ using JSON
             "Custom Chart",
             "bar",
             Dict("labels" => ["X"], "datasets" => [Dict("data" => [10])]),
-            options=Dict("plugins" => Dict("legend" => Dict("display" => false)))
+            options = Dict("plugins" => Dict("legend" => Dict("display" => false))),
         )
 
         html_output = tohtml(chart)
@@ -46,8 +46,8 @@ using JSON
             "Analytics",
             Dict(
                 "chart" => Dict("type" => "column"),
-                "series" => [Dict("data" => [1, 2, 3])]
-            )
+                "series" => [Dict("data" => [1, 2, 3])],
+            ),
         )
         @test chart isa Item
         @test chart.title == "Analytics"
@@ -67,7 +67,7 @@ using JSON
     @testset "Plotly" begin
         chart = Plotly(
             "Science Plot",
-            [Dict("x" => [1, 2, 3], "y" => [4, 5, 6], "type" => "scatter")]
+            [Dict("x" => [1, 2, 3], "y" => [4, 5, 6], "type" => "scatter")],
         )
         @test chart isa Item
         @test chart.title == "Science Plot"
@@ -88,8 +88,8 @@ using JSON
         chart = Plotly(
             "Custom Plot",
             [Dict("y" => [1, 2, 3])],
-            layout=Dict("title" => "My Title"),
-            config=Dict("displayModeBar" => false)
+            layout = Dict("title" => "My Title"),
+            config = Dict("displayModeBar" => false),
         )
 
         html_output = tohtml(chart)

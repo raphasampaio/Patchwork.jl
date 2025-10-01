@@ -36,7 +36,7 @@ function generate_html(dashboard::Dashboard)
             push!(items_data, Dict(
                 "id" => item_id,
                 "type" => item_type,
-                "html" => item_html
+                "html" => item_html,
             ))
         end
         push!(tabs_data, Dict("label" => tab.label, "items" => items_data))
