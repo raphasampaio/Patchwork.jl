@@ -16,7 +16,7 @@ struct PatchworkHighcharts <: Item
 end
 
 function PatchworkHighcharts(title::String, config::AbstractString)
-    return new(title, JSON.parse(config))
+    return PatchworkHighcharts(title, JSON.parse(config))
 end
 
 function to_html(item::PatchworkHighcharts)
