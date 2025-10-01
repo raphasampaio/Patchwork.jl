@@ -103,13 +103,13 @@ $(join(js_links, "\n"))
         </div>
 
         <div class="flex-1 flex flex-col overflow-hidden bg-gray-50">
-            <div class="bg-white border-b border-gray-100 px-8 py-5 flex items-center">
+            <div class="bg-white border-b border-gray-100 px-8 py-3 flex items-center">
                 <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden mr-4 p-1.5 rounded hover:bg-gray-100 transition-colors">
                     <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
                 </button>
-                <h2 class="text-base font-medium text-gray-900">{{ tabs[activeTab]?.label }}</h2>
+                <h2 class="text-sm font-medium text-gray-900">{{ tabs[activeTab]?.label }}</h2>
             </div>
 
             <div class="flex-1 overflow-y-auto px-8 py-6">
