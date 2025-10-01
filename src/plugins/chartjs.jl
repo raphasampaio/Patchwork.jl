@@ -1,7 +1,7 @@
 module ChartJsPlugin
 
 import JSON
-import ..Item, ..tohtml, ..cdnurls, ..initscript
+import ..Item, ..tohtml, ..cdnurls, ..initscript, ..customcss
 
 export PatchworkChartJs
 
@@ -49,5 +49,7 @@ initscript(::Type{PatchworkChartJs}) = """
         new Chart(canvas, config);
     });
 """
+
+customcss(::Type{PatchworkChartJs}) = ""
 
 end

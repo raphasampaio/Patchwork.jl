@@ -1,7 +1,7 @@
 module HighchartsPlugin
 
 import JSON
-import ..Item, ..tohtml, ..cdnurls, ..initscript
+import ..Item, ..tohtml, ..cdnurls, ..initscript, ..customcss
 using UUIDs
 
 export PatchworkHighcharts
@@ -33,5 +33,7 @@ initscript(::Type{PatchworkHighcharts}) = """
         Highcharts.chart(container.id, config);
     });
 """
+
+customcss(::Type{PatchworkHighcharts}) = ""
 
 end

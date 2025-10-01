@@ -26,6 +26,14 @@ function generate_html(dashboard::Dashboard)
         end
     end
 
+    custom_css_blocks = String[]
+    for type in all_types
+        css = customcss(type)
+        if !isempty(css)
+            push!(custom_css_blocks, css)
+        end
+    end
+
     tabs_data = []
     for tab in dashboard.tabs
         items_data = []
@@ -44,6 +52,7 @@ function generate_html(dashboard::Dashboard)
 
     tabs_json = JSON.json(tabs_data)
     combined_init = join(init_scripts, "\n")
+    all_css = join(custom_css_blocks, "\n\n")
 
     return """
 <!DOCTYPE html>
@@ -99,6 +108,7 @@ $(join(cdn_links, "\n"))
     </div>
 
     <style>
+        $all_css
         $(dashboard.custom_css)
     </style>
 

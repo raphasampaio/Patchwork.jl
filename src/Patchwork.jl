@@ -4,7 +4,7 @@ using UUIDs
 import JSON
 
 export Item, Tab, Dashboard, Html
-export render, tohtml, cdnurls, initscript
+export render, tohtml, cdnurls, initscript, customcss
 
 abstract type Item end
 
@@ -29,6 +29,7 @@ end
 tohtml(item::Html) = item.content
 cdnurls(::Type{Html}) = String[]
 initscript(::Type{Html}) = ""
+customcss(::Type{Html}) = ""
 
 include("html.jl")
 
