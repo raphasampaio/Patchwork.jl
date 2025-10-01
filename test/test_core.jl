@@ -8,7 +8,8 @@ using Patchwork
         html = Html("<p>test</p>")
         @test html isa Item
         @test to_html(html) == "<p>test</p>"
-        @test cdn_urls(Html) == String[]
+        @test css_deps(Html) == String[]
+        @test js_deps(Html) == String[]
         @test init_script(Html) == ""
         @test css(Html) == ""
     end
