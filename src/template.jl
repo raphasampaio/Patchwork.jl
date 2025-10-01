@@ -369,6 +369,8 @@ $(generate_cdn_scripts(config.cdn_urls))
                 highlightCode() {
                     if (typeof hljs !== 'undefined') {
                         document.querySelectorAll('pre code').forEach((block) => {
+                            // Remove language class to force auto-detection
+                            block.className = '';
                             hljs.highlightElement(block);
                         });
                     }
