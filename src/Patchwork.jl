@@ -17,13 +17,15 @@ include("plugins/chartjs.jl")
 include("plugins/highcharts.jl")
 include("plugins/plotly.jl")
 include("plugins/leaflet.jl")
+include("plugins/mermaid.jl")
 
 using .MarkdownPlugin
 using .ChartJsPlugin
 using .HighchartsPlugin
 using .PlotlyPlugin
 using .LeafletPlugin
+using .MermaidPlugin
 
-export PatchworkMarkdown, PatchworkChartJs, PatchworkHighcharts, PatchworkPlotly, PatchworkLeaflet
+export PatchworkMarkdown, PatchworkChartJs, PatchworkHighcharts, PatchworkPlotly, PatchworkLeaflet, PatchworkMermaid
 
 end

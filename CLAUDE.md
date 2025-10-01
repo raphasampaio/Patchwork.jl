@@ -114,6 +114,10 @@ css(::Type{MyItem}) = "/* custom styles */"
 - Creates interactive maps using Leaflet
 - Supports center coordinates, zoom levels, and markers with popups
 
+**PatchworkMermaid** (`src/plugins/mermaid.jl`)
+- Renders diagrams using Mermaid
+- Supports flowcharts, sequence diagrams, class diagrams, and more
+
 ## Important Implementation Details
 
 ### Type Safety
