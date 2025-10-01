@@ -1,11 +1,22 @@
 using Markdown
+using JSON
 
 """
     generate_dashboard(config::DashboardConfig, output_path::String)
 
 Generate a self-contained HTML dashboard file from the configuration.
+
+# Examples
+
+```julia
+config = DashboardConfig("My Dashboard", [tab])
+generate_dashboard(config, "dashboard.html")
+```
 """
 function generate_dashboard(config::DashboardConfig, output_path::String)
+    # Validate configuration before generating
+    validate_config(config)
+
     html = generate_html(config)
     write(output_path, html)
     return output_path
@@ -71,7 +82,7 @@ $(generate_cdn_scripts(config.cdn_urls))
                     </div>
                     <input v-model="searchQuery" type="text"
                         class="block w-full pl-9 pr-8 py-2 text-sm border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-dashboard-blue focus:border-dashboard-blue"
-                        placeholder="Search charts...">
+                        placeholder="Search content...">
                     <div v-if="searchQuery" @click="searchQuery = ''"
                         class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer">
                         <svg class="h-4 w-4 text-gray-400 hover:text-gray-600" fill="none" stroke="currentColor"
@@ -421,7 +432,7 @@ end
 """
     generate_tabs_json(tabs::Vector{Tab})
 
-Convert tabs configuration to JSON for embedding in the HTML.
+Convert tabs configuration to JSON string for embedding in the HTML.
 """
 function generate_tabs_json(tabs::Vector{Tab})
     tabs_array = []
@@ -457,31 +468,7 @@ function generate_tabs_json(tabs::Vector{Tab})
         push!(tabs_array, tab_dict)
     end
 
-    return json_string(tabs_array)
-end
-
-"""
-    json_string(obj)
-
-Simple JSON serialization (minimal implementation).
-For production use, consider using JSON.jl package.
-"""
-function json_string(obj)
-    if obj isa AbstractString
-        return "\"$(escape_json(obj))\""
-    elseif obj isa Number || obj isa Bool
-        return string(obj)
-    elseif obj isa AbstractDict
-        pairs = ["\"$(escape_json(string(k)))\":$(json_string(v))" for (k, v) in obj]
-        return "{" * join(pairs, ",") * "}"
-    elseif obj isa AbstractVector
-        items = [json_string(item) for item in obj]
-        return "[" * join(items, ",") * "]"
-    elseif isnothing(obj)
-        return "null"
-    else
-        return "\"$(escape_json(string(obj)))\""
-    end
+    return JSON.json(tabs_array)
 end
 
 """
@@ -495,20 +482,6 @@ function escape_html(str::String)
     str = replace(str, ">" => "&gt;")
     str = replace(str, "\"" => "&quot;")
     str = replace(str, "'" => "&#39;")
-    return str
-end
-
-"""
-    escape_json(str::String)
-
-Escape JSON special characters.
-"""
-function escape_json(str::String)
-    str = replace(str, "\\" => "\\\\")
-    str = replace(str, "\"" => "\\\"")
-    str = replace(str, "\n" => "\\n")
-    str = replace(str, "\r" => "\\r")
-    str = replace(str, "\t" => "\\t")
     return str
 end
 

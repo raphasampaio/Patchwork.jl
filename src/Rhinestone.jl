@@ -101,6 +101,7 @@ struct DashboardConfig
     end
 end
 
+include("validation.jl")
 include("template.jl")
 
 end
