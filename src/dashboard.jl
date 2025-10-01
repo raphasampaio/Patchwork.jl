@@ -71,7 +71,7 @@ function generate_html(dashboard::Dashboard)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>$(escape_html(dashboard.title))</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.12/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com/3.4.0"></script>
 $(join(cdn_links, "\n"))
 </head>
