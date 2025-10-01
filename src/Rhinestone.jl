@@ -1,55 +1,75 @@
+"""
+# Rhinestone.jl
+
+A flexible, plugin-based framework for creating interactive HTML dashboards.
+
+Rhinestone provides a core framework for building dashboards with tabs and content items.
+Content rendering is handled through a plugin system, allowing external packages to implement
+custom renderers for different content types (charts, maps, visualizations, etc.).
+
+## Plugin Architecture
+
+External packages can create renderers by:
+1. Defining a content type that extends `ContentItem`
+2. Implementing a renderer that extends `ContentRenderer`
+3. Registering the renderer with `register_renderer!`
+
+## Example
+
+```julia
+# In an external package like RhinestoneHighcharts.jl
+struct HighchartsPlot <: Rhinestone.ContentItem
+    id::String
+    title::String
+    config::Dict{String, Any}
+end
+
+struct HighchartsRenderer <: Rhinestone.ContentRenderer end
+
+Rhinestone.render_to_dict(::HighchartsRenderer, item::HighchartsPlot) =
+    Dict("type" => "highcharts", "id" => item.id, "title" => item.title,
+         "config" => item.config)
+
+Rhinestone.content_type(::HighchartsRenderer) = "highcharts"
+Rhinestone.get_cdn_urls(::HighchartsRenderer) =
+    Dict("highcharts" => "https://code.highcharts.com/highcharts.js")
+
+# Register the renderer
+Rhinestone.register_renderer!(HighchartsPlot, HighchartsRenderer())
+```
+"""
 module Rhinestone
 
 using Markdown
 using JSON
 
-export DashboardConfig, Tab, ChartPlaceholder, MarkdownContent, ContentItem, generate_dashboard
+export DashboardConfig, Tab, ContentItem, generate_dashboard
+export ContentRenderer, register_renderer!, get_renderer, has_renderer, clear_registry!
+export render_to_dict, get_cdn_urls, get_init_script, content_type
+export HtmlContent
 
 """
-Abstract type for dashboard content items (charts, markdown, etc.)
+Abstract type for dashboard content items.
+
+All content types must extend this type. External packages can define their own
+content types by extending ContentItem and implementing a corresponding renderer.
 """
 abstract type ContentItem end
 
 """
-    ChartPlaceholder <: ContentItem
+    HtmlContent <: ContentItem
 
-Represents a chart placeholder with a unique ID and container specifications.
-The actual chart rendering is handled by user-provided JavaScript.
-
-# Fields
-
-  - `id::String`: Unique identifier for the chart container
-  - `title::String`: Chart title
-  - `height::String`: CSS height value (default: "24rem")
-  - `metadata::Dict{String,Any}`: Additional metadata for chart initialization
-"""
-struct ChartPlaceholder <: ContentItem
-    id::String
-    title::String
-    height::String
-    metadata::Dict{String, Any}
-
-    function ChartPlaceholder(id::String, title::String;
-        height::String = "24rem",
-        metadata::Dict{String, Any} = Dict{String, Any}())
-        return new(id, title, height, metadata)
-    end
-end
-
-"""
-    MarkdownContent <: ContentItem
-
-Represents a markdown content block.
+Represents raw HTML content.
 
 # Fields
-
-  - `id::String`: Unique identifier for the content block
-  - `content::String`: Markdown content
+- `id::String`: Unique identifier for the content block
+- `html::String`: Raw HTML content
 """
-struct MarkdownContent <: ContentItem
+struct HtmlContent <: ContentItem
     id::String
-    content::String
+    html::String
 end
+
 
 """
     Tab
@@ -104,7 +124,22 @@ struct DashboardConfig
     end
 end
 
+include("renderers.jl")
 include("validation.jl")
+include("builtin_renderers.jl")
+include("RhinestoneMarkdown.jl")
+include("RhinestoneHighcharts.jl")
+include("RhinestoneChartJs.jl")
+include("RhinestonePlotly.jl")
+include("chart_compat.jl")
 include("template.jl")
+
+# Re-export plugin submodules
+using .RhinestoneMarkdown
+using .RhinestoneHighcharts
+using .RhinestoneChartJs
+using .RhinestonePlotly
+
+export RhinestoneMarkdown, RhinestoneHighcharts, RhinestoneChartJs, RhinestonePlotly
 
 end

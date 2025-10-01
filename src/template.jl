@@ -1,4 +1,39 @@
 """
+    collect_renderer_resources(tabs::Vector{Tab})
+
+Collect CDN URLs and init scripts from all renderers used in the tabs.
+"""
+function collect_renderer_resources(tabs::Vector{Tab})
+    all_cdn_urls = Dict{String, String}()
+    all_init_scripts = String[]
+    seen_renderers = Set{DataType}()
+
+    for tab in tabs
+        for item in tab.items
+            renderer = get_renderer(item)
+            renderer_type = typeof(renderer)
+
+            # Only collect resources once per renderer type
+            if !(renderer_type in seen_renderers)
+                push!(seen_renderers, renderer_type)
+
+                # Collect CDN URLs
+                cdn_urls = get_cdn_urls(renderer)
+                merge!(all_cdn_urls, cdn_urls)
+
+                # Collect init script
+                init_script = get_init_script(renderer)
+                if !isempty(init_script)
+                    push!(all_init_scripts, init_script)
+                end
+            end
+        end
+    end
+
+    return all_cdn_urls, all_init_scripts
+end
+
+"""
     generate_dashboard(config::DashboardConfig, output_path::String)
 
 Generate a self-contained HTML dashboard file from the configuration.
@@ -27,6 +62,20 @@ Generate the complete HTML string for the dashboard.
 function generate_html(config::DashboardConfig)
     tabs_json = generate_tabs_json(config.tabs)
 
+    # Collect CDN URLs and init scripts from renderers
+    renderer_cdn_urls, renderer_init_scripts = collect_renderer_resources(config.tabs)
+
+    # Merge user-provided CDN URLs with renderer URLs (user URLs take precedence)
+    all_cdn_urls = merge(renderer_cdn_urls, config.cdn_urls)
+
+    # Combine user chart_init_script with renderer init scripts
+    combined_init_script = if !isempty(config.chart_init_script)
+        config.chart_init_script
+    else
+        # Generate a combined init function from all renderer scripts
+        join(renderer_init_scripts, "\n\n")
+    end
+
     html = """
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +84,7 @@ function generate_html(config::DashboardConfig)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>$(escape_html(config.title))</title>
-$(generate_cdn_scripts(config.cdn_urls))
+$(generate_cdn_scripts(all_cdn_urls))
     <script>
         tailwind.config = {
             theme: {
@@ -365,8 +414,12 @@ $(generate_cdn_scripts(config.cdn_urls))
     <script>
         const { createApp } = Vue;
 
-        // User-provided chart initialization function
-        $(config.chart_init_script)
+        // Chart initialization function
+        function initializeChart(chartId, metadata) {
+            const container = document.getElementById(chartId);
+
+            $(combined_init_script)
+        }
 
         createApp({
             data() {
@@ -473,25 +526,10 @@ function generate_tabs_json(tabs::Vector{Tab})
     for tab in tabs
         items_array = []
         for item in tab.items
-            if item isa ChartPlaceholder
-                item_dict = Dict(
-                    "type" => "chart",
-                    "id" => item.id,
-                    "title" => item.title,
-                    "height" => item.height,
-                    "metadata" => item.metadata,
-                )
-                push!(items_array, item_dict)
-            elseif item isa MarkdownContent
-                # Convert markdown to HTML using Markdown.jl
-                html_content = Markdown.html(Markdown.parse(item.content))
-                item_dict = Dict(
-                    "type" => "markdown",
-                    "id" => item.id,
-                    "html" => html_content,
-                )
-                push!(items_array, item_dict)
-            end
+            # Use the renderer system to convert items to dictionaries
+            renderer = get_renderer(item)
+            item_dict = render_to_dict(renderer, item)
+            push!(items_array, item_dict)
         end
 
         tab_dict = Dict(

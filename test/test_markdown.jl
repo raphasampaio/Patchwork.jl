@@ -2,12 +2,13 @@ module TestMarkdown
 
 using Test
 using Rhinestone
+using Rhinestone.RhinestoneMarkdown
 
 @testset "Markdown" begin
     output_path = joinpath(@__DIR__, "output", "test_markdown.html")
     mkpath(dirname(output_path))
 
-    markdown_content = MarkdownContent(
+    markdown_content = RhinestoneMarkdown.MarkdownContent(
         "intro",
         """
 # Dashboard Overview
