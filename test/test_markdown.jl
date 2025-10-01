@@ -47,10 +47,10 @@ x = 1 + 1
 end
 
 # Generate sample HTML output
-dashboard = Dashboard(
+dashboard = PatchworkDashboard(
     "Markdown Demo",
     [
-        Tab(
+        PatchworkTab(
             "Documentation",
             [
                 PatchworkMarkdown(
@@ -80,7 +80,7 @@ Links work too: [Patchwork](https://github.com)
 """),
             ],
         ),
-        Tab(
+        PatchworkTab(
             "Mixed Content",
             [
                 PatchworkMarkdown("## Introduction\n\nThis tab combines markdown with HTML."),

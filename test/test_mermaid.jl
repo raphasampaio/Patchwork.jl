@@ -32,10 +32,10 @@ using Patchwork
 end
 
 # Generate sample HTML output
-dashboard = Dashboard(
+dashboard = PatchworkDashboard(
     "Mermaid Diagrams Demo",
     [
-        Tab(
+        PatchworkTab(
             "Flowcharts",
             [
                 PatchworkMermaid(
@@ -60,7 +60,7 @@ dashboard = Dashboard(
                 ),
             ],
         ),
-        Tab(
+        PatchworkTab(
             "Diagrams",
             [
                 PatchworkMermaid(

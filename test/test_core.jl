@@ -14,21 +14,21 @@ using Patchwork
         @test css(Html) == ""
     end
 
-    @testset "Tab" begin
-        tab = Tab("Test", [Html("<p>content</p>")])
+    @testset "PatchworkTab" begin
+        tab = PatchworkTab("Test", [Html("<p>content</p>")])
         @test tab.label == "Test"
         @test length(tab.items) == 1
         @test tab.items[1] isa Html
     end
 
-    @testset "Dashboard" begin
-        tabs = [Tab("Tab1", [Html("<p>content</p>")])]
-        dashboard = Dashboard("Test Dashboard", tabs)
-        @test dashboard.title == "Test Dashboard"
+    @testset "PatchworkDashboard" begin
+        tabs = [PatchworkTab("Tab1", [Html("<p>content</p>")])]
+        dashboard = PatchworkDashboard("Test PatchworkDashboard", tabs)
+        @test dashboard.title == "Test PatchworkDashboard"
         @test length(dashboard.tabs) == 1
         @test dashboard.custom_css == ""
 
-        dashboard_with_css = Dashboard("Styled", tabs, custom_css = ".custom { color: red; }")
+        dashboard_with_css = PatchworkDashboard("Styled", tabs, custom_css = ".custom { color: red; }")
         @test dashboard_with_css.custom_css == ".custom { color: red; }"
     end
 end
@@ -42,10 +42,10 @@ end
 end
 
 # Generate sample HTML output
-dashboard = Dashboard(
+dashboard = PatchworkDashboard(
     "Core Types Demo",
     [
-        Tab(
+        PatchworkTab(
             "HTML Content",
             [
                 Html("<h2>Raw HTML Example</h2>"),
@@ -53,7 +53,7 @@ dashboard = Dashboard(
                 Html("<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>"),
             ],
         ),
-        Tab(
+        PatchworkTab(
             "Multiple Items",
             [
                 Html("<div class='alert'>Alert message</div>"),

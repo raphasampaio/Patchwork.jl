@@ -45,10 +45,10 @@ using Patchwork
 end
 
 # Generate sample HTML output
-dashboard = Dashboard(
+dashboard = PatchworkDashboard(
     "Leaflet Maps Demo",
     [
-        Tab(
+        PatchworkTab(
             "Single Map",
             [
                 PatchworkLeaflet(
@@ -58,7 +58,7 @@ dashboard = Dashboard(
                 ),
             ],
         ),
-        Tab(
+        PatchworkTab(
             "Map with Markers",
             [
                 PatchworkLeaflet(

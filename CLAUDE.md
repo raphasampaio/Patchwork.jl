@@ -49,14 +49,14 @@ struct Html <: Item
     content::String
 end
 
-struct Tab
+struct PatchworkTab
     label::String
     items::Vector{Item}
 end
 
-struct Dashboard
+struct PatchworkDashboard
     title::String
-    tabs::Vector{Tab}
+    tabs::Vector{PatchworkTab}
     custom_css::String
 end
 ```
@@ -64,7 +64,7 @@ end
 ### Functions
 
 ```julia
-render(dashboard::Dashboard, path::String)  # Generate HTML file
+render(dashboard::PatchworkDashboard, path::String)  # Generate HTML file
 to_html(item::Item)                          # Render item to HTML
 css_deps(::Type{<:Item})                     # Get CSS dependencies for item type
 js_deps(::Type{<:Item})                      # Get JS dependencies for item type

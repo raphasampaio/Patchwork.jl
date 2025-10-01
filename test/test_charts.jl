@@ -91,10 +91,10 @@ using JSON
 end
 
 # Generate sample HTML output with all chart types
-dashboard = Dashboard(
+dashboard = PatchworkDashboard(
     "Charts Demo",
     [
-        Tab(
+        PatchworkTab(
             "Chart.js",
             [
                 PatchworkChartJs(
@@ -131,7 +131,7 @@ dashboard = Dashboard(
                 ),
             ],
         ),
-        Tab(
+        PatchworkTab(
             "Highcharts",
             [
                 PatchworkHighcharts(
@@ -157,7 +157,7 @@ dashboard = Dashboard(
                 ),
             ],
         ),
-        Tab(
+        PatchworkTab(
             "Plotly",
             [
                 PatchworkPlotly(
@@ -183,7 +183,7 @@ dashboard = Dashboard(
                 ),
             ],
         ),
-        Tab(
+        PatchworkTab(
             "Mixed Charts",
             [
                 PatchworkMarkdown("## Chart Comparison\n\nThis tab shows different chart libraries side by side."),
