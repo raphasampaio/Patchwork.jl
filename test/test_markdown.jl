@@ -15,14 +15,15 @@ using Patchwork
 
     @testset "Markdown formatting" begin
         md = PatchworkMarkdown("""
-        # Heading 1
-        ## Heading 2
+# Heading 1
+## Heading 2
 
-        **bold** and *italic*
+**bold** and *italic*
 
-        - List item 1
-        - List item 2
-        """)
+- List item 1
+- List item 2
+"""
+        )
 
         html_output = tohtml(md)
         @test occursin("<h1>Heading 1</h1>", html_output)

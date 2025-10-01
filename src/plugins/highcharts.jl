@@ -30,7 +30,7 @@ cdnurls(::Type{PatchworkHighcharts}) = ["https://code.highcharts.com/highcharts.
 initscript(::Type{PatchworkHighcharts}) = """
     document.querySelectorAll('.highcharts-chart').forEach(container => {
         const config = JSON.parse(container.getAttribute('data-config'));
-        PatchworkHighcharts.chart(container.id, config);
+        Highcharts.chart(container.id, config);
     });
 """
 

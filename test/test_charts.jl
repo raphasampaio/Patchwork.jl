@@ -141,7 +141,7 @@ dashboard = Dashboard(
             ],
         ),
         Tab(
-            "PatchworkHighcharts",
+            "Highcharts",
             [
                 PatchworkHighcharts(
                     "Monthly Performance",
@@ -167,7 +167,7 @@ dashboard = Dashboard(
             ],
         ),
         Tab(
-            "PatchworkPlotly",
+            "Plotly",
             [
                 PatchworkPlotly(
                     "Scatter Analysis",

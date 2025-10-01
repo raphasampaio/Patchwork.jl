@@ -44,7 +44,7 @@ initscript(::Type{PatchworkPlotly}) = """
         const data = JSON.parse(container.getAttribute('data-data'));
         const layout = JSON.parse(container.getAttribute('data-layout'));
         const config = JSON.parse(container.getAttribute('data-config'));
-        PatchworkPlotly.newPlot(container.id, data, layout, config);
+        Plotly.newPlot(container.id, data, layout, config);
     });
 """
 
