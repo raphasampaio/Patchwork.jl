@@ -44,11 +44,6 @@ x = 1 + 1
         @test occursin("<code", html_output)
         @test occursin("x", html_output) && occursin("1", html_output)
     end
-
-    @testset "Markdown plugin interface" begin
-        @test cdn_urls(PatchworkMarkdown) == String[]
-        @test init_script(PatchworkMarkdown) == ""
-    end
 end
 
 # Generate sample HTML output

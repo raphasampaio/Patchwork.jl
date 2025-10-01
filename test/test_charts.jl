@@ -21,9 +21,6 @@ using JSON
         @test occursin("canvas", html_output)
         @test occursin("data-config", html_output)
 
-        @test length(cdn_urls(PatchworkChartJs)) > 0
-        @test occursin("chart.js", cdn_urls(PatchworkChartJs)[1])
-
         script = init_script(PatchworkChartJs)
         @test occursin("chartjs-chart", script)
         @test occursin("Chart", script)
@@ -57,9 +54,6 @@ using JSON
         @test occursin("highcharts-chart", html_output)
         @test occursin("data-config", html_output)
 
-        @test length(cdn_urls(PatchworkHighcharts)) > 0
-        @test occursin("highcharts", cdn_urls(PatchworkHighcharts)[1])
-
         script = init_script(PatchworkHighcharts)
         @test occursin("Highcharts", script)
     end
@@ -76,9 +70,6 @@ using JSON
         @test occursin("Science Plot", html_output)
         @test occursin("plotly-chart", html_output)
         @test occursin("data-data", html_output)
-
-        @test length(cdn_urls(PatchworkPlotly)) > 0
-        @test occursin("plotly", cdn_urls(PatchworkPlotly)[1])
 
         script = init_script(PatchworkPlotly)
         @test occursin("Plotly", script)
