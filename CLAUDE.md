@@ -63,9 +63,9 @@ end
 
 ```julia
 render(dashboard::Dashboard, path::String)  # Generate HTML file
-tohtml(item::Item)                          # Render item to HTML
-cdnurls(::Type{<:Item})                    # Get CDN URLs for item type
-initscript(::Type{<:Item})                 # Get JS initialization script
+to_html(item::Item)                          # Render item to HTML
+cdn_urls(::Type{<:Item})                    # Get CDN URLs for item type
+init_script(::Type{<:Item})                 # Get JS initialization script
 ```
 
 ## Plugin System
@@ -74,13 +74,13 @@ Plugins implement three functions:
 
 ```julia
 # Required: Convert item to HTML
-tohtml(item::MyItem) = "<div>...</div>"
+to_html(item::MyItem) = "<div>...</div>"
 
 # Optional: CDN dependencies
-cdnurls(::Type{MyItem}) = ["https://cdn.example.com/lib.js"]
+cdn_urls(::Type{MyItem}) = ["https://cdn.example.com/lib.js"]
 
 # Optional: JavaScript initialization
-initscript(::Type{MyItem}) = "/* init code */"
+init_script(::Type{MyItem}) = "/* init code */"
 ```
 
 ### Built-in Plugins
@@ -141,16 +141,16 @@ Tests follow the `test_*.jl` naming convention and:
 ```julia
 module MyPlugin
 
-import ..Item, ..tohtml, ..cdnurls, ..initscript
+import ..Item, ..to_html, ..cdn_urls, ..init_script
 export MyItem
 
 struct MyItem <: Item
     content::String
 end
 
-tohtml(item::MyItem) = "<div class='my-item'>$(item.content)</div>"
-cdnurls(::Type{MyItem}) = ["https://cdn.example.com/mylib.js"]
-initscript(::Type{MyItem}) = "// initialization code"
+to_html(item::MyItem) = "<div class='my-item'>$(item.content)</div>"
+cdn_urls(::Type{MyItem}) = ["https://cdn.example.com/mylib.js"]
+init_script(::Type{MyItem}) = "// initialization code"
 
 end
 ```

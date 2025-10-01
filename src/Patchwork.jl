@@ -4,7 +4,7 @@ using UUIDs
 import JSON
 
 export Item, Tab, Dashboard, Html
-export render, tohtml, cdnurls, initscript, customcss
+export render, to_html, cdn_urls, init_script, css
 
 abstract type Item end
 
@@ -26,10 +26,10 @@ struct Dashboard
         new(title, tabs, custom_css)
 end
 
-tohtml(item::Html) = item.content
-cdnurls(::Type{Html}) = String[]
-initscript(::Type{Html}) = ""
-customcss(::Type{Html}) = ""
+to_html(item::Html) = item.content
+cdn_urls(::Type{Html}) = String[]
+init_script(::Type{Html}) = ""
+css(::Type{Html}) = ""
 
 include("html.jl")
 

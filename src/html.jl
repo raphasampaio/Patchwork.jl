@@ -9,7 +9,7 @@ function generate_html(dashboard::Dashboard)
 
     cdn_links = String[]
     for type in all_types
-        for url in cdnurls(type)
+        for url in cdn_urls(type)
             if endswith(url, ".css")
                 push!(cdn_links, "    <link rel=\"stylesheet\" href=\"$url\">")
             else
@@ -20,17 +20,17 @@ function generate_html(dashboard::Dashboard)
 
     init_scripts = String[]
     for type in all_types
-        script = initscript(type)
+        script = init_script(type)
         if !isempty(script)
             push!(init_scripts, script)
         end
     end
 
-    custom_css_blocks = String[]
+    css_blocks = String[]
     for type in all_types
-        css = customcss(type)
-        if !isempty(css)
-            push!(custom_css_blocks, css)
+        css_content = css(type)
+        if !isempty(css_content)
+            push!(css_blocks, css_content)
         end
     end
 
@@ -39,7 +39,7 @@ function generate_html(dashboard::Dashboard)
         items_data = []
         for item in tab.items
             item_id = "item-$(uuid4())"
-            item_html = tohtml(item)
+            item_html = to_html(item)
             item_type = get_item_type(item)
             push!(items_data, Dict(
                 "id" => item_id,
@@ -52,7 +52,7 @@ function generate_html(dashboard::Dashboard)
 
     tabs_json = JSON.json(tabs_data)
     combined_init = join(init_scripts, "\n")
-    all_css = join(custom_css_blocks, "\n\n")
+    all_css = join(css_blocks, "\n\n")
 
     return """
 <!DOCTYPE html>

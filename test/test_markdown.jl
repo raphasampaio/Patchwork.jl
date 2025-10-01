@@ -8,7 +8,7 @@ using Patchwork
         md = PatchworkMarkdown("# Hello\n\nWorld")
         @test md isa Item
 
-        html_output = tohtml(md)
+        html_output = to_html(md)
         @test occursin("<h1>Hello</h1>", html_output)
         @test occursin("World", html_output)
     end
@@ -25,7 +25,7 @@ using Patchwork
 """
         )
 
-        html_output = tohtml(md)
+        html_output = to_html(md)
         @test occursin("<h1>Heading 1</h1>", html_output)
         @test occursin("<h2>Heading 2</h2>", html_output)
         @test occursin("<strong>bold</strong>", html_output)
@@ -40,14 +40,14 @@ x = 1 + 1
 ```
         """)
 
-        html_output = tohtml(md)
+        html_output = to_html(md)
         @test occursin("<code", html_output)
         @test occursin("x", html_output) && occursin("1", html_output)
     end
 
     @testset "Markdown plugin interface" begin
-        @test cdnurls(PatchworkMarkdown) == String[]
-        @test initscript(PatchworkMarkdown) == ""
+        @test cdn_urls(PatchworkMarkdown) == String[]
+        @test init_script(PatchworkMarkdown) == ""
     end
 end
 

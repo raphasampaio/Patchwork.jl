@@ -1,7 +1,7 @@
 module HighchartsPlugin
 
 import JSON
-import ..Item, ..tohtml, ..cdnurls, ..initscript, ..customcss
+import ..Item, ..to_html, ..cdn_urls, ..init_script, ..css
 using UUIDs
 
 export PatchworkHighcharts
@@ -13,7 +13,7 @@ struct PatchworkHighcharts <: Item
     PatchworkHighcharts(title::String, config::Dict{String, Any}) = new(title, config)
 end
 
-function tohtml(item::PatchworkHighcharts)
+function to_html(item::PatchworkHighcharts)
     chart_id = "chart-$(uuid4())"
     config_json = JSON.json(item.config)
 
@@ -25,15 +25,15 @@ function tohtml(item::PatchworkHighcharts)
     """
 end
 
-cdnurls(::Type{PatchworkHighcharts}) = ["https://code.highcharts.com/highcharts.js"]
+cdn_urls(::Type{PatchworkHighcharts}) = ["https://code.highcharts.com/highcharts.js"]
 
-initscript(::Type{PatchworkHighcharts}) = """
+init_script(::Type{PatchworkHighcharts}) = """
     document.querySelectorAll('.highcharts-chart').forEach(container => {
         const config = JSON.parse(container.getAttribute('data-config'));
         Highcharts.chart(container.id, config);
     });
 """
 
-customcss(::Type{PatchworkHighcharts}) = ""
+css(::Type{PatchworkHighcharts}) = ""
 
 end

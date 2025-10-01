@@ -1,7 +1,7 @@
 module ChartJsPlugin
 
 import JSON
-import ..Item, ..tohtml, ..cdnurls, ..initscript, ..customcss
+import ..Item, ..to_html, ..cdn_urls, ..init_script, ..css
 
 export PatchworkChartJs
 
@@ -20,7 +20,7 @@ struct PatchworkChartJs <: Item
         new(title, chart_type, data, options)
 end
 
-function tohtml(item::PatchworkChartJs)
+function to_html(item::PatchworkChartJs)
     config = Dict(
         "type" => item.chart_type,
         "data" => item.data,
@@ -41,15 +41,15 @@ function tohtml(item::PatchworkChartJs)
     """
 end
 
-cdnurls(::Type{PatchworkChartJs}) = ["https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"]
+cdn_urls(::Type{PatchworkChartJs}) = ["https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"]
 
-initscript(::Type{PatchworkChartJs}) = """
+init_script(::Type{PatchworkChartJs}) = """
     document.querySelectorAll('.chartjs-chart').forEach(canvas => {
         const config = JSON.parse(canvas.getAttribute('data-config'));
         new Chart(canvas, config);
     });
 """
 
-customcss(::Type{PatchworkChartJs}) = ""
+css(::Type{PatchworkChartJs}) = ""
 
 end

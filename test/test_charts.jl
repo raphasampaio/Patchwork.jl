@@ -15,16 +15,16 @@ using JSON
         @test chart.title == "Test Chart"
         @test chart.chart_type == "line"
 
-        html_output = tohtml(chart)
+        html_output = to_html(chart)
         @test occursin("Test Chart", html_output)
         @test occursin("chartjs-chart", html_output)
         @test occursin("canvas", html_output)
         @test occursin("data-config", html_output)
 
-        @test length(cdnurls(PatchworkChartJs)) > 0
-        @test occursin("chart.js", cdnurls(PatchworkChartJs)[1])
+        @test length(cdn_urls(PatchworkChartJs)) > 0
+        @test occursin("chart.js", cdn_urls(PatchworkChartJs)[1])
 
-        script = initscript(PatchworkChartJs)
+        script = init_script(PatchworkChartJs)
         @test occursin("chartjs-chart", script)
         @test occursin("Chart", script)
     end
@@ -37,7 +37,7 @@ using JSON
             options = Dict{String, Any}("plugins" => Dict("legend" => Dict("display" => false))),
         )
 
-        html_output = tohtml(chart)
+        html_output = to_html(chart)
         @test occursin("Custom Chart", html_output)
     end
 
@@ -52,15 +52,15 @@ using JSON
         @test chart isa Item
         @test chart.title == "Analytics"
 
-        html_output = tohtml(chart)
+        html_output = to_html(chart)
         @test occursin("Analytics", html_output)
         @test occursin("highcharts-chart", html_output)
         @test occursin("data-config", html_output)
 
-        @test length(cdnurls(PatchworkHighcharts)) > 0
-        @test occursin("highcharts", cdnurls(PatchworkHighcharts)[1])
+        @test length(cdn_urls(PatchworkHighcharts)) > 0
+        @test occursin("highcharts", cdn_urls(PatchworkHighcharts)[1])
 
-        script = initscript(PatchworkHighcharts)
+        script = init_script(PatchworkHighcharts)
         @test occursin("Highcharts", script)
     end
 
@@ -72,15 +72,15 @@ using JSON
         @test chart isa Item
         @test chart.title == "Science Plot"
 
-        html_output = tohtml(chart)
+        html_output = to_html(chart)
         @test occursin("Science Plot", html_output)
         @test occursin("plotly-chart", html_output)
         @test occursin("data-data", html_output)
 
-        @test length(cdnurls(PatchworkPlotly)) > 0
-        @test occursin("plotly", cdnurls(PatchworkPlotly)[1])
+        @test length(cdn_urls(PatchworkPlotly)) > 0
+        @test occursin("plotly", cdn_urls(PatchworkPlotly)[1])
 
-        script = initscript(PatchworkPlotly)
+        script = init_script(PatchworkPlotly)
         @test occursin("Plotly", script)
     end
 
@@ -92,7 +92,7 @@ using JSON
             config = Dict{String, Any}("displayModeBar" => false),
         )
 
-        html_output = tohtml(chart)
+        html_output = to_html(chart)
         @test occursin("Custom Plot", html_output)
         @test occursin("data-layout", html_output)
         @test occursin("data-config", html_output)

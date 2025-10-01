@@ -1,7 +1,7 @@
 module MarkdownPlugin
 
 using Markdown
-import ..Item, ..tohtml, ..cdnurls, ..initscript, ..customcss
+import ..Item, ..to_html, ..cdn_urls, ..init_script, ..css
 
 export PatchworkMarkdown
 
@@ -9,13 +9,13 @@ struct PatchworkMarkdown <: Item
     content::String
 end
 
-tohtml(item::PatchworkMarkdown) = Markdown.html(Markdown.parse(item.content))
+to_html(item::PatchworkMarkdown) = Markdown.html(Markdown.parse(item.content))
 
-cdnurls(::Type{PatchworkMarkdown}) = String[]
+cdn_urls(::Type{PatchworkMarkdown}) = String[]
 
-initscript(::Type{PatchworkMarkdown}) = ""
+init_script(::Type{PatchworkMarkdown}) = ""
 
-customcss(::Type{PatchworkMarkdown}) = """
+css(::Type{PatchworkMarkdown}) = """
 /* Markdown content styling */
 h1 { font-size: 2em; font-weight: bold; margin: 0.67em 0; }
 h2 { font-size: 1.5em; font-weight: bold; margin: 0.75em 0; }

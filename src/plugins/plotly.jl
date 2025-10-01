@@ -1,7 +1,7 @@
 module PlotlyPlugin
 
 import JSON
-import ..Item, ..tohtml, ..cdnurls, ..initscript, ..customcss
+import ..Item, ..to_html, ..cdn_urls, ..init_script, ..css
 using UUIDs
 
 export PatchworkPlotly
@@ -21,7 +21,7 @@ struct PatchworkPlotly <: Item
         new(title, data, layout, config)
 end
 
-function tohtml(item::PatchworkPlotly)
+function to_html(item::PatchworkPlotly)
     chart_id = "chart-$(uuid4())"
     data_json = JSON.json(item.data)
     layout = merge(Dict("autosize" => true), item.layout)
@@ -37,9 +37,9 @@ function tohtml(item::PatchworkPlotly)
     """
 end
 
-cdnurls(::Type{PatchworkPlotly}) = ["https://cdn.plot.ly/plotly-2.27.0.min.js"]
+cdn_urls(::Type{PatchworkPlotly}) = ["https://cdn.plot.ly/plotly-2.27.0.min.js"]
 
-initscript(::Type{PatchworkPlotly}) = """
+init_script(::Type{PatchworkPlotly}) = """
     document.querySelectorAll('.plotly-chart').forEach(container => {
         const data = JSON.parse(container.getAttribute('data-data'));
         const layout = JSON.parse(container.getAttribute('data-layout'));
@@ -48,6 +48,6 @@ initscript(::Type{PatchworkPlotly}) = """
     });
 """
 
-customcss(::Type{PatchworkPlotly}) = ""
+css(::Type{PatchworkPlotly}) = ""
 
 end

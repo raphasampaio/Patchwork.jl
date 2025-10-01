@@ -7,9 +7,9 @@ using Patchwork
     @testset "Html" begin
         html = Html("<p>test</p>")
         @test html isa Item
-        @test tohtml(html) == "<p>test</p>"
-        @test cdnurls(Html) == String[]
-        @test initscript(Html) == ""
+        @test to_html(html) == "<p>test</p>"
+        @test cdn_urls(Html) == String[]
+        @test init_script(Html) == ""
     end
 
     @testset "Tab" begin
