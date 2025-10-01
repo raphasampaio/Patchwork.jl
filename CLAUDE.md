@@ -110,6 +110,10 @@ css(::Type{MyItem}) = "/* custom styles */"
 - Creates PatchworkPlotly charts
 - Supports data, layout, and config options
 
+**PatchworkLeaflet** (`src/plugins/leaflet.jl`)
+- Creates interactive maps using Leaflet
+- Supports center coordinates, zoom levels, and markers with popups
+
 ## Important Implementation Details
 
 ### Type Safety
