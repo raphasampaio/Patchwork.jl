@@ -40,18 +40,27 @@ end
 end
 
 # Generate sample HTML output
-dashboard = Dashboard("Core Types Demo", [
-    Tab("HTML Content", [
-        Html("<h2>Raw HTML Example</h2>"),
-        Html("<p>This demonstrates the Html content type with <strong>inline formatting</strong>.</p>"),
-        Html("<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>")
-    ]),
-    Tab("Multiple Items", [
-        Html("<div class='alert'>Alert message</div>"),
-        Html("<p>Another paragraph</p>"),
-        Html("<code>Code snippet: x = 42</code>")
-    ])
-])
+dashboard = Dashboard(
+    "Core Types Demo",
+    [
+        Tab(
+            "HTML Content",
+            [
+                Html("<h2>Raw HTML Example</h2>"),
+                Html("<p>This demonstrates the Html content type with <strong>inline formatting</strong>.</p>"),
+                Html("<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>"),
+            ],
+        ),
+        Tab(
+            "Multiple Items",
+            [
+                Html("<div class='alert'>Alert message</div>"),
+                Html("<p>Another paragraph</p>"),
+                Html("<code>Code snippet: x = 42</code>"),
+            ],
+        ),
+    ],
+)
 
 output_path = joinpath(@__DIR__, "output", "test_core.html")
 render(dashboard, output_path)
