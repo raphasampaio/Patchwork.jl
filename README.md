@@ -1,4 +1,4 @@
-# Rhinestone.jl
+# Patchwork.jl
 
 Simple, extensible dashboards with Vue.js and Tailwind CSS.
 
@@ -14,13 +14,13 @@ Simple, extensible dashboards with Vue.js and Tailwind CSS.
 
 ```julia
 using Pkg
-Pkg.add(url="https://github.com/yourusername/Rhinestone.jl")
+Pkg.add(url="https://github.com/yourusername/Patchwork.jl")
 ```
 
 ## Quick Start
 
 ```julia
-using Rhinestone
+using Patchwork
 
 # Create a simple dashboard
 dashboard = Dashboard("My Dashboard", [
@@ -42,7 +42,7 @@ render(dashboard, "dashboard.html")
 ### Chart.js
 
 ```julia
-using Rhinestone
+using Patchwork
 
 dashboard = Dashboard("Charts", [
     Tab("Sales", [
@@ -66,7 +66,7 @@ render(dashboard, "sales.html")
 ### Highcharts
 
 ```julia
-using Rhinestone
+using Patchwork
 
 dashboard = Dashboard("Analytics", [
     Tab("Performance", [
@@ -87,7 +87,7 @@ render(dashboard, "analytics.html")
 ### Plotly
 
 ```julia
-using Rhinestone
+using Patchwork
 
 dashboard = Dashboard("Science", [
     Tab("Data", [
@@ -156,12 +156,12 @@ dashboard = Dashboard("Styled", tabs,
 
 ## Creating Custom Plugins
 
-Extend Rhinestone by implementing the plugin interface:
+Extend Patchwork by implementing the plugin interface:
 
 ```julia
 module MyPlugin
 
-import Rhinestone: Item, tohtml, cdnurls, initscript
+import Patchwork: Item, tohtml, cdnurls, initscript
 
 struct MyItem <: Item
     content::String

@@ -1,7 +1,7 @@
 module TestCore
 
 using Test
-using Rhinestone
+using Patchwork
 
 @testset "Core Types" begin
     @testset "Html" begin
@@ -32,11 +32,11 @@ using Rhinestone
 end
 
 @testset "HTML Utilities" begin
-    @test Rhinestone.escape_html("&") == "&amp;"
-    @test Rhinestone.escape_html("<") == "&lt;"
-    @test Rhinestone.escape_html(">") == "&gt;"
-    @test Rhinestone.escape_html("\"") == "&quot;"
-    @test Rhinestone.escape_html("<div>&test</div>") == "&lt;div&gt;&amp;test&lt;/div&gt;"
+    @test Patchwork.escape_html("&") == "&amp;"
+    @test Patchwork.escape_html("<") == "&lt;"
+    @test Patchwork.escape_html(">") == "&gt;"
+    @test Patchwork.escape_html("\"") == "&quot;"
+    @test Patchwork.escape_html("<div>&test</div>") == "&lt;div&gt;&amp;test&lt;/div&gt;"
 end
 
 # Generate sample HTML output

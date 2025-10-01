@@ -1,7 +1,7 @@
 module TestMarkdown
 
 using Test
-using Rhinestone
+using Patchwork
 
 @testset "Markdown Plugin" begin
     @testset "Markdown basics" begin
@@ -59,7 +59,7 @@ dashboard = Dashboard(
             [
                 Markdown(
                     "# Markdown Content Example\n" *
-                    "This demonstrates the **Markdown plugin** for Rhinestone.\n" *
+                    "This demonstrates the **Markdown plugin** for Patchwork.\n" *
                     "\n" *
                     "## Features\n" *
                     "- Easy formatting\n" *
@@ -78,7 +78,7 @@ dashboard = Dashboard(
                     "You can use *italic*, **bold**, and ***bold italic*** text.\n" *
                     "> This is a blockquote.\n" *
                     "\n" *
-                    "Links work too: [Rhinestone](https://github.com)\n"),
+                    "Links work too: [Patchwork](https://github.com)\n"),
             ],
         ),
         Tab(

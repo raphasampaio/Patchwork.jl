@@ -1,7 +1,7 @@
 module TestCharts
 
 using Test
-using Rhinestone
+using Patchwork
 using JSON
 
 @testset "Chart Plugins" begin

@@ -1,10 +1,10 @@
-# Rhinestone.jl - AI Development Guide
+# Patchwork.jl - AI Development Guide
 
-This document provides context for AI assistants (like Claude) working on the Rhinestone.jl codebase.
+This document provides context for AI assistants (like Claude) working on the Patchwork.jl codebase.
 
 ## Project Overview
 
-**Rhinestone.jl** is a Julia package for creating interactive, self-contained HTML dashboards with Vue.js and Tailwind CSS. It emphasizes simplicity, clean code, and extensibility through a plugin system.
+**Patchwork.jl** is a Julia package for creating interactive, self-contained HTML dashboards with Vue.js and Tailwind CSS. It emphasizes simplicity, clean code, and extensibility through a plugin system.
 
 ## Architecture
 
@@ -19,7 +19,7 @@ This document provides context for AI assistants (like Claude) working on the Rh
 
 ```
 src/
-├── Rhinestone.jl          # Main module (exports, core types)
+├── Patchwork.jl          # Main module (exports, core types)
 ├── html.jl                # HTML generation and rendering
 └── plugins/               # Built-in plugins
     ├── markdown.jl        # Markdown content support
@@ -155,7 +155,7 @@ initscript(::Type{MyItem}) = "// initialization code"
 end
 ```
 
-2. Include in `src/Rhinestone.jl`:
+2. Include in `src/Patchwork.jl`:
 ```julia
 include("plugins/myplugin.jl")
 using .MyPlugin

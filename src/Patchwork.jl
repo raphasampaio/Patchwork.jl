@@ -1,4 +1,4 @@
-module Rhinestone
+module Patchwork
 
 using UUIDs
 import JSON
