@@ -1,14 +1,14 @@
 # Rhinestone.jl
 
-A chart-agnostic static site generator for creating self-contained, single-page HTML dashboards with TailwindCSS and Vue.js.
+Simple, extensible dashboards with Vue.js and Tailwind CSS.
 
 ## Features
 
-- **Chart Agnostic**: Works with any JavaScript charting library (Chart.js, Plotly, D3.js, or custom implementations)
-- **Self-Contained**: Generates a single HTML file with all dependencies loaded via CDN
-- **Responsive Design**: Built with TailwindCSS for mobile-friendly layouts
-- **Interactive**: Vue.js-powered sidebar navigation and search functionality
-- **Flexible**: Customizable CSS and chart initialization scripts
+- **Clean & Simple** - Minimal API, no complexity
+- **Extensible** - Plugin system for markdown, charts, and custom content
+- **Single File Output** - Self-contained HTML with CDN dependencies
+- **Responsive** - Mobile-friendly design with Tailwind CSS
+- **Interactive** - Vue.js powered sidebar and search
 
 ## Installation
 
@@ -22,179 +22,164 @@ Pkg.add(url="https://github.com/yourusername/Rhinestone.jl")
 ```julia
 using Rhinestone
 
-# Define your dashboard structure
-tabs = [
-    Tab("Performance", [
-        ChartPlaceholder("cpu-chart", "CPU Usage",
-            metadata=Dict{String,Any}(
-                "data" => [45, 52, 38, 61, 42]
+# Create a simple dashboard
+dashboard = Dashboard("My Dashboard", [
+    Tab("Overview", [
+        Markdown("""
+        # Welcome
+        This is a simple dashboard.
+        """),
+        Html("<p>Custom HTML content</p>")
+    ])
+])
+
+# Generate HTML file
+render(dashboard, "dashboard.html")
+```
+
+## Using Charts
+
+### Chart.js
+
+```julia
+using Rhinestone
+
+dashboard = Dashboard("Charts", [
+    Tab("Sales", [
+        ChartJs(
+            "Monthly Revenue",
+            "bar",
+            Dict(
+                "labels" => ["Jan", "Feb", "Mar"],
+                "datasets" => [Dict(
+                    "label" => "Revenue",
+                    "data" => [100, 150, 120]
+                )]
             )
         )
     ])
-]
+])
 
-# Provide chart initialization script
-chart_init_script = """
-function initializeChart(chartId, metadata) {
-    const container = document.getElementById(chartId);
-    // Your chart rendering code here
-}
-"""
-
-# Create configuration
-config = DashboardConfig(
-    "My Dashboard",
-    tabs,
-    chart_init_script=chart_init_script
-)
-
-# Generate HTML file
-generate_dashboard(config, "dashboard.html")
+render(dashboard, "sales.html")
 ```
 
-## Architecture
+### Highcharts
 
-The package separates concerns:
+```julia
+using Rhinestone
 
-1. **Structure** (`ChartPlaceholder`, `Tab`): Define layout and containers
-2. **Template** (`DashboardConfig`, `generate_dashboard`): Generate HTML skeleton
-3. **Rendering** (user-provided `chart_init_script`): Handle chart-specific visualization
+dashboard = Dashboard("Analytics", [
+    Tab("Performance", [
+        Highcharts(
+            "CPU Usage",
+            Dict(
+                "chart" => Dict("type" => "line"),
+                "xAxis" => Dict("categories" => ["00:00", "01:00", "02:00"]),
+                "series" => [Dict("name" => "CPU", "data" => [45, 52, 38])]
+            )
+        )
+    ])
+])
 
-This design allows you to use any charting library without modifying the package code.
+render(dashboard, "analytics.html")
+```
 
-## Examples
+### Plotly
 
-See the `examples/` directory:
+```julia
+using Rhinestone
 
-- `chartjs_example.jl`: Dashboard using Chart.js
-- `plotly_example.jl`: Dashboard using Plotly.js
-- `custom_example.jl`: Dashboard with custom HTML rendering (no external library)
+dashboard = Dashboard("Science", [
+    Tab("Data", [
+        Plotly(
+            "Scatter Plot",
+            [Dict(
+                "x" => [1, 2, 3, 4],
+                "y" => [10, 15, 13, 17],
+                "type" => "scatter",
+                "mode" => "lines+markers"
+            )]
+        )
+    ])
+])
+
+render(dashboard, "science.html")
+```
 
 ## API Reference
 
-### Types
+### Core Types
 
-#### `ChartPlaceholder`
+**`Dashboard(title, tabs; custom_css="")`**
+- `title::String` - Dashboard title
+- `tabs::Vector{Tab}` - Dashboard tabs
+- `custom_css::String` - Optional custom CSS
 
-Represents a chart container.
+**`Tab(label, items)`**
+- `label::String` - Tab name
+- `items::Vector{Item}` - Content items
 
-**Constructor:**
-```julia
-ChartPlaceholder(
-    id::String,
-    title::String;
-    height::String="24rem",
-    metadata::Dict{String,Any}=Dict{String,Any}()
-)
-```
+**`render(dashboard, path)`**
+- Generate HTML file from dashboard
 
-**Fields:**
-- `id`: Unique identifier for the DOM element
-- `title`: Chart title displayed above the container
-- `height`: CSS height value for the container
-- `metadata`: Arbitrary data passed to `initializeChart()`
+### Built-in Items
 
-#### `Tab`
+**`Html(content)`**
+- Raw HTML content
 
-Represents a dashboard tab.
+**`Markdown(content)`**
+- Markdown content (auto-converted to HTML)
 
-**Constructor:**
-```julia
-Tab(label::String, charts::Vector{ChartPlaceholder})
-```
+**`ChartJs(title, type, data; options=Dict())`**
+- Chart.js chart
+- `type`: "line", "bar", "pie", "doughnut", etc.
 
-**Fields:**
-- `label`: Tab name shown in sidebar
-- `charts`: List of charts in this tab
+**`Highcharts(title, config)`**
+- Highcharts chart
+- `config`: Highcharts configuration object
 
-#### `DashboardConfig`
+**`Plotly(title, data; layout=Dict(), config=Dict())`**
+- Plotly chart
+- `data`: Vector of trace objects
 
-Dashboard configuration.
-
-**Constructor:**
-```julia
-DashboardConfig(
-    title::String,
-    tabs::Vector{Tab};
-    custom_css::String="",
-    chart_init_script::String="",
-    cdn_urls::Dict{String,String}=Dict(
-        "tailwind" => "https://cdn.tailwindcss.com/3.4.0",
-        "vue" => "https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js"
-    )
-)
-```
-
-**Fields:**
-- `title`: Dashboard title
-- `tabs`: List of tabs
-- `custom_css`: Additional CSS styles
-- `chart_init_script`: JavaScript function for chart rendering
-- `cdn_urls`: External dependencies to load
-
-### Functions
-
-#### `generate_dashboard`
+## Custom CSS
 
 ```julia
-generate_dashboard(config::DashboardConfig, output_path::String)
-```
-
-Generates a self-contained HTML file.
-
-**Arguments:**
-- `config`: Dashboard configuration
-- `output_path`: Output file path
-
-**Returns:** The output file path
-
-## Chart Initialization Contract
-
-Your `chart_init_script` must define a function:
-
-```javascript
-function initializeChart(chartId, metadata) {
-    // chartId: String - DOM element ID for the container
-    // metadata: Object - The metadata dict from ChartPlaceholder
-
-    const container = document.getElementById(chartId);
-    // Render your chart in this container
-}
-```
-
-This function is called once for each chart after the page loads.
-
-## Customization
-
-### Custom Styling
-
-```julia
-config = DashboardConfig(
-    "Dashboard",
-    tabs,
+dashboard = Dashboard("Styled", tabs,
     custom_css="""
-    .chart-container {
-        background: linear-gradient(to bottom, #f0f0f0, #ffffff);
+    .bg-white {
+        background: linear-gradient(to bottom, #f8f9fa, #ffffff);
     }
     """
 )
 ```
 
-### Additional CDN Libraries
+## Creating Custom Plugins
+
+Extend Rhinestone by implementing the plugin interface:
 
 ```julia
-config = DashboardConfig(
-    "Dashboard",
-    tabs,
-    cdn_urls=Dict(
-        "tailwind" => "https://cdn.tailwindcss.com/3.4.0",
-        "vue" => "https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js",
-        "chartjs" => "https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js",
-        "d3" => "https://d3js.org/d3.v7.min.js"
-    )
-)
+module MyPlugin
+
+import Rhinestone: Item, tohtml, cdnurls, initscript
+
+struct MyItem <: Item
+    content::String
+end
+
+tohtml(item::MyItem) = "<div class='my-item'>$(item.content)</div>"
+
+cdnurls(::Type{MyItem}) = ["https://cdn.example.com/mylib.js"]
+
+initscript(::Type{MyItem}) = """
+    document.querySelectorAll('.my-item').forEach(el => {
+        // Initialize your component
+    });
+"""
+
+end
 ```
 
 ## License
 
-MIT License
+MIT
