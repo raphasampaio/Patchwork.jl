@@ -53,7 +53,7 @@ end
 
 # Generate sample HTML output
 dashboard = Dashboard(
-    "PatchworkMarkdown Demo",
+    "Markdown Demo",
     [
         Tab(
             "Documentation",
