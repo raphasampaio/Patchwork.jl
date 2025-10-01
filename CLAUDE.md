@@ -25,7 +25,9 @@ src/
     ├── markdown.jl        # PatchworkMarkdown content support
     ├── chartjs.jl         # Chart.js integration
     ├── highcharts.jl      # PatchworkHighcharts integration
-    └── plotly.jl          # PatchworkPlotly integration
+    ├── plotly.jl          # PatchworkPlotly integration
+    ├── leaflet.jl         # PatchworkLeaflet maps integration
+    └── mermaid.jl         # PatchworkMermaid diagrams integration
 
 test/
 ├── runtests.jl            # Main test runner (recursive)

@@ -26,6 +26,13 @@ using .PlotlyPlugin
 using .LeafletPlugin
 using .MermaidPlugin
 
-export PatchworkMarkdown, PatchworkChartJs, PatchworkHighcharts, PatchworkPlotly, PatchworkLeaflet, PatchworkMermaid
+export
+    PatchworkMarkdown,
+    PatchworkChartJs,
+    PatchworkHighcharts,
+    PatchworkPlotly,
+    PatchworkLeaflet,
+    PatchworkMermaid,
+    PatchworkECharts
 
 end

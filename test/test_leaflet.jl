@@ -66,10 +66,26 @@ dashboard = Dashboard(
                     (39.8283, -98.5795),
                     zoom = 4,
                     markers = [
-                        Dict{String, Any}("lat" => 40.7128, "lng" => -74.0060, "popup" => "<b>New York</b><br>Population: 8.3M"),
-                        Dict{String, Any}("lat" => 34.0522, "lng" => -118.2437, "popup" => "<b>Los Angeles</b><br>Population: 4.0M"),
-                        Dict{String, Any}("lat" => 41.8781, "lng" => -87.6298, "popup" => "<b>Chicago</b><br>Population: 2.7M"),
-                        Dict{String, Any}("lat" => 29.7604, "lng" => -95.3698, "popup" => "<b>Houston</b><br>Population: 2.3M"),
+                        Dict{String, Any}(
+                            "lat" => 40.7128,
+                            "lng" => -74.0060,
+                            "popup" => "<b>New York</b><br>Population: 8.3M",
+                        ),
+                        Dict{String, Any}(
+                            "lat" => 34.0522,
+                            "lng" => -118.2437,
+                            "popup" => "<b>Los Angeles</b><br>Population: 4.0M",
+                        ),
+                        Dict{String, Any}(
+                            "lat" => 41.8781,
+                            "lng" => -87.6298,
+                            "popup" => "<b>Chicago</b><br>Population: 2.7M",
+                        ),
+                        Dict{String, Any}(
+                            "lat" => 29.7604,
+                            "lng" => -95.3698,
+                            "popup" => "<b>Houston</b><br>Population: 2.3M",
+                        ),
                     ],
                 ),
             ],
