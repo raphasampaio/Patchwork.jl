@@ -3,15 +3,15 @@ module ChartJsPlugin
 import JSON
 import ..Item, ..tohtml, ..cdnurls, ..initscript
 
-export ChartJs
+export PatchworkChartJs
 
-struct ChartJs <: Item
+struct PatchworkChartJs <: Item
     title::String
     chart_type::String
     data::Dict{String, Any}
     options::Dict{String, Any}
 
-    ChartJs(
+    PatchworkChartJs(
         title::String,
         chart_type::String,
         data::Dict{String, Any};
@@ -20,7 +20,7 @@ struct ChartJs <: Item
         new(title, chart_type, data, options)
 end
 
-function tohtml(item::ChartJs)
+function tohtml(item::PatchworkChartJs)
     config = Dict(
         "type" => item.chart_type,
         "data" => item.data,
@@ -41,9 +41,9 @@ function tohtml(item::ChartJs)
     """
 end
 
-cdnurls(::Type{ChartJs}) = ["https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"]
+cdnurls(::Type{PatchworkChartJs}) = ["https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"]
 
-initscript(::Type{ChartJs}) = """
+initscript(::Type{PatchworkChartJs}) = """
     document.querySelectorAll('.chartjs-chart').forEach(canvas => {
         const config = JSON.parse(canvas.getAttribute('data-config'));
         new Chart(canvas, config);

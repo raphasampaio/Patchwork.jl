@@ -22,15 +22,15 @@ src/
 ├── Patchwork.jl          # Main module (exports, core types)
 ├── html.jl                # HTML generation and rendering
 └── plugins/               # Built-in plugins
-    ├── markdown.jl        # Markdown content support
+    ├── markdown.jl        # PatchworkMarkdown content support
     ├── chartjs.jl         # Chart.js integration
-    ├── highcharts.jl      # Highcharts integration
-    └── plotly.jl          # Plotly integration
+    ├── highcharts.jl      # PatchworkHighcharts integration
+    └── plotly.jl          # PatchworkPlotly integration
 
 test/
 ├── runtests.jl            # Main test runner (recursive)
 ├── test_core.jl           # Core types tests
-├── test_markdown.jl       # Markdown plugin tests
+├── test_markdown.jl       # PatchworkMarkdown plugin tests
 ├── test_charts.jl         # Chart plugins tests
 ├── test_html.jl           # HTML generation tests
 └── output/                # Generated HTML demos
@@ -85,21 +85,21 @@ initscript(::Type{MyItem}) = "/* init code */"
 
 ### Built-in Plugins
 
-**Markdown** (`src/plugins/markdown.jl`)
-- Converts markdown to HTML using Julia's Markdown stdlib
-- Uses `import Markdown as MD` to avoid namespace conflicts
+**PatchworkMarkdown** (`src/plugins/markdown.jl`)
+- Converts markdown to HTML using Julia's PatchworkMarkdown stdlib
+- Uses `import PatchworkMarkdown as MD` to avoid namespace conflicts
 
-**ChartJs** (`src/plugins/chartjs.jl`)
+**PatchworkChartJs** (`src/plugins/chartjs.jl`)
 - Creates Chart.js charts
 - Stores config in `data-config` attribute
 - Requires `Dict{String,Any}` for type safety
 
-**Highcharts** (`src/plugins/highcharts.jl`)
-- Creates Highcharts charts
+**PatchworkHighcharts** (`src/plugins/highcharts.jl`)
+- Creates PatchworkHighcharts charts
 - Uses UUID for unique chart IDs
 
-**Plotly** (`src/plugins/plotly.jl`)
-- Creates Plotly charts
+**PatchworkPlotly** (`src/plugins/plotly.jl`)
+- Creates PatchworkPlotly charts
 - Supports data, layout, and config options
 
 ## Important Implementation Details
@@ -110,10 +110,10 @@ Always use `Dict{String,Any}` for chart configurations to avoid Julia's type inf
 
 ```julia
 # ✓ Correct
-ChartJs("Title", "bar", Dict{String,Any}("labels" => [...]))
+PatchworkChartJs("Title", "bar", Dict{String,Any}("labels" => [...]))
 
 # ✗ Wrong - will cause type errors
-ChartJs("Title", "bar", Dict("labels" => [...]))
+PatchworkChartJs("Title", "bar", Dict("labels" => [...]))
 ```
 
 ### HTML Generation
@@ -170,7 +170,7 @@ Edit `Project.toml`:
 ```toml
 [deps]
 JSON = "..."
-Markdown = "..."
+PatchworkMarkdown = "..."
 UUIDs = "..."
 
 [compat]

@@ -6,7 +6,7 @@ using JSON
 
 @testset "Chart Plugins" begin
     @testset "ChartJs" begin
-        chart = ChartJs(
+        chart = PatchworkChartJs(
             "Test Chart",
             "line",
             Dict{String, Any}("labels" => ["A", "B"], "datasets" => [Dict("data" => [1, 2])]),
@@ -21,16 +21,16 @@ using JSON
         @test occursin("canvas", html_output)
         @test occursin("data-config", html_output)
 
-        @test length(cdnurls(ChartJs)) > 0
-        @test occursin("chart.js", cdnurls(ChartJs)[1])
+        @test length(cdnurls(PatchworkChartJs)) > 0
+        @test occursin("chart.js", cdnurls(PatchworkChartJs)[1])
 
-        script = initscript(ChartJs)
+        script = initscript(PatchworkChartJs)
         @test occursin("chartjs-chart", script)
         @test occursin("Chart", script)
     end
 
     @testset "ChartJs with options" begin
-        chart = ChartJs(
+        chart = PatchworkChartJs(
             "Custom Chart",
             "bar",
             Dict{String, Any}("labels" => ["X"], "datasets" => [Dict("data" => [10])]),
@@ -42,7 +42,7 @@ using JSON
     end
 
     @testset "Highcharts" begin
-        chart = Highcharts(
+        chart = PatchworkHighcharts(
             "Analytics",
             Dict{String, Any}(
                 "chart" => Dict("type" => "column"),
@@ -57,15 +57,15 @@ using JSON
         @test occursin("highcharts-chart", html_output)
         @test occursin("data-config", html_output)
 
-        @test length(cdnurls(Highcharts)) > 0
-        @test occursin("highcharts", cdnurls(Highcharts)[1])
+        @test length(cdnurls(PatchworkHighcharts)) > 0
+        @test occursin("highcharts", cdnurls(PatchworkHighcharts)[1])
 
-        script = initscript(Highcharts)
-        @test occursin("Highcharts", script)
+        script = initscript(PatchworkHighcharts)
+        @test occursin("PatchworkHighcharts", script)
     end
 
     @testset "Plotly" begin
-        chart = Plotly(
+        chart = PatchworkPlotly(
             "Science Plot",
             [Dict("x" => [1, 2, 3], "y" => [4, 5, 6], "type" => "scatter")],
         )
@@ -77,15 +77,15 @@ using JSON
         @test occursin("plotly-chart", html_output)
         @test occursin("data-data", html_output)
 
-        @test length(cdnurls(Plotly)) > 0
-        @test occursin("plotly", cdnurls(Plotly)[1])
+        @test length(cdnurls(PatchworkPlotly)) > 0
+        @test occursin("plotly", cdnurls(PatchworkPlotly)[1])
 
-        script = initscript(Plotly)
-        @test occursin("Plotly", script)
+        script = initscript(PatchworkPlotly)
+        @test occursin("PatchworkPlotly", script)
     end
 
     @testset "Plotly with layout and config" begin
-        chart = Plotly(
+        chart = PatchworkPlotly(
             "Custom Plot",
             [Dict{String, Any}("y" => [1, 2, 3])],
             layout = Dict{String, Any}("title" => "My Title"),
@@ -106,7 +106,7 @@ dashboard = Dashboard(
         Tab(
             "Chart.js",
             [
-                ChartJs(
+                PatchworkChartJs(
                     "Sales by Quarter",
                     "bar",
                     Dict{String, Any}(
@@ -125,7 +125,7 @@ dashboard = Dashboard(
                         ],
                     ),
                 ),
-                ChartJs(
+                PatchworkChartJs(
                     "Traffic Sources",
                     "doughnut",
                     Dict{String, Any}(
@@ -141,9 +141,9 @@ dashboard = Dashboard(
             ],
         ),
         Tab(
-            "Highcharts",
+            "PatchworkHighcharts",
             [
-                Highcharts(
+                PatchworkHighcharts(
                     "Monthly Performance",
                     Dict{String, Any}(
                         "chart" => Dict("type" => "line"),
@@ -156,7 +156,7 @@ dashboard = Dashboard(
                         ],
                     ),
                 ),
-                Highcharts(
+                PatchworkHighcharts(
                     "Distribution",
                     Dict{String, Any}(
                         "chart" => Dict("type" => "column"),
@@ -167,9 +167,9 @@ dashboard = Dashboard(
             ],
         ),
         Tab(
-            "Plotly",
+            "PatchworkPlotly",
             [
-                Plotly(
+                PatchworkPlotly(
                     "Scatter Analysis",
                     [
                         Dict{String, Any}(
@@ -182,7 +182,7 @@ dashboard = Dashboard(
                     ],
                     layout = Dict{String, Any}("xaxis" => Dict("title" => "X"), "yaxis" => Dict("title" => "Y²")),
                 ),
-                Plotly(
+                PatchworkPlotly(
                     "3D Surface",
                     [Dict{String, Any}(
                         "z" => [[1, 2, 3], [2, 3, 4], [3, 4, 5]],
@@ -195,17 +195,17 @@ dashboard = Dashboard(
         Tab(
             "Mixed Charts",
             [
-                Markdown("## Chart Comparison\n\nThis tab shows different chart libraries side by side."),
-                ChartJs(
+                PatchworkMarkdown("## Chart Comparison\n\nThis tab shows different chart libraries side by side."),
+                PatchworkChartJs(
                     "Line Chart",
                     "line",
                     Dict{String, Any}("labels" => ["A", "B", "C"], "datasets" => [Dict("data" => [10, 20, 15])]),
                 ),
-                Highcharts(
+                PatchworkHighcharts(
                     "Area Chart",
                     Dict{String, Any}("chart" => Dict("type" => "area"), "series" => [Dict("data" => [10, 20, 15])]),
                 ),
-                Plotly("Scatter Plot", [Dict{String, Any}("y" => [10, 20, 15], "type" => "scatter")]),
+                PatchworkPlotly("Scatter Plot", [Dict{String, Any}("y" => [10, 20, 15], "type" => "scatter")]),
             ],
         ),
     ],

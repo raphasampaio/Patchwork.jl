@@ -42,6 +42,6 @@ using .ChartJsPlugin
 using .HighchartsPlugin
 using .PlotlyPlugin
 
-export Markdown, ChartJs, Highcharts, Plotly
+export PatchworkMarkdown, PatchworkChartJs, PatchworkHighcharts, PatchworkPlotly
 
 end

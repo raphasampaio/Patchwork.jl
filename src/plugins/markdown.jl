@@ -1,18 +1,18 @@
 module MarkdownPlugin
 
-import Markdown as MD
+using Markdown
 import ..Item, ..tohtml, ..cdnurls, ..initscript
 
-export Markdown
+export PatchworkMarkdown
 
-struct Markdown <: Item
+struct PatchworkMarkdown <: Item
     content::String
 end
 
-tohtml(item::Markdown) = MD.html(MD.parse(item.content))
+tohtml(item::PatchworkMarkdown) = Markdown.html(Markdown.parse(item.content))
 
-cdnurls(::Type{Markdown}) = String[]
+cdnurls(::Type{PatchworkMarkdown}) = String[]
 
-initscript(::Type{Markdown}) = ""
+initscript(::Type{PatchworkMarkdown}) = ""
 
 end

@@ -5,7 +5,7 @@ using Patchwork
 
 @testset "Markdown Plugin" begin
     @testset "Markdown basics" begin
-        md = Markdown("# Hello\n\nWorld")
+        md = PatchworkMarkdown("# Hello\n\nWorld")
         @test md isa Item
 
         html_output = tohtml(md)
@@ -14,7 +14,7 @@ using Patchwork
     end
 
     @testset "Markdown formatting" begin
-        md = Markdown("""
+        md = PatchworkMarkdown("""
         # Heading 1
         ## Heading 2
 
@@ -33,7 +33,7 @@ using Patchwork
     end
 
     @testset "Markdown code blocks" begin
-        md = Markdown("""
+        md = PatchworkMarkdown("""
 ```julia
 x = 1 + 1
 ```
@@ -45,21 +45,21 @@ x = 1 + 1
     end
 
     @testset "Markdown plugin interface" begin
-        @test cdnurls(Markdown) == String[]
-        @test initscript(Markdown) == ""
+        @test cdnurls(PatchworkMarkdown) == String[]
+        @test initscript(PatchworkMarkdown) == ""
     end
 end
 
 # Generate sample HTML output
 dashboard = Dashboard(
-    "Markdown Demo",
+    "PatchworkMarkdown Demo",
     [
         Tab(
             "Documentation",
             [
-                Markdown(
-                    "# Markdown Content Example\n" *
-                    "This demonstrates the **Markdown plugin** for Patchwork.\n" *
+                PatchworkMarkdown(
+                    "# PatchworkMarkdown Content Example\n" *
+                    "This demonstrates the **PatchworkMarkdown plugin** for Patchwork.\n" *
                     "\n" *
                     "## Features\n" *
                     "- Easy formatting\n" *
@@ -84,9 +84,9 @@ dashboard = Dashboard(
         Tab(
             "Mixed Content",
             [
-                Markdown("## Introduction\n\nThis tab combines markdown with HTML."),
+                PatchworkMarkdown("## Introduction\n\nThis tab combines markdown with HTML."),
                 Html("<hr>"),
-                Markdown("### Details\n\nMore markdown content here."),
+                PatchworkMarkdown("### Details\n\nMore markdown content here."),
             ],
         ),
     ],

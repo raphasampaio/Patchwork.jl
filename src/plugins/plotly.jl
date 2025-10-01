@@ -4,15 +4,15 @@ import JSON
 import ..Item, ..tohtml, ..cdnurls, ..initscript
 using UUIDs
 
-export Plotly
+export PatchworkPlotly
 
-struct Plotly <: Item
+struct PatchworkPlotly <: Item
     title::String
     data::Vector{Dict{String, Any}}
     layout::Dict{String, Any}
     config::Dict{String, Any}
 
-    Plotly(
+    PatchworkPlotly(
         title::String,
         data::Vector{Dict{String, Any}};
         layout::Dict{String, Any} = Dict{String, Any}(),
@@ -21,7 +21,7 @@ struct Plotly <: Item
         new(title, data, layout, config)
 end
 
-function tohtml(item::Plotly)
+function tohtml(item::PatchworkPlotly)
     chart_id = "chart-$(uuid4())"
     data_json = JSON.json(item.data)
     layout = merge(Dict("autosize" => true), item.layout)
@@ -37,14 +37,14 @@ function tohtml(item::Plotly)
     """
 end
 
-cdnurls(::Type{Plotly}) = ["https://cdn.plot.ly/plotly-2.27.0.min.js"]
+cdnurls(::Type{PatchworkPlotly}) = ["https://cdn.plot.ly/plotly-2.27.0.min.js"]
 
-initscript(::Type{Plotly}) = """
+initscript(::Type{PatchworkPlotly}) = """
     document.querySelectorAll('.plotly-chart').forEach(container => {
         const data = JSON.parse(container.getAttribute('data-data'));
         const layout = JSON.parse(container.getAttribute('data-layout'));
         const config = JSON.parse(container.getAttribute('data-config'));
-        Plotly.newPlot(container.id, data, layout, config);
+        PatchworkPlotly.newPlot(container.id, data, layout, config);
     });
 """
 

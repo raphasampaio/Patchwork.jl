@@ -25,7 +25,7 @@ using Patchwork
 # Create a simple dashboard
 dashboard = Dashboard("My Dashboard", [
     Tab("Overview", [
-        Markdown("""
+        PatchworkMarkdown("""
         # Welcome
         This is a simple dashboard.
         """),
@@ -46,7 +46,7 @@ using Patchwork
 
 dashboard = Dashboard("Charts", [
     Tab("Sales", [
-        ChartJs(
+        PatchworkChartJs(
             "Monthly Revenue",
             "bar",
             Dict(
@@ -63,14 +63,14 @@ dashboard = Dashboard("Charts", [
 render(dashboard, "sales.html")
 ```
 
-### Highcharts
+### PatchworkHighcharts
 
 ```julia
 using Patchwork
 
 dashboard = Dashboard("Analytics", [
     Tab("Performance", [
-        Highcharts(
+        PatchworkHighcharts(
             "CPU Usage",
             Dict(
                 "chart" => Dict("type" => "line"),
@@ -84,14 +84,14 @@ dashboard = Dashboard("Analytics", [
 render(dashboard, "analytics.html")
 ```
 
-### Plotly
+### PatchworkPlotly
 
 ```julia
 using Patchwork
 
 dashboard = Dashboard("Science", [
     Tab("Data", [
-        Plotly(
+        PatchworkPlotly(
             "Scatter Plot",
             [Dict(
                 "x" => [1, 2, 3, 4],
@@ -127,19 +127,19 @@ render(dashboard, "science.html")
 **`Html(content)`**
 - Raw HTML content
 
-**`Markdown(content)`**
-- Markdown content (auto-converted to HTML)
+**`PatchworkMarkdown(content)`**
+- PatchworkMarkdown content (auto-converted to HTML)
 
-**`ChartJs(title, type, data; options=Dict())`**
+**`PatchworkChartJs(title, type, data; options=Dict())`**
 - Chart.js chart
 - `type`: "line", "bar", "pie", "doughnut", etc.
 
-**`Highcharts(title, config)`**
-- Highcharts chart
-- `config`: Highcharts configuration object
+**`PatchworkHighcharts(title, config)`**
+- PatchworkHighcharts chart
+- `config`: PatchworkHighcharts configuration object
 
-**`Plotly(title, data; layout=Dict(), config=Dict())`**
-- Plotly chart
+**`PatchworkPlotly(title, data; layout=Dict(), config=Dict())`**
+- PatchworkPlotly chart
 - `data`: Vector of trace objects
 
 ## Custom CSS

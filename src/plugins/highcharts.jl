@@ -4,16 +4,16 @@ import JSON
 import ..Item, ..tohtml, ..cdnurls, ..initscript
 using UUIDs
 
-export Highcharts
+export PatchworkHighcharts
 
-struct Highcharts <: Item
+struct PatchworkHighcharts <: Item
     title::String
     config::Dict{String, Any}
 
-    Highcharts(title::String, config::Dict{String, Any}) = new(title, config)
+    PatchworkHighcharts(title::String, config::Dict{String, Any}) = new(title, config)
 end
 
-function tohtml(item::Highcharts)
+function tohtml(item::PatchworkHighcharts)
     chart_id = "chart-$(uuid4())"
     config_json = JSON.json(item.config)
 
@@ -25,12 +25,12 @@ function tohtml(item::Highcharts)
     """
 end
 
-cdnurls(::Type{Highcharts}) = ["https://code.highcharts.com/highcharts.js"]
+cdnurls(::Type{PatchworkHighcharts}) = ["https://code.highcharts.com/highcharts.js"]
 
-initscript(::Type{Highcharts}) = """
+initscript(::Type{PatchworkHighcharts}) = """
     document.querySelectorAll('.highcharts-chart').forEach(container => {
         const config = JSON.parse(container.getAttribute('data-config'));
-        Highcharts.chart(container.id, config);
+        PatchworkHighcharts.chart(container.id, config);
     });
 """
 

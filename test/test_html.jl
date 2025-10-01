@@ -60,7 +60,7 @@ using Patchwork
             "Charts",
             [
                 Tab("T", [
-                    ChartJs("Chart", "line", Dict{String, Any}("labels" => [], "datasets" => [])),
+                    PatchworkChartJs("Chart", "line", Dict{String, Any}("labels" => [], "datasets" => [])),
                 ]),
             ],
         )
@@ -74,7 +74,7 @@ using Patchwork
             "Charts",
             [
                 Tab("T", [
-                    ChartJs("Chart", "bar", Dict{String, Any}("labels" => [], "datasets" => [])),
+                    PatchworkChartJs("Chart", "bar", Dict{String, Any}("labels" => [], "datasets" => [])),
                 ]),
             ],
         )
@@ -107,7 +107,7 @@ using Patchwork
             Tab("Tab", [
                 Html("<p>first</p>"),
                 Html("<p>second</p>"),
-                Markdown("# Third"),
+                PatchworkMarkdown("# Third"),
             ]),
         ])
         html = Patchwork.generate_html(dashboard)
@@ -125,8 +125,8 @@ using Patchwork
                     "All",
                     [
                         Html("<div>HTML</div>"),
-                        Markdown("**Markdown**"),
-                        ChartJs(
+                        PatchworkMarkdown("**PatchworkMarkdown**"),
+                        PatchworkChartJs(
                             "Chart",
                             "pie",
                             Dict{String, Any}("labels" => ["A"], "datasets" => [Dict("data" => [1])]),
@@ -138,7 +138,7 @@ using Patchwork
         html = Patchwork.generate_html(dashboard)
 
         @test occursin("HTML", html)
-        @test occursin("Markdown", html)
+        @test occursin("PatchworkMarkdown", html)
         @test occursin("Chart", html)
         @test occursin("chart.js", html)
     end
@@ -151,7 +151,7 @@ dashboard = Dashboard(
         Tab(
             "Overview",
             [
-                Markdown("""
+                PatchworkMarkdown("""
                 # Patchwork Dashboard Generator
 
                 This demo showcases the HTML generation capabilities.
@@ -161,7 +161,7 @@ dashboard = Dashboard(
                 - **Multi-tab layout** with Vue.js navigation
                 - **Responsive design** using Tailwind CSS
                 - **Search functionality** across all content
-                - **Mixed content types** (HTML, Markdown, Charts)
+                - **Mixed content types** (HTML, PatchworkMarkdown, Charts)
                 """),
                 Html(
                     "<div class='bg-blue-50 border border-blue-200 rounded p-4 my-4'><strong>Info:</strong> This is custom HTML content with Tailwind classes.</div>",
@@ -171,12 +171,12 @@ dashboard = Dashboard(
         Tab(
             "Components",
             [
-                Markdown("## Available Components\n\n### 1. HTML Items"),
+                PatchworkMarkdown("## Available Components\n\n### 1. HTML Items"),
                 Html("<p>Direct HTML injection for maximum flexibility.</p>"),
-                Markdown("### 2. Markdown Items"),
-                Markdown("Support for *all* **standard** markdown features."),
-                Markdown("### 3. Chart Items"),
-                ChartJs(
+                PatchworkMarkdown("### 2. PatchworkMarkdown Items"),
+                PatchworkMarkdown("Support for *all* **standard** markdown features."),
+                PatchworkMarkdown("### 3. Chart Items"),
+                PatchworkChartJs(
                     "Sample Chart",
                     "line",
                     Dict{String, Any}(
@@ -189,7 +189,7 @@ dashboard = Dashboard(
         Tab(
             "Custom Styling",
             [
-                Markdown("## Custom CSS Support\n\nDashboards can include custom CSS for styling."),
+                PatchworkMarkdown("## Custom CSS Support\n\nDashboards can include custom CSS for styling."),
                 Html(
                     """
                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 0.5rem; text-align: center;">
@@ -206,7 +206,7 @@ dashboard = Dashboard(
         Tab(
             "Interactive Features",
             [
-                Markdown("""
+                PatchworkMarkdown("""
                 ## Search
 
                 Try searching for keywords in the top search bar.
