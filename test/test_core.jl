@@ -1,0 +1,42 @@
+module TestCore
+
+using Test
+using Rhinestone
+
+@testset "Core Types" begin
+    @testset "Html" begin
+        html = Html("<p>test</p>")
+        @test html isa Item
+        @test tohtml(html) == "<p>test</p>"
+        @test cdnurls(Html) == String[]
+        @test initscript(Html) == ""
+    end
+
+    @testset "Tab" begin
+        tab = Tab("Test", [Html("<p>content</p>")])
+        @test tab.label == "Test"
+        @test length(tab.items) == 1
+        @test tab.items[1] isa Html
+    end
+
+    @testset "Dashboard" begin
+        tabs = [Tab("Tab1", [Html("<p>content</p>")])]
+        dashboard = Dashboard("Test Dashboard", tabs)
+        @test dashboard.title == "Test Dashboard"
+        @test length(dashboard.tabs) == 1
+        @test dashboard.custom_css == ""
+
+        dashboard_with_css = Dashboard("Styled", tabs, custom_css=".custom { color: red; }")
+        @test dashboard_with_css.custom_css == ".custom { color: red; }"
+    end
+end
+
+@testset "HTML Utilities" begin
+    @test Rhinestone.escape_html("&") == "&amp;"
+    @test Rhinestone.escape_html("<") == "&lt;"
+    @test Rhinestone.escape_html(">") == "&gt;"
+    @test Rhinestone.escape_html("\"") == "&quot;"
+    @test Rhinestone.escape_html("<div>&test</div>") == "&lt;div&gt;&amp;test&lt;/div&gt;"
+end
+
+end
