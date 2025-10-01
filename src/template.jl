@@ -1,3 +1,5 @@
+using Markdown
+
 """
     generate_dashboard(config::DashboardConfig, output_path::String)
 
@@ -263,7 +265,6 @@ $(generate_cdn_scripts(config.cdn_urls))
             },
             mounted() {
                 this.\$nextTick(() => {
-                    this.initializeMarkdown();
                     this.initializeAllCharts();
                 });
             },
@@ -273,15 +274,6 @@ $(generate_cdn_scripts(config.cdn_urls))
                 }
             },
             methods: {
-                initializeMarkdown() {
-                    this.tabs.forEach((tab, tabIndex) => {
-                        tab.items.forEach((item, itemIndex) => {
-                            if (item.type === 'markdown' && typeof marked !== 'undefined') {
-                                item.html = marked.parse(item.content);
-                            }
-                        });
-                    });
-                },
                 initializeAllCharts() {
                     this.tabs.forEach((tab, tabIndex) => {
                         tab.items.forEach((item, itemIndex) => {
@@ -298,7 +290,9 @@ $(generate_cdn_scripts(config.cdn_urls))
                     if (item.type === 'chart') {
                         return item.title.toLowerCase().includes(query);
                     } else if (item.type === 'markdown') {
-                        return item.content.toLowerCase().includes(query);
+                        // Search in HTML content (strip tags for better results)
+                        const textContent = item.html.replace(/<[^>]*>/g, ' ');
+                        return textContent.toLowerCase().includes(query);
                     }
                     return true;
                 },
@@ -344,12 +338,12 @@ function generate_tabs_json(tabs::Vector{Tab})
                 )
                 push!(items_array, item_dict)
             elseif item isa MarkdownContent
-                # Convert markdown to HTML using marked.js (will be done client-side)
+                # Convert markdown to HTML using Markdown.jl
+                html_content = Markdown.html(Markdown.parse(item.content))
                 item_dict = Dict(
                     "type" => "markdown",
                     "id" => item.id,
-                    "content" => item.content,
-                    "html" => "", # Will be populated client-side by marked.js
+                    "html" => html_content,
                 )
                 push!(items_array, item_dict)
             end

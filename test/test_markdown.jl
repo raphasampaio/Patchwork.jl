@@ -7,24 +7,27 @@ using Rhinestone
     output_path = joinpath(@__DIR__, "output", "test_markdown.html")
     mkpath(dirname(output_path))
 
-    markdown_content = MarkdownContent("intro", """
-    # Dashboard Overview
+    markdown_content = MarkdownContent(
+        "intro",
+        """
+# Dashboard Overview
 
-    This dashboard demonstrates **markdown support** alongside charts.
+This dashboard demonstrates **markdown support** alongside charts.
 
-    ## Features
+## Features
 
-    - Mix markdown and charts freely
-    - Full markdown syntax support
-    - Search across both content types
+- Mix markdown and charts freely
+- Full markdown syntax support
+- Search across both content types
 
-    ```julia
-    # Example code block
-    function hello()
-        println("Hello, World!")
-    end
-    ```
-    """)
+```julia
+# Example code block
+function hello()
+    println("Hello, World!")
+end
+```
+""",
+    )
 
     chart = ChartPlaceholder("sample-chart", "Sample Chart",
         metadata = Dict{String, Any}(
@@ -69,7 +72,7 @@ using Rhinestone
     @test occursin("Markdown Test Dashboard", content)
     @test occursin("Dashboard Overview", content)
     @test occursin("markdown", content)
-    @test occursin("marked", content)
+    @test occursin("typography", content)  # Check for Tailwind Typography CSS
 end
 
 end

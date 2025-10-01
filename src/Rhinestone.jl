@@ -87,11 +87,10 @@ struct DashboardConfig
         custom_css::String = "",
         chart_init_script::String = "",
         cdn_urls::Dict{String, String} = Dict{String, String}())
-        # Always include Vue, Tailwind (with typography), and Marked.js (for markdown) as base dependencies
+        # Always include Vue, Tailwind (with typography) as base dependencies
         default_urls = Dict(
             "vue" => "https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js",
             "tailwind" => "https://cdn.tailwindcss.com/3.4.0",
-            "marked" => "https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js",
             "typography" => "https://unpkg.com/@tailwindcss/typography@0.5.10/dist/typography.min.css",
         )
         # Merge user-provided URLs with defaults (user URLs take precedence)
