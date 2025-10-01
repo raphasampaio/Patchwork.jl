@@ -1,6 +1,3 @@
-using Markdown
-using JSON
-
 """
     generate_dashboard(config::DashboardConfig, output_path::String)
 
@@ -177,7 +174,7 @@ $(generate_cdn_scripts(config.cdn_urls))
                             </div>
 
                             <!-- Markdown content -->
-                            <div v-if="item.type === 'markdown'" class="prose" v-html="item.html"></div>
+                            <div v-if="item.type === 'markdown'" class="prose" v-html="highlightSearchTerm(item.html)"></div>
                         </div>
                     </div>
 
@@ -428,11 +425,32 @@ $(generate_cdn_scripts(config.cdn_urls))
 
                     return this.tabs[tabIndex].items.filter(item => this.isItemVisible(item)).length;
                 },
-                highlightSearchTerm(text) {
-                    if (!this.searchQuery) return text;
+                highlightSearchTerm(html) {
+                    if (!this.searchQuery) return html;
 
-                    const regex = new RegExp('(' + this.searchQuery + ')', 'gi');
-                    return text.replace(regex, '<span class="bg-yellow-200 text-yellow-800 px-1 rounded">\$1</span>');
+                    // Escape special regex characters in search query
+                    const escapedQuery = this.searchQuery.replace(/[.*+?^\${}()|[\\]\\\\]/g, '\\\\\$&');
+
+                    // Create a temporary div to parse HTML
+                    const div = document.createElement('div');
+                    div.innerHTML = html;
+
+                    // Recursively highlight text nodes
+                    const highlightTextNodes = (node) => {
+                        if (node.nodeType === Node.TEXT_NODE) {
+                            const regex = new RegExp('(' + escapedQuery + ')', 'gi');
+                            if (regex.test(node.textContent)) {
+                                const span = document.createElement('span');
+                                span.innerHTML = node.textContent.replace(regex, '<span class="bg-yellow-200 text-yellow-800 px-1 rounded">\$1</span>');
+                                node.replaceWith(span);
+                            }
+                        } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE') {
+                            Array.from(node.childNodes).forEach(highlightTextNodes);
+                        }
+                    };
+
+                    highlightTextNodes(div);
+                    return div.innerHTML;
                 }
             }
         }).mount('#app');

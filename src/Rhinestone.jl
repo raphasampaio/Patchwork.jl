@@ -1,5 +1,8 @@
 module Rhinestone
 
+using Markdown
+using JSON
+
 export DashboardConfig, Tab, ChartPlaceholder, MarkdownContent, ContentItem, generate_dashboard
 
 """
