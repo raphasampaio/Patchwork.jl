@@ -3,8 +3,9 @@ struct Dashboard
     tabs::Vector{Tab}
     custom_css::String
 
-    Dashboard(title::String, tabs::Vector{Tab}; custom_css::String = "") =
-        new(title, tabs, custom_css)
+    function Dashboard(title::String, tabs::Vector{Tab}; custom_css::String = "")
+        return new(title, tabs, custom_css)
+    end
 end
 
 function render(dashboard::Dashboard, path::String)

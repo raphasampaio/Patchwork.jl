@@ -10,6 +10,7 @@ using Patchwork
         @test to_html(html) == "<p>test</p>"
         @test cdn_urls(Html) == String[]
         @test init_script(Html) == ""
+        @test css(Html) == ""
     end
 
     @testset "Tab" begin

@@ -66,11 +66,12 @@ render(dashboard::Dashboard, path::String)  # Generate HTML file
 to_html(item::Item)                          # Render item to HTML
 cdn_urls(::Type{<:Item})                    # Get CDN URLs for item type
 init_script(::Type{<:Item})                 # Get JS initialization script
+css(::Type{<:Item})                         # Get CSS styles for item type
 ```
 
 ## Plugin System
 
-Plugins implement three functions:
+Plugins implement four functions:
 
 ```julia
 # Required: Convert item to HTML
@@ -81,6 +82,9 @@ cdn_urls(::Type{MyItem}) = ["https://cdn.example.com/lib.js"]
 
 # Optional: JavaScript initialization
 init_script(::Type{MyItem}) = "/* init code */"
+
+# Optional: CSS styles
+css(::Type{MyItem}) = "/* custom styles */"
 ```
 
 ### Built-in Plugins
@@ -121,9 +125,10 @@ PatchworkChartJs("Title", "bar", Dict("labels" => [...]))
 The HTML template in `src/html.jl`:
 1. Collects CDN URLs from all item types
 2. Collects init scripts from all item types
-3. Generates Vue.js-powered single-page application
-4. Auto-generates UUIDs for items
-5. Embeds all data as JSON
+3. Collects CSS styles from all item types
+4. Generates Vue.js-powered single-page application
+5. Auto-generates UUIDs for items
+6. Embeds all data as JSON
 
 ### Testing Pattern
 
