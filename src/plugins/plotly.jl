@@ -1,7 +1,7 @@
 module PlotlyPlugin
 
 import JSON
-import ..Item, ..to_html, ..cdn_urls, ..init_script, ..css
+import ..Item, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
 using UUIDs
 
 export PatchworkPlotly
@@ -37,7 +37,7 @@ function to_html(item::PatchworkPlotly)
     """
 end
 
-cdn_urls(::Type{PatchworkPlotly}) = ["https://cdn.plot.ly/plotly-2.27.0.min.js"]
+js_deps(::Type{PatchworkPlotly}) = ["https://cdn.plot.ly/plotly-2.27.0.min.js"]
 
 init_script(::Type{PatchworkPlotly}) = """
     document.querySelectorAll('.plotly-chart').forEach(container => {

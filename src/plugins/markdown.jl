@@ -1,7 +1,7 @@
 module MarkdownPlugin
 
 using Markdown
-import ..Item, ..to_html, ..cdn_urls, ..init_script, ..css
+import ..Item, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
 
 export PatchworkMarkdown
 
@@ -11,9 +11,21 @@ end
 
 to_html(item::PatchworkMarkdown) = Markdown.html(Markdown.parse(item.content))
 
-cdn_urls(::Type{PatchworkMarkdown}) = String[]
+css_deps(::Type{PatchworkMarkdown}) = [
+    "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css",
+]
 
-init_script(::Type{PatchworkMarkdown}) = ""
+js_deps(::Type{PatchworkMarkdown}) = [
+    "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/julia.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/lua.min.js"
+]
+
+init_script(::Type{PatchworkMarkdown}) = """
+    document.querySelectorAll('pre code').forEach((block) => {
+        hljs.highlightElement(block);
+    });
+"""
 
 css(::Type{PatchworkMarkdown}) = """
 /* Markdown content styling */
@@ -45,8 +57,6 @@ code {
 }
 
 pre {
-    background: #1f2937;
-    color: #e5e7eb;
     padding: 1em;
     border-radius: 6px;
     overflow-x: auto;
@@ -54,9 +64,8 @@ pre {
 }
 
 pre code {
-    background: transparent;
+    background: transparent !important;
     padding: 0;
-    color: inherit;
 }
 
 a {

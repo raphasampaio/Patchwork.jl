@@ -1,7 +1,7 @@
 module ChartJsPlugin
 
 import JSON
-import ..Item, ..to_html, ..cdn_urls, ..init_script, ..css
+import ..Item, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
 
 export PatchworkChartJs
 
@@ -41,7 +41,7 @@ function to_html(item::PatchworkChartJs)
     """
 end
 
-cdn_urls(::Type{PatchworkChartJs}) = ["https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"]
+js_deps(::Type{PatchworkChartJs}) = ["https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"]
 
 init_script(::Type{PatchworkChartJs}) = """
     document.querySelectorAll('.chartjs-chart').forEach(canvas => {

@@ -17,14 +17,17 @@ end
 function generate_html(dashboard::Dashboard)
     all_types = unique([typeof(item) for tab in dashboard.tabs for item in tab.items])
 
-    cdn_links = String[]
+    css_links = String[]
     for type in all_types
-        for url in cdn_urls(type)
-            if endswith(url, ".css")
-                push!(cdn_links, "    <link rel=\"stylesheet\" href=\"$url\">")
-            else
-                push!(cdn_links, "    <script src=\"$url\"></script>")
-            end
+        for url in css_deps(type)
+            push!(css_links, "    <link rel=\"stylesheet\" href=\"$url\">")
+        end
+    end
+
+    js_links = String[]
+    for type in all_types
+        for url in js_deps(type)
+            push!(js_links, "    <script src=\"$url\"></script>")
         end
     end
 
@@ -73,7 +76,8 @@ function generate_html(dashboard::Dashboard)
     <title>$(escape_html(dashboard.title))</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@3.5.12/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-$(join(cdn_links, "\n"))
+$(join(css_links, "\n"))
+$(join(js_links, "\n"))
 </head>
 <body class="bg-gray-50">
     <div id="app" class="flex h-screen">

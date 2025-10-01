@@ -4,7 +4,7 @@ using UUIDs
 import JSON
 
 export Item, Tab, Dashboard, Html
-export render, to_html, cdn_urls, init_script, css
+export render, to_html, css_deps, js_deps, init_script, css
 
 include("string.jl")
 include("item.jl")

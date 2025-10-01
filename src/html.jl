@@ -3,6 +3,7 @@ struct Html <: Item
 end
 
 to_html(item::Html) = item.content
-cdn_urls(::Type{Html}) = String[]
+css_deps(::Type{Html}) = String[]
+js_deps(::Type{Html}) = String[]
 init_script(::Type{Html}) = ""
 css(::Type{Html}) = ""

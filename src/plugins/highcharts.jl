@@ -1,7 +1,7 @@
 module HighchartsPlugin
 
 import JSON
-import ..Item, ..to_html, ..cdn_urls, ..init_script, ..css
+import ..Item, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
 using UUIDs
 
 export PatchworkHighcharts
@@ -25,7 +25,7 @@ function to_html(item::PatchworkHighcharts)
     """
 end
 
-cdn_urls(::Type{PatchworkHighcharts}) = ["https://code.highcharts.com/highcharts.js"]
+js_deps(::Type{PatchworkHighcharts}) = ["https://code.highcharts.com/highcharts.js"]
 
 init_script(::Type{PatchworkHighcharts}) = """
     document.querySelectorAll('.highcharts-chart').forEach(container => {
