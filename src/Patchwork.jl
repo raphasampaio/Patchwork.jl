@@ -32,7 +32,6 @@ export
     PatchworkHighcharts,
     PatchworkPlotly,
     PatchworkLeaflet,
-    PatchworkMermaid,
-    PatchworkECharts
+    PatchworkMermaid
 
 end
