@@ -87,10 +87,13 @@ struct DashboardConfig
         custom_css::String = "",
         chart_init_script::String = "",
         cdn_urls::Dict{String, String} = Dict{String, String}())
-        # Always include Vue and Tailwind as base dependencies
+        # Always include Vue, Tailwind, and highlight.js as base dependencies
         default_urls = Dict(
             "vue" => "https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js",
             "tailwind" => "https://cdn.tailwindcss.com/3.4.0",
+            "highlightjs" => "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js",
+            "highlightcss" => "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css",
+            "highlightjs-julia" => "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/languages/julia.min.js",
         )
         # Merge user-provided URLs with defaults (user URLs take precedence)
         merged_urls = merge(default_urls, cdn_urls)

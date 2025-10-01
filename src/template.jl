@@ -357,6 +357,7 @@ $(generate_cdn_scripts(config.cdn_urls))
             mounted() {
                 this.\$nextTick(() => {
                     this.initializeAllCharts();
+                    this.highlightCode();
                 });
             },
             watch: {
@@ -365,6 +366,13 @@ $(generate_cdn_scripts(config.cdn_urls))
                 }
             },
             methods: {
+                highlightCode() {
+                    if (typeof hljs !== 'undefined') {
+                        document.querySelectorAll('pre code').forEach((block) => {
+                            hljs.highlightElement(block);
+                        });
+                    }
+                },
                 initializeAllCharts() {
                     this.tabs.forEach((tab, tabIndex) => {
                         tab.items.forEach((item, itemIndex) => {
