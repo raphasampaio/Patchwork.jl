@@ -12,7 +12,7 @@ end
 to_html(item::PatchworkMarkdown) = Markdown.html(Markdown.parse(item.content))
 
 css_deps(::Type{PatchworkMarkdown}) = [
-    "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css",
+    "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-light.min.css",
 ]
 
 js_deps(::Type{PatchworkMarkdown}) = [
