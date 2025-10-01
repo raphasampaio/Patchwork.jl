@@ -59,9 +59,12 @@ using Patchwork
         dashboard = PatchworkDashboard(
             "Charts",
             [
-                PatchworkTab("T", [
-                    PatchworkChartJs("Chart", "line", Dict{String, Any}("labels" => [], "datasets" => [])),
-                ]),
+                PatchworkTab(
+                    "T",
+                    [
+                        PatchworkChartJs("Chart", "line", Dict{String, Any}("labels" => [], "datasets" => [])),
+                    ],
+                ),
             ],
         )
         html = Patchwork.generate_html(dashboard)
@@ -73,9 +76,12 @@ using Patchwork
         dashboard = PatchworkDashboard(
             "Charts",
             [
-                PatchworkTab("T", [
-                    PatchworkChartJs("Chart", "bar", Dict{String, Any}("labels" => [], "datasets" => [])),
-                ]),
+                PatchworkTab(
+                    "T",
+                    [
+                        PatchworkChartJs("Chart", "bar", Dict{String, Any}("labels" => [], "datasets" => [])),
+                    ],
+                ),
             ],
         )
         html = Patchwork.generate_html(dashboard)
@@ -106,11 +112,14 @@ using Patchwork
         dashboard = PatchworkDashboard(
             "Multi",
             [
-                PatchworkTab("PatchworkTab", [
-                    Html("<p>first</p>"),
-                    Html("<p>second</p>"),
-                    PatchworkMarkdown("# Third"),
-                ]),
+                PatchworkTab(
+                    "PatchworkTab",
+                    [
+                        Html("<p>first</p>"),
+                        Html("<p>second</p>"),
+                        PatchworkMarkdown("# Third"),
+                    ],
+                ),
             ],
         )
         html = Patchwork.generate_html(dashboard)
