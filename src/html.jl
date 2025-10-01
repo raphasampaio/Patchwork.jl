@@ -42,7 +42,6 @@ function generate_html(dashboard::Dashboard)
         push!(tabs_data, Dict("label" => tab.label, "items" => items_data))
     end
 
-    import JSON
     tabs_json = JSON.json(tabs_data)
     combined_init = join(init_scripts, "\n")
 

@@ -99,4 +99,85 @@ using JSON
     end
 end
 
+# Generate sample HTML output with all chart types
+dashboard = Dashboard("Charts Demo", [
+    Tab("Chart.js", [
+        ChartJs(
+            "Sales by Quarter",
+            "bar",
+            Dict(
+                "labels" => ["Q1", "Q2", "Q3", "Q4"],
+                "datasets" => [
+                    Dict("label" => "2023", "data" => [120, 190, 130, 250], "backgroundColor" => "rgba(54, 162, 235, 0.5)"),
+                    Dict("label" => "2024", "data" => [150, 220, 180, 290], "backgroundColor" => "rgba(255, 99, 132, 0.5)")
+                ]
+            )
+        ),
+        ChartJs(
+            "Traffic Sources",
+            "doughnut",
+            Dict(
+                "labels" => ["Direct", "Social", "Organic", "Referral"],
+                "datasets" => [Dict(
+                    "data" => [300, 150, 200, 100],
+                    "backgroundColor" => ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"]
+                )]
+            )
+        )
+    ]),
+    Tab("Highcharts", [
+        Highcharts(
+            "Monthly Performance",
+            Dict(
+                "chart" => Dict("type" => "line"),
+                "title" => Dict("text" => ""),
+                "xAxis" => Dict("categories" => ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]),
+                "yAxis" => Dict("title" => Dict("text" => "Value")),
+                "series" => [
+                    Dict("name" => "Series A", "data" => [29, 71, 106, 129, 144, 176]),
+                    Dict("name" => "Series B", "data" => [50, 80, 95, 110, 130, 150])
+                ]
+            )
+        ),
+        Highcharts(
+            "Distribution",
+            Dict(
+                "chart" => Dict("type" => "column"),
+                "xAxis" => Dict("categories" => ["Alpha", "Beta", "Gamma", "Delta"]),
+                "series" => [Dict("name" => "Values", "data" => [5, 3, 4, 7])]
+            )
+        )
+    ]),
+    Tab("Plotly", [
+        Plotly(
+            "Scatter Analysis",
+            [Dict(
+                "x" => [1, 2, 3, 4, 5, 6],
+                "y" => [1, 4, 9, 16, 25, 36],
+                "mode" => "markers+lines",
+                "type" => "scatter",
+                "name" => "Quadratic"
+            )],
+            layout = Dict("xaxis" => Dict("title" => "X"), "yaxis" => Dict("title" => "Y²"))
+        ),
+        Plotly(
+            "3D Surface",
+            [Dict(
+                "z" => [[1, 2, 3], [2, 3, 4], [3, 4, 5]],
+                "type" => "surface"
+            )],
+            layout = Dict("title" => "3D Surface Plot")
+        )
+    ]),
+    Tab("Mixed Charts", [
+        Markdown("## Chart Comparison\n\nThis tab shows different chart libraries side by side."),
+        ChartJs("Line Chart", "line", Dict("labels" => ["A", "B", "C"], "datasets" => [Dict("data" => [10, 20, 15])])),
+        Highcharts("Area Chart", Dict("chart" => Dict("type" => "area"), "series" => [Dict("data" => [10, 20, 15])])),
+        Plotly("Scatter Plot", [Dict("y" => [10, 20, 15], "type" => "scatter")])
+    ])
+])
+
+output_path = joinpath(@__DIR__, "output", "test_charts.html")
+render(dashboard, output_path)
+
 end

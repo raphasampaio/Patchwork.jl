@@ -134,4 +134,74 @@ using Rhinestone
     end
 end
 
+# Generate comprehensive HTML demo
+dashboard = Dashboard(
+    "HTML Generation Demo",
+    [
+        Tab("Overview", [
+            Markdown("""
+            # Rhinestone Dashboard Generator
+
+            This demo showcases the HTML generation capabilities.
+
+            ## Features Demonstrated
+
+            - **Multi-tab layout** with Vue.js navigation
+            - **Responsive design** using Tailwind CSS
+            - **Search functionality** across all content
+            - **Mixed content types** (HTML, Markdown, Charts)
+            """),
+            Html("<div class='bg-blue-50 border border-blue-200 rounded p-4 my-4'><strong>Info:</strong> This is custom HTML content with Tailwind classes.</div>")
+        ]),
+        Tab("Components", [
+            Markdown("## Available Components\n\n### 1. HTML Items"),
+            Html("<p>Direct HTML injection for maximum flexibility.</p>"),
+            Markdown("### 2. Markdown Items"),
+            Markdown("Support for *all* **standard** markdown features."),
+            Markdown("### 3. Chart Items"),
+            ChartJs(
+                "Sample Chart",
+                "line",
+                Dict(
+                    "labels" => ["Mon", "Tue", "Wed", "Thu", "Fri"],
+                    "datasets" => [Dict("label" => "Data", "data" => [12, 19, 3, 5, 2])]
+                )
+            )
+        ]),
+        Tab("Custom Styling", [
+            Markdown("## Custom CSS Support\n\nDashboards can include custom CSS for styling."),
+            Html("""
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 0.5rem; text-align: center;">
+                <h3 style="margin: 0; font-size: 1.5rem;">Gradient Box</h3>
+                <p style="margin-top: 0.5rem;">With inline styles</p>
+            </div>
+            """),
+            Html("<div style='margin-top: 1rem; padding: 1rem; background: #f9fafb; border-radius: 0.5rem;'><code>Custom CSS can be added via the dashboard config</code></div>")
+        ]),
+        Tab("Interactive Features", [
+            Markdown("""
+            ## Search
+
+            Try searching for keywords in the top search bar.
+
+            ## Tab Navigation
+
+            Click tabs in the sidebar to switch views.
+
+            ## Responsive Layout
+
+            Resize your browser to see the mobile-friendly layout.
+            """),
+            Html("<div class='grid grid-cols-2 gap-4 my-4'><div class='bg-gray-100 p-4 rounded'>Box 1</div><div class='bg-gray-100 p-4 rounded'>Box 2</div></div>")
+        ])
+    ],
+    custom_css = """
+    .bg-blue-50 { background-color: #eff6ff; }
+    .border-blue-200 { border-color: #bfdbfe; }
+    """
+)
+
+output_path = joinpath(@__DIR__, "output", "test_html.html")
+render(dashboard, output_path)
+
 end

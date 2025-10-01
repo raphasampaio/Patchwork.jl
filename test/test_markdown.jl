@@ -50,4 +50,42 @@ using Rhinestone
     end
 end
 
+# Generate sample HTML output
+dashboard = Dashboard("Markdown Demo", [
+    Tab("Documentation", [
+        Markdown(
+            """
+# Markdown Content Example
+This demonstrates the **Markdown plugin** for Rhinestone.
+
+## Features
+- Easy formatting
+- Code blocks
+- Lists and emphasis
+
+### Code Example
+```julia
+function greet(name)
+    println("Hello, \$name!")
+end
+greet("World")
+```
+
+## Formatting
+You can use *italic*, **bold**, and ***bold italic*** text.
+> This is a blockquote.
+
+Links work too: [Rhinestone](https://github.com)
+""")
+    ]),
+    Tab("Mixed Content", [
+        Markdown("## Introduction\n\nThis tab combines markdown with HTML."),
+        Html("<hr>"),
+        Markdown("### Details\n\nMore markdown content here.")
+    ])
+])
+
+output_path = joinpath(@__DIR__, "output", "test_markdown.html")
+render(dashboard, output_path)
+
 end

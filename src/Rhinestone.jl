@@ -1,6 +1,7 @@
 module Rhinestone
 
 using UUIDs
+import JSON
 
 export Item, Tab, Dashboard, Html
 export render, tohtml, cdnurls, initscript
