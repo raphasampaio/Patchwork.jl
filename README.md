@@ -1,4 +1,4 @@
-<div align="center"><img src="/docs/src/assets/logo.svg" width=100px alt="Patchwork.jl"></img></div>
+<div align="center"><img src="/docs/src/assets/logo.svg" width=150px alt="Patchwork.jl"></img></div>
 
 # Patchwork.jl
 
