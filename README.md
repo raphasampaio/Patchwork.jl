@@ -1,3 +1,5 @@
+<div align="center"><img src="/docs/src/assets/logo.svg" width=250px alt="UnsupervisedClustering.jl"></img></div>
+
 # Patchwork.jl
 
 [![CI](https://github.com/raphasampaio/Patchwork.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/raphasampaio/Patchwork.jl/actions/workflows/CI.yml)
