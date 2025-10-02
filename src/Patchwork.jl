@@ -3,7 +3,6 @@ module Patchwork
 using UUIDs
 import JSON
 
-export Item, Tab, Dashboard, Html
 export save, to_html, css_deps, js_deps, init_script, css
 
 include("string.jl")
