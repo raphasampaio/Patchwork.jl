@@ -25,6 +25,3 @@ Manifest.toml
 
 *.DS_Store
 .claude
-
-# Test output directory
-test/output/
