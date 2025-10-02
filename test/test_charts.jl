@@ -73,6 +73,7 @@ using JSON
 
         script = init_script(PatchworkPlotly)
         @test occursin("Plotly", script)
+        @test occursin("initPlotlyCharts", script)
     end
 
     @testset "Plotly with layout and config" begin

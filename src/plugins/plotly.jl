@@ -45,14 +45,47 @@ js_deps(::Type{PatchworkPlotly}) = [
 ]
 
 init_script(::Type{PatchworkPlotly}) = """
-    document.querySelectorAll('.plotly-chart').forEach(container => {
-        const data = JSON.parse(container.getAttribute('data-data'));
-        const layout = JSON.parse(container.getAttribute('data-layout'));
-        const config = JSON.parse(container.getAttribute('data-config'));
-        Plotly.newPlot(container.id, data, layout, config);
-    });
+    const initPlotlyCharts = () => {
+        document.querySelectorAll('.plotly-chart').forEach(container => {
+            if (container.offsetParent !== null && !container.classList.contains('plotly-initialized')) {
+                const data = JSON.parse(container.getAttribute('data-data'));
+                const layout = JSON.parse(container.getAttribute('data-layout'));
+                const config = JSON.parse(container.getAttribute('data-config'));
+
+                if (layout.height) {
+                    container.style.height = layout.height + 'px';
+                } else {
+                    layout.height = parseInt(getComputedStyle(container).height);
+                }
+
+                Plotly.newPlot(container.id, data, layout, config);
+                container.classList.add('plotly-initialized');
+            }
+        });
+    };
+
+    initPlotlyCharts();
+
+    // Check for newly visible charts periodically
+    setInterval(initPlotlyCharts, 100);
 """
 
-css(::Type{PatchworkPlotly}) = ""
+css(::Type{PatchworkPlotly}) = """
+.plotly-chart {
+    min-height: 400px;
+}
+.plotly-chart .plot-container {
+    height: 100% !important;
+}
+.plotly-chart .gl-container {
+    height: 100% !important;
+}
+.plotly-chart .mapboxgl-map {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+"""
 
 end
