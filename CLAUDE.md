@@ -95,28 +95,28 @@ css(::Type{MyItem}) = "/* custom styles */"
 
 ### Built-in Plugins
 
-**PatchworkMarkdown** (`src/plugins/markdown.jl`)
-- Converts markdown to HTML using Julia's PatchworkMarkdown stdlib
-- Uses `import PatchworkMarkdown as MD` to avoid namespace conflicts
+**Patchwork.Markdown** (`src/plugins/markdown.jl`)
+- Converts markdown to HTML using Julia's Markdown stdlib
+- Uses `import Markdown as MD` to avoid namespace conflicts
 
-**PatchworkChartJs** (`src/plugins/chartjs.jl`)
+**Patchwork.ChartJs** (`src/plugins/chartjs.jl`)
 - Creates Chart.js charts
 - Stores config in `data-config` attribute
 - Requires `Dict{String,Any}` for type safety
 
-**PatchworkHighcharts** (`src/plugins/highcharts.jl`)
-- Creates PatchworkHighcharts charts
+**Patchwork.Highcharts** (`src/plugins/highcharts.jl`)
+- Creates Highcharts charts
 - Uses UUID for unique chart IDs
 
-**PatchworkPlotly** (`src/plugins/plotly.jl`)
-- Creates PatchworkPlotly charts
+**Patchwork.Plotly** (`src/plugins/plotly.jl`)
+- Creates Plotly charts
 - Supports data, layout, and config options
 
-**PatchworkLeaflet** (`src/plugins/leaflet.jl`)
+**Patchwork.Leaflet** (`src/plugins/leaflet.jl`)
 - Creates interactive maps using Leaflet
 - Supports center coordinates, zoom levels, and markers with popups
 
-**PatchworkMermaid** (`src/plugins/mermaid.jl`)
+**Patchwork.Mermaid** (`src/plugins/mermaid.jl`)
 - Renders diagrams using Mermaid
 - Supports flowcharts, sequence diagrams, class diagrams, and more
 
@@ -128,10 +128,10 @@ Always use `Dict{String,Any}` for chart configurations to avoid Julia's type inf
 
 ```julia
 # ✓ Correct
-PatchworkChartJs("Title", "bar", Dict{String,Any}("labels" => [...]))
+Patchwork.ChartJs("Title", "bar", Dict{String,Any}("labels" => [...]))
 
 # ✗ Wrong - will cause type errors
-PatchworkChartJs("Title", "bar", Dict("labels" => [...]))
+Patchwork.ChartJs("Title", "bar", Dict("labels" => [...]))
 ```
 
 ### HTML Generation
@@ -190,7 +190,7 @@ Edit `Project.toml`:
 ```toml
 [deps]
 JSON = "..."
-PatchworkMarkdown = "..."
+Markdown = "..."
 UUIDs = "..."
 
 [compat]
@@ -239,11 +239,6 @@ Self-contained outputs are easier to share and deploy. CDN dependencies keep fil
 - **Generate real output** for visual verification
 - **Cover edge cases** but don't over-test
 - **Keep tests simple** and readable
-
-## Version History
-
-- **v0.1.0** - Initial implementation with complex registry system
-- **v0.2.0** - Complete rewrite: simplified, plugin-based, no backward compatibility
 
 ## Future Considerations
 
