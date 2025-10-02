@@ -4,16 +4,16 @@ import JSON
 import ..Item, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
 using UUIDs
 
-export PatchworkLeaflet
+export Leaflet
 
-struct PatchworkLeaflet <: Item
+struct Leaflet <: Item
     title::String
     center::Tuple{Float64, Float64}
     zoom::Int
     markers::Vector{Dict{String, Any}}
     options::Dict{String, Any}
 
-    function PatchworkLeaflet(
+    function Leaflet(
         title::String,
         center::Tuple{Float64, Float64};
         zoom::Int = 13,
@@ -24,7 +24,7 @@ struct PatchworkLeaflet <: Item
     end
 end
 
-function to_html(item::PatchworkLeaflet)
+function to_html(item::Leaflet)
     map_id = "map-$(uuid4())"
 
     map_data = Dict(
@@ -44,15 +44,15 @@ function to_html(item::PatchworkLeaflet)
     """
 end
 
-css_deps(::Type{PatchworkLeaflet}) = [
+css_deps(::Type{Leaflet}) = [
     "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
 ]
 
-js_deps(::Type{PatchworkLeaflet}) = [
+js_deps(::Type{Leaflet}) = [
     "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
 ]
 
-init_script(::Type{PatchworkLeaflet}) = """
+init_script(::Type{Leaflet}) = """
     document.querySelectorAll('.leaflet-map').forEach(container => {
         const config = JSON.parse(container.getAttribute('data-config'));
         const map = L.map(container.id, config.options).setView(config.center, config.zoom);
@@ -71,6 +71,6 @@ init_script(::Type{PatchworkLeaflet}) = """
     });
 """
 
-css(::Type{PatchworkLeaflet}) = ""
+css(::Type{Leaflet}) = ""
 
 end

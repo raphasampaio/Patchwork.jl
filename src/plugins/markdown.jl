@@ -1,33 +1,33 @@
 module MarkdownPlugin
 
-using Markdown
+import Markdown as MD
 import ..Item, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
 
-export PatchworkMarkdown
+export Markdown
 
-struct PatchworkMarkdown <: Item
+struct Markdown <: Item
     content::String
 end
 
-to_html(item::PatchworkMarkdown) = Markdown.html(Markdown.parse(item.content))
+to_html(item::Markdown) = MD.html(MD.parse(item.content))
 
-css_deps(::Type{PatchworkMarkdown}) = [
+css_deps(::Type{Markdown}) = [
     "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-light.min.css",
 ]
 
-js_deps(::Type{PatchworkMarkdown}) = [
+js_deps(::Type{Markdown}) = [
     "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/julia.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/lua.min.js",
 ]
 
-init_script(::Type{PatchworkMarkdown}) = """
+init_script(::Type{Markdown}) = """
     document.querySelectorAll('pre code').forEach((block) => {
         hljs.highlightElement(block);
     });
 """
 
-css(::Type{PatchworkMarkdown}) = """
+css(::Type{Markdown}) = """
 /* Markdown content styling */
 h1 {
     font-size: 1.875rem;

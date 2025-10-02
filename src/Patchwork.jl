@@ -3,7 +3,6 @@ module Patchwork
 using UUIDs
 import JSON
 
-export Item, PatchworkTab, PatchworkDashboard, Html
 export save, to_html, css_deps, js_deps, init_script, css
 
 include("string.jl")
@@ -25,13 +24,5 @@ using .HighchartsPlugin
 using .PlotlyPlugin
 using .LeafletPlugin
 using .MermaidPlugin
-
-export
-    PatchworkMarkdown,
-    PatchworkChartJs,
-    PatchworkHighcharts,
-    PatchworkPlotly,
-    PatchworkLeaflet,
-    PatchworkMermaid
 
 end

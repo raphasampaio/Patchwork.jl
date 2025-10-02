@@ -5,8 +5,8 @@ using Patchwork
 
 @testset "Markdown Plugin" begin
     @testset "Markdown basics" begin
-        md = PatchworkMarkdown("# Hello\n\nWorld")
-        @test md isa Item
+        md = Patchwork.Markdown("# Hello\n\nWorld")
+        @test md isa Patchwork.Item
 
         html_output = to_html(md)
         @test occursin("<h1>Hello</h1>", html_output)
@@ -14,7 +14,7 @@ using Patchwork
     end
 
     @testset "Markdown formatting" begin
-        md = PatchworkMarkdown("""
+        md = Patchwork.Markdown("""
 # Heading 1
 ## Heading 2
 
@@ -34,7 +34,7 @@ using Patchwork
     end
 
     @testset "Markdown code blocks" begin
-        md = PatchworkMarkdown("""
+        md = Patchwork.Markdown("""
 ```julia
 x = 1 + 1
 ```
@@ -47,13 +47,13 @@ x = 1 + 1
 end
 
 # Generate sample HTML output
-dashboard = PatchworkDashboard(
+dashboard = Patchwork.Dashboard(
     "Markdown Demo",
     [
-        PatchworkTab(
+        Patchwork.Tab(
             "Documentation",
             [
-                PatchworkMarkdown(
+                Patchwork.Markdown(
                     """
 # Markdown Content Example
 This demonstrates the **Markdown plugin** for Patchwork.
@@ -80,12 +80,12 @@ Links work too: [Patchwork](https://github.com)
 """),
             ],
         ),
-        PatchworkTab(
+        Patchwork.Tab(
             "Mixed Content",
             [
-                PatchworkMarkdown("## Introduction\n\nThis tab combines markdown with HTML."),
-                Html("<hr>"),
-                PatchworkMarkdown("### Details\n\nMore markdown content here."),
+                Patchwork.Markdown("## Introduction\n\nThis tab combines markdown with HTML."),
+                Patchwork.Html("<hr>"),
+                Patchwork.Markdown("### Details\n\nMore markdown content here."),
             ],
         ),
     ],

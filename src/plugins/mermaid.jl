@@ -3,14 +3,14 @@ module MermaidPlugin
 import ..Item, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
 using UUIDs
 
-export PatchworkMermaid
+export Mermaid
 
-struct PatchworkMermaid <: Item
+struct Mermaid <: Item
     title::String
     diagram::String
     theme::String
 
-    function PatchworkMermaid(
+    function Mermaid(
         title::String,
         diagram::String;
         theme::String = "default",
@@ -19,7 +19,7 @@ struct PatchworkMermaid <: Item
     end
 end
 
-function to_html(item::PatchworkMermaid)
+function to_html(item::Mermaid)
     diagram_id = "mermaid-$(uuid4())"
 
     return """
@@ -32,13 +32,13 @@ function to_html(item::PatchworkMermaid)
     """
 end
 
-css_deps(::Type{PatchworkMermaid}) = String[]
+css_deps(::Type{Mermaid}) = String[]
 
-js_deps(::Type{PatchworkMermaid}) = [
+js_deps(::Type{Mermaid}) = [
     "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js",
 ]
 
-init_script(::Type{PatchworkMermaid}) = """
+init_script(::Type{Mermaid}) = """
     const diagramThemes = {};
     document.querySelectorAll('.mermaid-diagram').forEach(container => {
         const theme = container.getAttribute('data-theme') || 'default';
@@ -56,7 +56,7 @@ init_script(::Type{PatchworkMermaid}) = """
     });
 """
 
-css(::Type{PatchworkMermaid}) = """
+css(::Type{Mermaid}) = """
 .mermaid-diagram {
     overflow-x: auto;
 }

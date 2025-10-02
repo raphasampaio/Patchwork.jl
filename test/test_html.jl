@@ -8,8 +8,8 @@ using Patchwork
         mktempdir() do dir
             path = joinpath(dir, "test.html")
 
-            dashboard = PatchworkDashboard("Test", [
-                PatchworkTab("Tab1", [Html("<p>content</p>")]),
+            dashboard = Patchwork.Dashboard("Test", [
+                Patchwork.Tab("Tab1", [Patchwork.Html("<p>content</p>")]),
             ])
 
             result = save(dashboard, path)
@@ -25,7 +25,7 @@ using Patchwork
     end
 
     @testset "HTML contains Vue and Tailwind" begin
-        dashboard = PatchworkDashboard("App", [PatchworkTab("T", [Html("<p>x</p>")])])
+        dashboard = Patchwork.Dashboard("App", [Patchwork.Tab("T", [Patchwork.Html("<p>x</p>")])])
         html = Patchwork.generate_html(dashboard)
 
         @test occursin("vue", html)
@@ -33,14 +33,14 @@ using Patchwork
     end
 
     @testset "HTML contains dashboard title" begin
-        dashboard = PatchworkDashboard("My PatchworkDashboard", [PatchworkTab("T", [Html("<p>x</p>")])])
+        dashboard = Patchwork.Dashboard("My Dashboard", [Patchwork.Tab("T", [Patchwork.Html("<p>x</p>")])])
         html = Patchwork.generate_html(dashboard)
 
-        @test occursin("My PatchworkDashboard", html)
+        @test occursin("My Dashboard", html)
     end
 
     @testset "HTML escapes title properly" begin
-        dashboard = PatchworkDashboard("<script>alert()</script>", [PatchworkTab("T", [Html("<p>x</p>")])])
+        dashboard = Patchwork.Dashboard("<script>alert()</script>", [Patchwork.Tab("T", [Patchwork.Html("<p>x</p>")])])
         html = Patchwork.generate_html(dashboard)
 
         @test occursin("&lt;script&gt;", html)
@@ -48,7 +48,7 @@ using Patchwork
     end
 
     @testset "HTML includes custom CSS" begin
-        dashboard = PatchworkDashboard("App", [PatchworkTab("T", [Html("<p>x</p>")])],
+        dashboard = Patchwork.Dashboard("App", [Patchwork.Tab("T", [Patchwork.Html("<p>x</p>")])],
             custom_css = ".custom { color: red; }")
         html = Patchwork.generate_html(dashboard)
 
@@ -56,13 +56,13 @@ using Patchwork
     end
 
     @testset "HTML includes CDN URLs from plugins" begin
-        dashboard = PatchworkDashboard(
+        dashboard = Patchwork.Dashboard(
             "Charts",
             [
-                PatchworkTab(
+                Patchwork.Tab(
                     "T",
                     [
-                        PatchworkChartJs("Chart", "line", Dict{String, Any}("labels" => [], "datasets" => [])),
+                        Patchwork.ChartJs("Chart", "line", Dict{String, Any}("labels" => [], "datasets" => [])),
                     ],
                 ),
             ],
@@ -73,13 +73,13 @@ using Patchwork
     end
 
     @testset "HTML includes init scripts from plugins" begin
-        dashboard = PatchworkDashboard(
+        dashboard = Patchwork.Dashboard(
             "Charts",
             [
-                PatchworkTab(
+                Patchwork.Tab(
                     "T",
                     [
-                        PatchworkChartJs("Chart", "bar", Dict{String, Any}("labels" => [], "datasets" => [])),
+                        Patchwork.ChartJs("Chart", "bar", Dict{String, Any}("labels" => [], "datasets" => [])),
                     ],
                 ),
             ],
@@ -90,12 +90,12 @@ using Patchwork
     end
 
     @testset "HTML contains multiple tabs" begin
-        dashboard = PatchworkDashboard(
+        dashboard = Patchwork.Dashboard(
             "Multi",
             [
-                PatchworkTab("Tab1", [Html("<p>one</p>")]),
-                PatchworkTab("Tab2", [Html("<p>two</p>")]),
-                PatchworkTab("Tab3", [Html("<p>three</p>")]),
+                Patchwork.Tab("Tab1", [Patchwork.Html("<p>one</p>")]),
+                Patchwork.Tab("Tab2", [Patchwork.Html("<p>two</p>")]),
+                Patchwork.Tab("Tab3", [Patchwork.Html("<p>three</p>")]),
             ],
         )
         html = Patchwork.generate_html(dashboard)
@@ -109,15 +109,15 @@ using Patchwork
     end
 
     @testset "HTML contains multiple items per tab" begin
-        dashboard = PatchworkDashboard(
+        dashboard = Patchwork.Dashboard(
             "Multi",
             [
-                PatchworkTab(
-                    "PatchworkTab",
+                Patchwork.Tab(
+                    "Tab",
                     [
-                        Html("<p>first</p>"),
-                        Html("<p>second</p>"),
-                        PatchworkMarkdown("# Third"),
+                        Patchwork.Html("<p>first</p>"),
+                        Patchwork.Html("<p>second</p>"),
+                        Patchwork.Markdown("# Third"),
                     ],
                 ),
             ],
@@ -130,15 +130,15 @@ using Patchwork
     end
 
     @testset "Mixed content types" begin
-        dashboard = PatchworkDashboard(
+        dashboard = Patchwork.Dashboard(
             "Mixed",
             [
-                PatchworkTab(
+                Patchwork.Tab(
                     "All",
                     [
-                        Html("<div>HTML</div>"),
-                        PatchworkMarkdown("**PatchworkMarkdown**"),
-                        PatchworkChartJs(
+                        Patchwork.Html("<div>HTML</div>"),
+                        Patchwork.Markdown("**Markdown**"),
+                        Patchwork.ChartJs(
                             "Chart",
                             "pie",
                             Dict{String, Any}("labels" => ["A"], "datasets" => [Dict("data" => [1])]),
@@ -150,21 +150,21 @@ using Patchwork
         html = Patchwork.generate_html(dashboard)
 
         @test occursin("HTML", html)
-        @test occursin("PatchworkMarkdown", html)
+        @test occursin("Markdown", html)
         @test occursin("Chart", html)
         @test occursin("chart.js", html)
     end
 end
 
 # Generate comprehensive HTML demo
-dashboard = PatchworkDashboard(
+dashboard = Patchwork.Dashboard(
     "HTML Generation Demo",
     [
-        PatchworkTab(
+        Patchwork.Tab(
             "Overview",
             [
-                PatchworkMarkdown("""
-                # Patchwork PatchworkDashboard Generator
+                Patchwork.Markdown("""
+                # Patchwork Dashboard Generator
 
                 This demo showcases the HTML generation capabilities.
 
@@ -173,22 +173,22 @@ dashboard = PatchworkDashboard(
                 - **Multi-tab layout** with Vue.js navigation
                 - **Responsive design** using Tailwind CSS
                 - **Search functionality** across all content
-                - **Mixed content types** (HTML, PatchworkMarkdown, Charts)
+                - **Mixed content types** (HTML, Markdown, Charts)
                 """),
-                Html(
+                Patchwork.Html(
                     "<div class='bg-blue-50 border border-blue-200 rounded p-4 my-4'><strong>Info:</strong> This is custom HTML content with Tailwind classes.</div>",
                 ),
             ],
         ),
-        PatchworkTab(
+        Patchwork.Tab(
             "Components",
             [
-                PatchworkMarkdown("## Available Components\n\n### 1. HTML Items"),
-                Html("<p>Direct HTML injection for maximum flexibility.</p>"),
-                PatchworkMarkdown("### 2. PatchworkMarkdown Items"),
-                PatchworkMarkdown("Support for *all* **standard** markdown features."),
-                PatchworkMarkdown("### 3. Chart Items"),
-                PatchworkChartJs(
+                Patchwork.Markdown("## Available Components\n\n### 1. HTML Items"),
+                Patchwork.Html("<p>Direct HTML injection for maximum flexibility.</p>"),
+                Patchwork.Markdown("### 2. Markdown Items"),
+                Patchwork.Markdown("Support for *all* **standard** markdown features."),
+                Patchwork.Markdown("### 3. Chart Items"),
+                Patchwork.ChartJs(
                     "Sample Chart",
                     "line",
                     Dict{String, Any}(
@@ -198,11 +198,11 @@ dashboard = PatchworkDashboard(
                 ),
             ],
         ),
-        PatchworkTab(
+        Patchwork.Tab(
             "Custom Styling",
             [
-                PatchworkMarkdown("## Custom CSS Support\n\nDashboards can include custom CSS for styling."),
-                Html(
+                Patchwork.Markdown("## Custom CSS Support\n\nDashboards can include custom CSS for styling."),
+                Patchwork.Html(
                     """
                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 0.5rem; text-align: center;">
                    <h3 style="margin: 0; font-size: 1.5rem;">Gradient Box</h3>
@@ -210,20 +210,20 @@ dashboard = PatchworkDashboard(
                </div>
                """,
                 ),
-                Html(
+                Patchwork.Html(
                     "<div style='margin-top: 1rem; padding: 1rem; background: #f9fafb; border-radius: 0.5rem;'><code>Custom CSS can be added via the dashboard config</code></div>",
                 ),
             ],
         ),
-        PatchworkTab(
+        Patchwork.Tab(
             "Interactive Features",
             [
-                PatchworkMarkdown("""
+                Patchwork.Markdown("""
                 ## Search
 
                 Try searching for keywords in the top search bar.
 
-                ## PatchworkTab Navigation
+                ## Tab Navigation
 
                 Click tabs in the sidebar to switch views.
 
@@ -231,7 +231,7 @@ dashboard = PatchworkDashboard(
 
                 Resize your browser to see the mobile-friendly layout.
                 """),
-                Html(
+                Patchwork.Html(
                     "<div class='grid grid-cols-2 gap-4 my-4'><div class='bg-gray-100 p-4 rounded'>Box 1</div><div class='bg-gray-100 p-4 rounded'>Box 2</div></div>",
                 ),
             ],
