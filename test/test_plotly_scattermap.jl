@@ -5,7 +5,7 @@ using Patchwork
 
 @testset "Plotly Scattermap" begin
     @testset "Basic scattermapbox" begin
-        chart = Plotly(
+        chart = Patchwork.Plotly(
             "Location Map",
             [Dict{String, Any}(
                 "type" => "scattermapbox",
@@ -32,7 +32,7 @@ using Patchwork
     end
 
     @testset "Scattermapbox with custom styling" begin
-        chart = Plotly(
+        chart = Patchwork.Plotly(
             "City Population",
             [Dict{String, Any}(
                 "type" => "scattermapbox",
@@ -61,7 +61,7 @@ using Patchwork
     end
 
     @testset "Multiple scattermapbox traces" begin
-        chart = Plotly(
+        chart = Patchwork.Plotly(
             "Multi-layer Map",
             [
                 Dict{String, Any}(
@@ -97,18 +97,18 @@ using Patchwork
 end
 
 # Generate demo HTML
-dashboard = Dashboard(
+dashboard = Patchwork.Dashboard(
     "Plotly Scattermap Demo",
     [
-        Tab(
+        Patchwork.Tab(
             "US Cities",
             [
-                Markdown("""
+                Patchwork.Markdown("""
                 ## Major US Cities Map
 
                 This map shows the locations of major US cities using Plotly's scattermapbox.
                 """),
-                Plotly(
+                Patchwork.Plotly(
                     "Population Centers",
                     [Dict{String, Any}(
                         "type" => "scattermapbox",
@@ -132,15 +132,15 @@ dashboard = Dashboard(
                 ),
             ],
         ),
-        Tab(
+        Patchwork.Tab(
             "World Capitals",
             [
-                Markdown("""
+                Patchwork.Markdown("""
                 ## World Capital Cities
 
                 Interactive map showing capital cities across different continents.
                 """),
-                Plotly(
+                Patchwork.Plotly(
                     "Global Capitals",
                     [
                         Dict{String, Any}(
@@ -182,15 +182,15 @@ dashboard = Dashboard(
                 ),
             ],
         ),
-        Tab(
+        Patchwork.Tab(
             "Route Visualization",
             [
-                Markdown("""
+                Patchwork.Markdown("""
                 ## Flight Path Example
 
                 Showing a flight route with markers and lines.
                 """),
-                Plotly(
+                Patchwork.Plotly(
                     "Flight Route: NYC to London",
                     [
                         Dict{String, Any}(

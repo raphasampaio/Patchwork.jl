@@ -5,8 +5,8 @@ using Patchwork
 using JSON
 
 @testset "Chart Plugins" begin
-    @testset "ChartJs" begin
-        chart = ChartJs(
+    @testset "Patchwork.ChartJs(" begin
+        chart = Patchwork.ChartJs(
             "Test Chart",
             "line",
             Dict{String, Any}("labels" => ["A", "B"], "datasets" => [Dict("data" => [1, 2])]),
@@ -21,13 +21,13 @@ using JSON
         @test occursin("canvas", html_output)
         @test occursin("data-config", html_output)
 
-        script = init_script(ChartJs)
+        script = init_script(Patchwork.ChartJs)
         @test occursin("chartjs-chart", script)
         @test occursin("Chart", script)
     end
 
     @testset "ChartJs with options" begin
-        chart = ChartJs(
+        chart = Patchwork.ChartJs(
             "Custom Chart",
             "bar",
             Dict{String, Any}("labels" => ["X"], "datasets" => [Dict("data" => [10])]),
@@ -39,7 +39,7 @@ using JSON
     end
 
     @testset "Highcharts" begin
-        chart = Highcharts(
+        chart = Patchwork.Highcharts(
             "Analytics",
             Dict{String, Any}(
                 "chart" => Dict("type" => "column"),
@@ -59,7 +59,7 @@ using JSON
     end
 
     @testset "Plotly" begin
-        chart = Plotly(
+        chart = Patchwork.Plotly(
             "Science Plot",
             [Dict("x" => [1, 2, 3], "y" => [4, 5, 6], "type" => "scatter")],
         )
@@ -77,7 +77,7 @@ using JSON
     end
 
     @testset "Plotly with layout and config" begin
-        chart = Plotly(
+        chart = Patchwork.Plotly(
             "Custom Plot",
             [Dict{String, Any}("y" => [1, 2, 3])],
             layout = Dict{String, Any}("title" => "My Title"),
@@ -92,13 +92,13 @@ using JSON
 end
 
 # Generate sample HTML output with all chart types
-dashboard = Dashboard(
+dashboard = Patchwork.Dashboard(
     "Charts Demo",
     [
-        Tab(
+        Patchwork.Tab(
             "Chart.js",
             [
-                ChartJs(
+                Patchwork.ChartJs(
                     "Sales by Quarter",
                     "bar",
                     Dict{String, Any}(
@@ -117,7 +117,7 @@ dashboard = Dashboard(
                         ],
                     ),
                 ),
-                ChartJs(
+                Patchwork.ChartJs(
                     "Traffic Sources",
                     "doughnut",
                     Dict{String, Any}(
@@ -132,10 +132,10 @@ dashboard = Dashboard(
                 ),
             ],
         ),
-        Tab(
+        Patchwork.Tab(
             "Highcharts",
             [
-                Highcharts(
+                Patchwork.Highcharts(
                     "Monthly Performance",
                     Dict{String, Any}(
                         "chart" => Dict("type" => "line"),
@@ -148,7 +148,7 @@ dashboard = Dashboard(
                         ],
                     ),
                 ),
-                Highcharts(
+                Patchwork.Highcharts(
                     "Distribution",
                     Dict{String, Any}(
                         "chart" => Dict("type" => "column"),
@@ -158,10 +158,10 @@ dashboard = Dashboard(
                 ),
             ],
         ),
-        Tab(
+        Patchwork.Tab(
             "Plotly",
             [
-                Plotly(
+                Patchwork.Plotly(
                     "Scatter Analysis",
                     [
                         Dict{String, Any}(
@@ -174,7 +174,7 @@ dashboard = Dashboard(
                     ],
                     layout = Dict{String, Any}("xaxis" => Dict("title" => "X"), "yaxis" => Dict("title" => "Y²")),
                 ),
-                Plotly(
+                Patchwork.Plotly(
                     "3D Surface",
                     [Dict{String, Any}(
                         "z" => [[1, 2, 3], [2, 3, 4], [3, 4, 5]],
@@ -184,20 +184,20 @@ dashboard = Dashboard(
                 ),
             ],
         ),
-        Tab(
+        Patchwork.Tab(
             "Mixed Charts",
             [
-                Markdown("## Chart Comparison\n\nThis tab shows different chart libraries side by side."),
-                ChartJs(
+                Patchwork.Markdown("## Chart Comparison\n\nThis tab shows different chart libraries side by side."),
+                Patchwork.ChartJs(
                     "Line Chart",
                     "line",
                     Dict{String, Any}("labels" => ["A", "B", "C"], "datasets" => [Dict("data" => [10, 20, 15])]),
                 ),
-                Highcharts(
+                Patchwork.Highcharts(
                     "Area Chart",
                     Dict{String, Any}("chart" => Dict("type" => "area"), "series" => [Dict("data" => [10, 20, 15])]),
                 ),
-                Plotly("Scatter Plot", [Dict{String, Any}("y" => [10, 20, 15], "type" => "scatter")]),
+                Patchwork.Plotly("Scatter Plot", [Dict{String, Any}("y" => [10, 20, 15], "type" => "scatter")]),
             ],
         ),
     ],

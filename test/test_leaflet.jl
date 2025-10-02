@@ -5,14 +5,14 @@ using Patchwork
 
 @testset "Leaflet Plugin" begin
     @testset "Leaflet constructor" begin
-        map = Leaflet("Test Map", (40.7128, -74.0060))
+        map = Patchwork.Leaflet("Test Map", (40.7128, -74.0060))
         @test map.title == "Test Map"
         @test map.center == (40.7128, -74.0060)
         @test map.zoom == 13
         @test map.markers == Dict{String, Any}[]
         @test map.options == Dict{String, Any}()
 
-        map_with_zoom = Leaflet("Custom Zoom", (51.505, -0.09), zoom = 10)
+        map_with_zoom = Patchwork.Leaflet("Custom Zoom", (51.505, -0.09), zoom = 10)
         @test map_with_zoom.zoom == 10
     end
 
@@ -21,13 +21,13 @@ using Patchwork
             Dict{String, Any}("lat" => 40.7128, "lng" => -74.0060, "popup" => "New York"),
             Dict{String, Any}("lat" => 34.0522, "lng" => -118.2437, "popup" => "Los Angeles"),
         ]
-        map = Leaflet("US Cities", (37.0, -95.0), markers = markers)
+        map = Patchwork.Leaflet("US Cities", (37.0, -95.0), markers = markers)
         @test length(map.markers) == 2
         @test map.markers[1]["popup"] == "New York"
     end
 
     @testset "Leaflet rendering" begin
-        map = Leaflet("Test Map", (40.7128, -74.0060))
+        map = Patchwork.Leaflet("Test Map", (40.7128, -74.0060))
         html = to_html(map)
         @test occursin("Test Map", html)
         @test occursin("leaflet-map", html)
@@ -45,23 +45,23 @@ using Patchwork
 end
 
 # Generate sample HTML output
-dashboard = Dashboard(
+dashboard = Patchwork.Dashboard(
     "Leaflet Maps Demo",
     [
-        Tab(
+        Patchwork.Tab(
             "Single Map",
             [
-                Leaflet(
+                Patchwork.Leaflet(
                     "New York City",
                     (40.7128, -74.0060),
                     zoom = 12,
                 ),
             ],
         ),
-        Tab(
+        Patchwork.Tab(
             "Map with Markers",
             [
-                Leaflet(
+                Patchwork.Leaflet(
                     "Major US Cities",
                     (39.8283, -98.5795),
                     zoom = 4,

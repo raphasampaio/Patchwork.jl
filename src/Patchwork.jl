@@ -25,12 +25,4 @@ using .PlotlyPlugin
 using .LeafletPlugin
 using .MermaidPlugin
 
-export
-    Markdown,
-    ChartJs,
-    Highcharts,
-    Plotly,
-    Leaflet,
-    Mermaid
-
 end

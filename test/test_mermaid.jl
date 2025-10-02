@@ -5,17 +5,17 @@ using Patchwork
 
 @testset "Mermaid Plugin" begin
     @testset "Mermaid constructor" begin
-        diagram = Mermaid("Test Diagram", "graph TD\nA-->B")
+        diagram = Patchwork.Mermaid("Test Diagram", "graph TD\nA-->B")
         @test diagram.title == "Test Diagram"
         @test diagram.diagram == "graph TD\nA-->B"
         @test diagram.theme == "default"
 
-        diagram_with_theme = Mermaid("Dark Diagram", "graph LR\nX-->Y", theme = "dark")
+        diagram_with_theme = Patchwork.Mermaid("Dark Diagram", "graph LR\nX-->Y", theme = "dark")
         @test diagram_with_theme.theme == "dark"
     end
 
     @testset "Mermaid rendering" begin
-        diagram = Mermaid("Flowchart", "graph TD\nStart-->End")
+        diagram = Patchwork.Mermaid("Flowchart", "graph TD\nStart-->End")
         html = to_html(diagram)
         @test occursin("Flowchart", html)
         @test occursin("mermaid-diagram", html)
@@ -32,13 +32,13 @@ using Patchwork
 end
 
 # Generate sample HTML output
-dashboard = Dashboard(
+dashboard = Patchwork.Dashboard(
     "Mermaid Diagrams Demo",
     [
-        Tab(
+        Patchwork.Tab(
             "Flowcharts",
             [
-                Mermaid(
+                Patchwork.Mermaid(
                     "Simple Flowchart",
                     """
                     graph TD
@@ -48,7 +48,7 @@ dashboard = Dashboard(
                         C --> D
                     """,
                 ),
-                Mermaid(
+                Patchwork.Mermaid(
                     "Process Flow",
                     """
                     graph LR
@@ -60,10 +60,10 @@ dashboard = Dashboard(
                 ),
             ],
         ),
-        Tab(
+        Patchwork.Tab(
             "Diagrams",
             [
-                Mermaid(
+                Patchwork.Mermaid(
                     "Sequence Diagram",
                     """
                     sequenceDiagram
@@ -76,7 +76,7 @@ dashboard = Dashboard(
                         Browser->>User: Display result
                     """,
                 ),
-                Mermaid(
+                Patchwork.Mermaid(
                     "Class Diagram",
                     """
                     classDiagram
