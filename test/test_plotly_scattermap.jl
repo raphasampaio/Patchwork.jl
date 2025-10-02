@@ -25,7 +25,7 @@ using Patchwork
                 ),
             ),
         )
-        @test chart isa Item
+        @test chart isa Patchwork.Item
         @test chart.title == "Location Map"
 
         html_output = to_html(chart)

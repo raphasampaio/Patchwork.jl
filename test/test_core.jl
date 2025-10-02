@@ -6,19 +6,19 @@ using Patchwork
 @testset "Core Types" begin
     @testset "Html" begin
         html = Patchwork.Html("<p>test</p>")
-        @test html isa Item
+        @test html isa Patchwork.Item
         @test to_html(html) == "<p>test</p>"
-        @test css_deps(Html) == String[]
-        @test js_deps(Html) == String[]
-        @test init_script(Html) == ""
-        @test css(Html) == ""
+        @test css_deps(Patchwork.Html) == String[]
+        @test js_deps(Patchwork.Html) == String[]
+        @test init_script(Patchwork.Html) == ""
+        @test css(Patchwork.Html) == ""
     end
 
     @testset "Tab" begin
         tab = Patchwork.Tab("Test", [Patchwork.Html("<p>content</p>")])
         @test tab.label == "Test"
         @test length(tab.items) == 1
-        @test tab.items[1] isa Html
+        @test tab.items[1] isa Patchwork.Html
     end
 
     @testset "Dashboard" begin

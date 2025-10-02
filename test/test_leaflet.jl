@@ -36,11 +36,11 @@ using Patchwork
     end
 
     @testset "Leaflet plugin interface" begin
-        @test css_deps(Leaflet) == ["https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"]
-        @test js_deps(Leaflet) == ["https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"]
-        @test occursin("L.map", init_script(Leaflet))
-        @test occursin("L.tileLayer", init_script(Leaflet))
-        @test css(Leaflet) == ""
+        @test css_deps(Patchwork.Leaflet) == ["https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"]
+        @test js_deps(Patchwork.Leaflet) == ["https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"]
+        @test occursin("L.map", init_script(Patchwork.Leaflet))
+        @test occursin("L.tileLayer", init_script(Patchwork.Leaflet))
+        @test css(Patchwork.Leaflet) == ""
     end
 end
 

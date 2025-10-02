@@ -6,7 +6,7 @@ using Patchwork
 @testset "Markdown Plugin" begin
     @testset "Markdown basics" begin
         md = Patchwork.Markdown("# Hello\n\nWorld")
-        @test md isa Item
+        @test md isa Patchwork.Item
 
         html_output = to_html(md)
         @test occursin("<h1>Hello</h1>", html_output)

@@ -46,7 +46,7 @@ using JSON
                 "series" => [Dict("data" => [1, 2, 3])],
             ),
         )
-        @test chart isa Item
+        @test chart isa Patchwork.Item
         @test chart.title == "Analytics"
 
         html_output = to_html(chart)
@@ -54,7 +54,7 @@ using JSON
         @test occursin("highcharts-chart", html_output)
         @test occursin("data-config", html_output)
 
-        script = init_script(Highcharts)
+        script = init_script(Patchwork.Highcharts)
         @test occursin("Highcharts", script)
     end
 
@@ -63,7 +63,7 @@ using JSON
             "Science Plot",
             [Dict("x" => [1, 2, 3], "y" => [4, 5, 6], "type" => "scatter")],
         )
-        @test chart isa Item
+        @test chart isa Patchwork.Item
         @test chart.title == "Science Plot"
 
         html_output = to_html(chart)
@@ -71,7 +71,7 @@ using JSON
         @test occursin("plotly-chart", html_output)
         @test occursin("data-data", html_output)
 
-        script = init_script(Plotly)
+        script = init_script(Patchwork.Plotly)
         @test occursin("Plotly", script)
         @test occursin("initPlotlyCharts", script)
     end

@@ -24,10 +24,10 @@ using Patchwork
     end
 
     @testset "Mermaid plugin interface" begin
-        @test css_deps(Mermaid) == String[]
-        @test js_deps(Mermaid) == ["https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"]
-        @test occursin("mermaid.initialize", init_script(Mermaid))
-        @test occursin(".mermaid-diagram", css(Mermaid))
+        @test css_deps(Patchwork.Mermaid) == String[]
+        @test js_deps(Patchwork.Mermaid) == ["https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"]
+        @test occursin("mermaid.initialize", init_script(Patchwork.Mermaid))
+        @test occursin(".mermaid-diagram", css(Patchwork.Mermaid))
     end
 end
 
