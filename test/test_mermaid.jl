@@ -4,18 +4,18 @@ using Test
 using Patchwork
 
 @testset "Mermaid Plugin" begin
-    @testset "PatchworkMermaid constructor" begin
-        diagram = PatchworkMermaid("Test Diagram", "graph TD\nA-->B")
+    @testset "Mermaid constructor" begin
+        diagram = Mermaid("Test Diagram", "graph TD\nA-->B")
         @test diagram.title == "Test Diagram"
         @test diagram.diagram == "graph TD\nA-->B"
         @test diagram.theme == "default"
 
-        diagram_with_theme = PatchworkMermaid("Dark Diagram", "graph LR\nX-->Y", theme = "dark")
+        diagram_with_theme = Mermaid("Dark Diagram", "graph LR\nX-->Y", theme = "dark")
         @test diagram_with_theme.theme == "dark"
     end
 
-    @testset "PatchworkMermaid rendering" begin
-        diagram = PatchworkMermaid("Flowchart", "graph TD\nStart-->End")
+    @testset "Mermaid rendering" begin
+        diagram = Mermaid("Flowchart", "graph TD\nStart-->End")
         html = to_html(diagram)
         @test occursin("Flowchart", html)
         @test occursin("mermaid-diagram", html)
@@ -23,22 +23,22 @@ using Patchwork
         @test occursin("Start-->End", html)
     end
 
-    @testset "PatchworkMermaid plugin interface" begin
-        @test css_deps(PatchworkMermaid) == String[]
-        @test js_deps(PatchworkMermaid) == ["https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"]
-        @test occursin("mermaid.initialize", init_script(PatchworkMermaid))
-        @test occursin(".mermaid-diagram", css(PatchworkMermaid))
+    @testset "Mermaid plugin interface" begin
+        @test css_deps(Mermaid) == String[]
+        @test js_deps(Mermaid) == ["https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"]
+        @test occursin("mermaid.initialize", init_script(Mermaid))
+        @test occursin(".mermaid-diagram", css(Mermaid))
     end
 end
 
 # Generate sample HTML output
-dashboard = PatchworkDashboard(
+dashboard = Dashboard(
     "Mermaid Diagrams Demo",
     [
-        PatchworkTab(
+        Tab(
             "Flowcharts",
             [
-                PatchworkMermaid(
+                Mermaid(
                     "Simple Flowchart",
                     """
                     graph TD
@@ -48,7 +48,7 @@ dashboard = PatchworkDashboard(
                         C --> D
                     """,
                 ),
-                PatchworkMermaid(
+                Mermaid(
                     "Process Flow",
                     """
                     graph LR
@@ -60,10 +60,10 @@ dashboard = PatchworkDashboard(
                 ),
             ],
         ),
-        PatchworkTab(
+        Tab(
             "Diagrams",
             [
-                PatchworkMermaid(
+                Mermaid(
                     "Sequence Diagram",
                     """
                     sequenceDiagram
@@ -76,7 +76,7 @@ dashboard = PatchworkDashboard(
                         Browser->>User: Display result
                     """,
                 ),
-                PatchworkMermaid(
+                Mermaid(
                     "Class Diagram",
                     """
                     classDiagram

@@ -1,20 +1,20 @@
-struct PatchworkDashboard
+struct Dashboard
     title::String
-    tabs::Vector{PatchworkTab}
+    tabs::Vector{Tab}
     custom_css::String
 
-    function PatchworkDashboard(title::String, tabs::Vector{PatchworkTab}; custom_css::String = "")
+    function Dashboard(title::String, tabs::Vector{Tab}; custom_css::String = "")
         return new(title, tabs, custom_css)
     end
 end
 
-function save(dashboard::PatchworkDashboard, path::String)
+function save(dashboard::Dashboard, path::String)
     html = generate_html(dashboard)
     write(path, html)
     return path
 end
 
-function generate_html(dashboard::PatchworkDashboard)
+function generate_html(dashboard::Dashboard)
     all_types = unique([typeof(item) for tab in dashboard.tabs for item in tab.items])
 
     css_urls = String[]

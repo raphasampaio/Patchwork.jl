@@ -4,15 +4,15 @@ import JSON
 import ..Item, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
 using UUIDs
 
-export PatchworkPlotly
+export Plotly
 
-struct PatchworkPlotly <: Item
+struct Plotly <: Item
     title::String
     data::Vector{Dict{String, Any}}
     layout::Dict{String, Any}
     config::Dict{String, Any}
 
-    function PatchworkPlotly(
+    function Plotly(
         title::String,
         data::Vector{Dict{String, Any}};
         layout::Dict{String, Any} = Dict{String, Any}(),
@@ -22,7 +22,7 @@ struct PatchworkPlotly <: Item
     end
 end
 
-function to_html(item::PatchworkPlotly)
+function to_html(item::Plotly)
     chart_id = "chart-$(uuid4())"
     data_json = JSON.json(item.data)
     layout = merge(Dict("autosize" => true), item.layout)
@@ -38,13 +38,13 @@ function to_html(item::PatchworkPlotly)
     """
 end
 
-css_deps(::Type{PatchworkPlotly}) = String[]
+css_deps(::Type{Plotly}) = String[]
 
-js_deps(::Type{PatchworkPlotly}) = [
+js_deps(::Type{Plotly}) = [
     "https://cdn.plot.ly/plotly-2.27.0.min.js",
 ]
 
-init_script(::Type{PatchworkPlotly}) = """
+init_script(::Type{Plotly}) = """
     const initPlotlyCharts = () => {
         document.querySelectorAll('.plotly-chart').forEach(container => {
             if (container.offsetParent !== null && !container.classList.contains('plotly-initialized')) {
@@ -70,7 +70,7 @@ init_script(::Type{PatchworkPlotly}) = """
     setInterval(initPlotlyCharts, 100);
 """
 
-css(::Type{PatchworkPlotly}) = """
+css(::Type{Plotly}) = """
 .plotly-chart {
     min-height: 400px;
 }

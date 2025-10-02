@@ -3,15 +3,15 @@ module ChartJsPlugin
 import JSON
 import ..Item, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
 
-export PatchworkChartJs
+export ChartJs
 
-struct PatchworkChartJs <: Item
+struct ChartJs <: Item
     title::String
     chart_type::String
     data::Dict{String, Any}
     options::Dict{String, Any}
 
-    function PatchworkChartJs(
+    function ChartJs(
         title::String,
         chart_type::String,
         data::Dict{String, Any};
@@ -21,7 +21,7 @@ struct PatchworkChartJs <: Item
     end
 end
 
-function to_html(item::PatchworkChartJs)
+function to_html(item::ChartJs)
     config = Dict(
         "type" => item.chart_type,
         "data" => item.data,
@@ -42,19 +42,19 @@ function to_html(item::PatchworkChartJs)
     """
 end
 
-css_deps(::Type{PatchworkChartJs}) = String[]
+css_deps(::Type{ChartJs}) = String[]
 
-js_deps(::Type{PatchworkChartJs}) = [
+js_deps(::Type{ChartJs}) = [
     "https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js",
 ]
 
-init_script(::Type{PatchworkChartJs}) = """
+init_script(::Type{ChartJs}) = """
     document.querySelectorAll('.chartjs-chart').forEach(canvas => {
         const config = JSON.parse(canvas.getAttribute('data-config'));
         new Chart(canvas, config);
     });
 """
 
-css(::Type{PatchworkChartJs}) = ""
+css(::Type{ChartJs}) = ""
 
 end

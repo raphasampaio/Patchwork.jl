@@ -4,22 +4,22 @@ import JSON
 import ..Item, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
 using UUIDs
 
-export PatchworkHighcharts
+export Highcharts
 
-struct PatchworkHighcharts <: Item
+struct Highcharts <: Item
     title::String
     config::Dict{String, Any}
 
-    function PatchworkHighcharts(title::String, config::Dict{String, Any})
+    function Highcharts(title::String, config::Dict{String, Any})
         return new(title, config)
     end
 end
 
-function PatchworkHighcharts(title::String, config::AbstractString)
-    return PatchworkHighcharts(title, JSON.parse(config))
+function Highcharts(title::String, config::AbstractString)
+    return Highcharts(title, JSON.parse(config))
 end
 
-function to_html(item::PatchworkHighcharts)
+function to_html(item::Highcharts)
     chart_id = "chart-$(uuid4())"
     config_json = JSON.json(item.config)
 
@@ -31,19 +31,19 @@ function to_html(item::PatchworkHighcharts)
     """
 end
 
-css_deps(::Type{PatchworkHighcharts}) = String[]
+css_deps(::Type{Highcharts}) = String[]
 
-js_deps(::Type{PatchworkHighcharts}) = [
+js_deps(::Type{Highcharts}) = [
     "https://code.highcharts.com/12.4.0/highcharts.js",
 ]
 
-init_script(::Type{PatchworkHighcharts}) = """
+init_script(::Type{Highcharts}) = """
     document.querySelectorAll('.highcharts-chart').forEach(container => {
         const config = JSON.parse(container.getAttribute('data-config'));
         Highcharts.chart(container.id, config);
     });
 """
 
-css(::Type{PatchworkHighcharts}) = ""
+css(::Type{Highcharts}) = ""
 
 end
