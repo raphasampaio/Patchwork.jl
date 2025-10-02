@@ -11,7 +11,7 @@ using JSON
             "line",
             Dict{String, Any}("labels" => ["A", "B"], "datasets" => [Dict("data" => [1, 2])]),
         )
-        @test chart isa Item
+        @test chart isa Patchwork.Item
         @test chart.title == "Test Chart"
         @test chart.chart_type == "line"
 

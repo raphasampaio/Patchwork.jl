@@ -49,7 +49,9 @@ dashboard = Patchwork.Dashboard(
             "HTML Content",
             [
                 Patchwork.Html("<h2>Raw HTML Example</h2>"),
-                Patchwork.Html("<p>This demonstrates the Html content type with <strong>inline formatting</strong>.</p>"),
+                Patchwork.Html(
+                    "<p>This demonstrates the Html content type with <strong>inline formatting</strong>.</p>",
+                ),
                 Patchwork.Html("<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>"),
             ],
         ),

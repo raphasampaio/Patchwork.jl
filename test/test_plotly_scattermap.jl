@@ -7,14 +7,16 @@ using Patchwork
     @testset "Basic scattermapbox" begin
         chart = Patchwork.Plotly(
             "Location Map",
-            [Dict{String, Any}(
-                "type" => "scattermapbox",
-                "lat" => [45.5, 43.6],
-                "lon" => [-73.6, -79.4],
-                "mode" => "markers",
-                "marker" => Dict("size" => 14),
-                "text" => ["Montreal", "Toronto"],
-            )],
+            [
+                Dict{String, Any}(
+                    "type" => "scattermapbox",
+                    "lat" => [45.5, 43.6],
+                    "lon" => [-73.6, -79.4],
+                    "mode" => "markers",
+                    "marker" => Dict("size" => 14),
+                    "text" => ["Montreal", "Toronto"],
+                ),
+            ],
             layout = Dict{String, Any}(
                 "mapbox" => Dict(
                     "style" => "open-street-map",
@@ -34,17 +36,19 @@ using Patchwork
     @testset "Scattermapbox with custom styling" begin
         chart = Patchwork.Plotly(
             "City Population",
-            [Dict{String, Any}(
-                "type" => "scattermapbox",
-                "lat" => [40.7, 34.0, 41.9],
-                "lon" => [-74.0, -118.2, -87.6],
-                "mode" => "markers",
-                "marker" => Dict(
-                    "size" => [20, 30, 25],
-                    "color" => ["red", "blue", "green"],
+            [
+                Dict{String, Any}(
+                    "type" => "scattermapbox",
+                    "lat" => [40.7, 34.0, 41.9],
+                    "lon" => [-74.0, -118.2, -87.6],
+                    "mode" => "markers",
+                    "marker" => Dict(
+                        "size" => [20, 30, 25],
+                        "color" => ["red", "blue", "green"],
+                    ),
+                    "text" => ["New York", "Los Angeles", "Chicago"],
                 ),
-                "text" => ["New York", "Los Angeles", "Chicago"],
-            )],
+            ],
             layout = Dict{String, Any}(
                 "mapbox" => Dict(
                     "style" => "open-street-map",
@@ -110,17 +114,19 @@ dashboard = Patchwork.Dashboard(
                 """),
                 Patchwork.Plotly(
                     "Population Centers",
-                    [Dict{String, Any}(
-                        "type" => "scattermapbox",
-                        "lat" => [40.7128, 34.0522, 41.8781, 29.7604, 33.4484, 39.7392],
-                        "lon" => [-74.0060, -118.2437, -87.6298, -95.3698, -112.0740, -104.9903],
-                        "mode" => "markers",
-                        "marker" => Dict(
-                            "size" => [25, 30, 22, 20, 18, 15],
-                            "color" => ["#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A", "#98D8C8", "#F7DC6F"],
+                    [
+                        Dict{String, Any}(
+                            "type" => "scattermapbox",
+                            "lat" => [40.7128, 34.0522, 41.8781, 29.7604, 33.4484, 39.7392],
+                            "lon" => [-74.0060, -118.2437, -87.6298, -95.3698, -112.0740, -104.9903],
+                            "mode" => "markers",
+                            "marker" => Dict(
+                                "size" => [25, 30, 22, 20, 18, 15],
+                                "color" => ["#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A", "#98D8C8", "#F7DC6F"],
+                            ),
+                            "text" => ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Denver"],
                         ),
-                        "text" => ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Denver"],
-                    )],
+                    ],
                     layout = Dict{String, Any}(
                         "mapbox" => Dict(
                             "style" => "open-street-map",
