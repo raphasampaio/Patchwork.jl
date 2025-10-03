@@ -78,19 +78,19 @@ Plugins implement four functions:
 
 ```julia
 # Required: Convert plugin to HTML
-to_html(plugin::MyItem) = "<div>...</div>"
+to_html(plugin::MyPlugin) = "<div>...</div>"
 
 # Optional: CSS dependencies
-css_deps(::Type{MyItem}) = ["https://cdn.example.com/lib.css"]
+css_deps(::Type{MyPlugin}) = ["https://cdn.example.com/lib.css"]
 
 # Optional: JS dependencies
-js_deps(::Type{MyItem}) = ["https://cdn.example.com/lib.js"]
+js_deps(::Type{MyPlugin}) = ["https://cdn.example.com/lib.js"]
 
 # Optional: JavaScript initialization
-init_script(::Type{MyItem}) = "/* init code */"
+init_script(::Type{MyPlugin}) = "/* init code */"
 
 # Optional: CSS styles
-css(::Type{MyItem}) = "/* custom styles */"
+css(::Type{MyPlugin}) = "/* custom styles */"
 ```
 
 ### Built-in Plugins
@@ -161,16 +161,16 @@ Tests follow the `test_*.jl` naming convention and:
 module MyPlugin
 
 import ..Plugin, ..to_html, ..css_deps, ..js_deps, ..init_script
-export MyItem
+export MyPlugin
 
-struct MyItem <: Plugin
+struct MyPlugin <: Plugin
     content::String
 end
 
-to_html(plugin::MyItem) = "<div class='my-plugin'>$(plugin.content)</div>"
-css_deps(::Type{MyItem}) = ["https://cdn.example.com/mylib.css"]
-js_deps(::Type{MyItem}) = ["https://cdn.example.com/mylib.js"]
-init_script(::Type{MyItem}) = "// initialization code"
+to_html(plugin::MyPlugin) = "<div class='my-plugin'>$(plugin.content)</div>"
+css_deps(::Type{MyPlugin}) = ["https://cdn.example.com/mylib.css"]
+js_deps(::Type{MyPlugin}) = ["https://cdn.example.com/mylib.js"]
+init_script(::Type{MyPlugin}) = "// initialization code"
 
 end
 ```
@@ -179,7 +179,7 @@ end
 ```julia
 include("plugins/myplugin.jl")
 using .MyPlugin
-export MyItem
+export MyPlugin
 ```
 
 3. Add tests in `test/test_myplugin.jl`
