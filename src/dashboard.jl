@@ -15,7 +15,7 @@ function save(dashboard::Dashboard, path::String)
 end
 
 function generate_html(dashboard::Dashboard)
-    all_types = unique([typeof(item) for tab in dashboard.tabs for item in tab.items])
+    all_types = unique([typeof(plugin) for tab in dashboard.tabs for plugin in tab.plugins])
 
     css_urls = String[]
     for type in all_types
@@ -49,18 +49,18 @@ function generate_html(dashboard::Dashboard)
 
     tabs_data = Dict{String, Any}[]
     for tab in dashboard.tabs
-        items_data = Dict{String, Any}[]
-        for item in tab.items
-            item_id = "item-$(uuid4())"
-            item_html = to_html(item)
-            item_type = get_item_type(item)
-            push!(items_data, Dict(
-                "id" => item_id,
-                "type" => item_type,
-                "html" => item_html,
+        plugins_data = Dict{String, Any}[]
+        for plugin in tab.plugins
+            plugin_id = "plugin-$(uuid4())"
+            plugin_html = to_html(plugin)
+            plugin_type = get_plugin_type(plugin)
+            push!(plugins_data, Dict(
+                "id" => plugin_id,
+                "type" => plugin_type,
+                "html" => plugin_html,
             ))
         end
-        push!(tabs_data, Dict("label" => tab.label, "items" => items_data))
+        push!(tabs_data, Dict("label" => tab.label, "plugins" => plugins_data))
     end
 
     tabs_json = JSON.json(tabs_data)
@@ -103,7 +103,7 @@ $(join(js_urls, "\n"))
         </div>
 
         <div class="flex-1 flex flex-col overflow-hidden bg-gray-50">
-            <div class="bg-white border-b border-gray-100 px-8 py-3 flex items-center">
+            <div class="bg-white border-b border-gray-100 px-8 py-3 flex plugins-center">
                 <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden mr-4 p-1.5 rounded hover:bg-gray-100 transition-colors">
                     <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -114,7 +114,7 @@ $(join(js_urls, "\n"))
 
             <div class="flex-1 overflow-y-auto px-8 py-6">
                 <div v-for="(tab, tabIdx) in tabs" :key="tabIdx" v-show="activeTab === tabIdx" class="max-w-4xl mx-auto space-y-8">
-                    <div v-for="item in tab.items" :key="item.id" v-show="isVisible(item)" class="bg-white border border-gray-100 rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow" v-html="item.html"></div>
+                    <div v-for="plugin in tab.plugins" :key="plugin.id" v-show="isVisible(plugin)" class="bg-white border border-gray-100 rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow" v-html="plugin.html"></div>
                     <div v-if="searchQuery && visibleCount(tabIdx) === 0" class="text-center py-16 text-sm text-gray-400">No results found</div>
                 </div>
             </div>
@@ -147,13 +147,13 @@ $(join(js_urls, "\n"))
                 initializeContent() {
                     $combined_init
                 },
-                isVisible(item) {
+                isVisible(plugin) {
                     if (!this.searchQuery) return true;
                     const query = this.searchQuery.toLowerCase();
-                    return item.html.toLowerCase().includes(query);
+                    return plugin.html.toLowerCase().includes(query);
                 },
                 visibleCount(tabIdx) {
-                    return this.tabs[tabIdx].items.filter(item => this.isVisible(item)).length;
+                    return this.tabs[tabIdx].plugins.filter(plugin => this.isVisible(plugin)).length;
                 }
             }
         }).mount('#app');

@@ -1,12 +1,12 @@
 module LeafletPlugin
 
 import JSON
-import ..Item, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
+import ..Plugin, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
 using UUIDs
 
 export Leaflet
 
-struct Leaflet <: Item
+struct Leaflet <: Plugin
     title::String
     center::Tuple{Float64, Float64}
     zoom::Int
@@ -24,21 +24,21 @@ struct Leaflet <: Item
     end
 end
 
-function to_html(item::Leaflet)
+function to_html(plugin::Leaflet)
     map_id = "map-$(uuid4())"
 
     map_data = Dict(
-        "center" => [item.center[1], item.center[2]],
-        "zoom" => item.zoom,
-        "markers" => item.markers,
-        "options" => item.options,
+        "center" => [plugin.center[1], plugin.center[2]],
+        "zoom" => plugin.zoom,
+        "markers" => plugin.markers,
+        "options" => plugin.options,
     )
 
     map_json = JSON.json(map_data)
 
     return """
     <div>
-        <h3 class="text-lg font-semibold mb-4">$(item.title)</h3>
+        <h3 class="text-lg font-semibold mb-4">$(plugin.title)</h3>
         <div id="$map_id" class="leaflet-map" data-config='$map_json' style="height: 500px; border-radius: 0.5rem; overflow: hidden;"></div>
     </div>
     """

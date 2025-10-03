@@ -1,11 +1,11 @@
 module ChartJsPlugin
 
 import JSON
-import ..Item, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
+import ..Plugin, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
 
 export ChartJs
 
-struct ChartJs <: Item
+struct ChartJs <: Plugin
     title::String
     chart_type::String
     data::Dict{String, Any}
@@ -21,20 +21,20 @@ struct ChartJs <: Item
     end
 end
 
-function to_html(item::ChartJs)
+function to_html(plugin::ChartJs)
     config = Dict(
-        "type" => item.chart_type,
-        "data" => item.data,
+        "type" => plugin.chart_type,
+        "data" => plugin.data,
         "options" => merge(
             Dict("responsive" => true, "maintainAspectRatio" => false),
-            item.options,
+            plugin.options,
         ),
     )
     config_json = JSON.json(config)
 
     return """
     <div>
-        <h3 class="text-lg font-semibold mb-4">$(item.title)</h3>
+        <h3 class="text-lg font-semibold mb-4">$(plugin.title)</h3>
         <div style="height: 400px;">
             <canvas class="chartjs-chart" data-config='$config_json'></canvas>
         </div>

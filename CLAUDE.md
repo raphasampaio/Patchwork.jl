@@ -43,15 +43,15 @@ test/
 ### Types
 
 ```julia
-abstract type Item end
+abstract type Plugin end
 
-struct Html <: Item
+struct HTML <: Plugin
     content::String
 end
 
 struct PatchworkTab
     label::String
-    items::Vector{Item}
+    plugins::Vector{Plugin}
 end
 
 struct PatchworkDashboard
@@ -65,11 +65,11 @@ end
 
 ```julia
 save(dashboard::PatchworkDashboard, path::String)  # Generate HTML file
-to_html(item::Item)                          # Render item to HTML
-css_deps(::Type{<:Item})                     # Get CSS dependencies for item type
-js_deps(::Type{<:Item})                      # Get JS dependencies for item type
-init_script(::Type{<:Item})                 # Get JS initialization script
-css(::Type{<:Item})                         # Get CSS styles for item type
+to_html(plugin::Plugin)                          # Render plugin to HTML
+css_deps(::Type{<:Plugin})                     # Get CSS dependencies for plugin type
+js_deps(::Type{<:Plugin})                      # Get JS dependencies for plugin type
+init_script(::Type{<:Plugin})                 # Get JS initialization script
+css(::Type{<:Plugin})                         # Get CSS styles for plugin type
 ```
 
 ## Plugin System
@@ -77,20 +77,20 @@ css(::Type{<:Item})                         # Get CSS styles for item type
 Plugins implement four functions:
 
 ```julia
-# Required: Convert item to HTML
-to_html(item::MyItem) = "<div>...</div>"
+# Required: Convert plugin to HTML
+to_html(plugin::MyPlugin) = "<div>...</div>"
 
 # Optional: CSS dependencies
-css_deps(::Type{MyItem}) = ["https://cdn.example.com/lib.css"]
+css_deps(::Type{MyPlugin}) = ["https://cdn.example.com/lib.css"]
 
 # Optional: JS dependencies
-js_deps(::Type{MyItem}) = ["https://cdn.example.com/lib.js"]
+js_deps(::Type{MyPlugin}) = ["https://cdn.example.com/lib.js"]
 
 # Optional: JavaScript initialization
-init_script(::Type{MyItem}) = "/* init code */"
+init_script(::Type{MyPlugin}) = "/* init code */"
 
 # Optional: CSS styles
-css(::Type{MyItem}) = "/* custom styles */"
+css(::Type{MyPlugin}) = "/* custom styles */"
 ```
 
 ### Built-in Plugins
@@ -137,11 +137,11 @@ Patchwork.ChartJs("Title", "bar", Dict("labels" => [...]))
 ### HTML Generation
 
 The HTML template in `src/html.jl`:
-1. Collects CDN URLs from all item types
-2. Collects init scripts from all item types
-3. Collects CSS styles from all item types
+1. Collects CDN URLs from all plugin types
+2. Collects init scripts from all plugin types
+3. Collects CSS styles from all plugin types
 4. Generates Vue.js-powered single-page application
-5. Auto-generates UUIDs for items
+5. Auto-generates UUIDs for plugins
 6. Embeds all data as JSON
 
 ### Testing Pattern
@@ -160,17 +160,17 @@ Tests follow the `test_*.jl` naming convention and:
 ```julia
 module MyPlugin
 
-import ..Item, ..to_html, ..css_deps, ..js_deps, ..init_script
-export MyItem
+import ..Plugin, ..to_html, ..css_deps, ..js_deps, ..init_script
+export MyPlugin
 
-struct MyItem <: Item
+struct MyPlugin <: Plugin
     content::String
 end
 
-to_html(item::MyItem) = "<div class='my-item'>$(item.content)</div>"
-css_deps(::Type{MyItem}) = ["https://cdn.example.com/mylib.css"]
-js_deps(::Type{MyItem}) = ["https://cdn.example.com/mylib.js"]
-init_script(::Type{MyItem}) = "// initialization code"
+to_html(plugin::MyPlugin) = "<div class='my-plugin'>$(plugin.content)</div>"
+css_deps(::Type{MyPlugin}) = ["https://cdn.example.com/mylib.css"]
+js_deps(::Type{MyPlugin}) = ["https://cdn.example.com/mylib.js"]
+init_script(::Type{MyPlugin}) = "// initialization code"
 
 end
 ```
@@ -179,7 +179,7 @@ end
 ```julia
 include("plugins/myplugin.jl")
 using .MyPlugin
-export MyItem
+export MyPlugin
 ```
 
 3. Add tests in `test/test_myplugin.jl`

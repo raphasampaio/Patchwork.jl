@@ -88,11 +88,11 @@ save(dashboard, "sales.html")
 Create custom plugins by implementing five functions for any JavaScript library:
 
 ```julia
-struct MyPlugin <: Item
+struct MyPlugin <: Plugin
     content::String
 end
 
-to_html(item::MyPlugin) = "<div>$(item.content)</div>"
+to_html(plugin::MyPlugin) = "<div>$(plugin.content)</div>"
 css_deps(::Type{MyPlugin}) = ["https://cdn.example.com/lib.css"]
 js_deps(::Type{MyPlugin}) = ["https://cdn.example.com/lib.js"]
 init_script(::Type{MyPlugin}) = "// initialization code"

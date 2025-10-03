@@ -11,7 +11,7 @@ using JSON
             "line",
             Dict{String, Any}("labels" => ["A", "B"], "datasets" => [Dict("data" => [1, 2])]),
         )
-        @test chart isa Patchwork.Item
+        @test chart isa Patchwork.Plugin
         @test chart.title == "Test Chart"
         @test chart.chart_type == "line"
 
@@ -46,7 +46,7 @@ using JSON
                 "series" => [Dict("data" => [1, 2, 3])],
             ),
         )
-        @test chart isa Patchwork.Item
+        @test chart isa Patchwork.Plugin
         @test chart.title == "Analytics"
 
         html_output = to_html(chart)
@@ -63,7 +63,7 @@ using JSON
             "Science Plot",
             [Dict("x" => [1, 2, 3], "y" => [4, 5, 6], "type" => "scatter")],
         )
-        @test chart isa Patchwork.Item
+        @test chart isa Patchwork.Plugin
         @test chart.title == "Science Plot"
 
         html_output = to_html(chart)

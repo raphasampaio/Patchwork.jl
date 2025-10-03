@@ -1,4 +1,4 @@
 struct Tab
     label::String
-    items::Vector{Item}
+    plugins::Vector{Plugin}
 end

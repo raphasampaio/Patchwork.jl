@@ -6,7 +6,7 @@ using Patchwork
 @testset "Markdown Plugin" begin
     @testset "Markdown basics" begin
         md = Patchwork.Markdown("# Hello\n\nWorld")
-        @test md isa Patchwork.Item
+        @test md isa Patchwork.Plugin
 
         html_output = to_html(md)
         @test occursin("<h1>Hello</h1>", html_output)
@@ -20,8 +20,8 @@ using Patchwork
 
 **bold** and *italic*
 
-- List item 1
-- List item 2
+- List plugin 1
+- List plugin 2
 """
         )
 
@@ -30,7 +30,7 @@ using Patchwork
         @test occursin("<h2>Heading 2</h2>", html_output)
         @test occursin("<strong>bold</strong>", html_output)
         @test occursin("<em>italic</em>", html_output)
-        @test occursin("List item 1", html_output) && occursin("<li>", html_output)
+        @test occursin("List plugin 1", html_output) && occursin("<li>", html_output)
     end
 
     @testset "Markdown code blocks" begin
@@ -84,7 +84,7 @@ Links work too: [Patchwork](https://github.com)
             "Mixed Content",
             [
                 Patchwork.Markdown("## Introduction\n\nThis tab combines markdown with HTML."),
-                Patchwork.Html("<hr>"),
+                Patchwork.HTML("<hr>"),
                 Patchwork.Markdown("### Details\n\nMore markdown content here."),
             ],
         ),

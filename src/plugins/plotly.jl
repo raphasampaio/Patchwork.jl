@@ -1,12 +1,12 @@
 module PlotlyPlugin
 
 import JSON
-import ..Item, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
+import ..Plugin, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
 using UUIDs
 
 export Plotly
 
-struct Plotly <: Item
+struct Plotly <: Plugin
     title::String
     data::Vector{Dict{String, Any}}
     layout::Dict{String, Any}
@@ -22,17 +22,17 @@ struct Plotly <: Item
     end
 end
 
-function to_html(item::Plotly)
+function to_html(plugin::Plotly)
     chart_id = "chart-$(uuid4())"
-    data_json = JSON.json(item.data)
-    layout = merge(Dict("autosize" => true), item.layout)
+    data_json = JSON.json(plugin.data)
+    layout = merge(Dict("autosize" => true), plugin.layout)
     layout_json = JSON.json(layout)
-    config = merge(Dict("responsive" => true), item.config)
+    config = merge(Dict("responsive" => true), plugin.config)
     config_json = JSON.json(config)
 
     return """
     <div>
-        <h3 class="text-lg font-semibold mb-4">$(item.title)</h3>
+        <h3 class="text-lg font-semibold mb-4">$(plugin.title)</h3>
         <div id="$chart_id" class="plotly-chart" data-data='$data_json' data-layout='$layout_json' data-config='$config_json' style="height: 400px;"></div>
     </div>
     """

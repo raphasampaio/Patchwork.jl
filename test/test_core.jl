@@ -4,25 +4,25 @@ using Test
 using Patchwork
 
 @testset "Core Types" begin
-    @testset "Html" begin
-        html = Patchwork.Html("<p>test</p>")
-        @test html isa Patchwork.Item
+    @testset "HTML" begin
+        html = Patchwork.HTML("<p>test</p>")
+        @test html isa Patchwork.Plugin
         @test to_html(html) == "<p>test</p>"
-        @test css_deps(Patchwork.Html) == String[]
-        @test js_deps(Patchwork.Html) == String[]
-        @test init_script(Patchwork.Html) == ""
-        @test css(Patchwork.Html) == ""
+        @test css_deps(Patchwork.HTML) == String[]
+        @test js_deps(Patchwork.HTML) == String[]
+        @test init_script(Patchwork.HTML) == ""
+        @test css(Patchwork.HTML) == ""
     end
 
     @testset "Tab" begin
-        tab = Patchwork.Tab("Test", [Patchwork.Html("<p>content</p>")])
+        tab = Patchwork.Tab("Test", [Patchwork.HTML("<p>content</p>")])
         @test tab.label == "Test"
-        @test length(tab.items) == 1
-        @test tab.items[1] isa Patchwork.Html
+        @test length(tab.plugins) == 1
+        @test tab.plugins[1] isa Patchwork.HTML
     end
 
     @testset "Dashboard" begin
-        tabs = [Patchwork.Tab("Tab1", [Patchwork.Html("<p>content</p>")])]
+        tabs = [Patchwork.Tab("Tab1", [Patchwork.HTML("<p>content</p>")])]
         dashboard = Patchwork.Dashboard("Test Dashboard", tabs)
         @test dashboard.title == "Test Dashboard"
         @test length(dashboard.tabs) == 1
@@ -48,19 +48,19 @@ dashboard = Patchwork.Dashboard(
         Patchwork.Tab(
             "HTML Content",
             [
-                Patchwork.Html("<h2>Raw HTML Example</h2>"),
-                Patchwork.Html(
-                    "<p>This demonstrates the Html content type with <strong>inline formatting</strong>.</p>",
+                Patchwork.HTML("<h2>Raw HTML Example</h2>"),
+                Patchwork.HTML(
+                    "<p>This demonstrates the HTML content type with <strong>inline formatting</strong>.</p>",
                 ),
-                Patchwork.Html("<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>"),
+                Patchwork.HTML("<ul><li>Plugin 1</li><li>Plugin 2</li><li>Plugin 3</li></ul>"),
             ],
         ),
         Patchwork.Tab(
             "Multiple Items",
             [
-                Patchwork.Html("<div class='alert'>Alert message</div>"),
-                Patchwork.Html("<p>Another paragraph</p>"),
-                Patchwork.Html("<code>Code snippet: x = 42</code>"),
+                Patchwork.HTML("<div class='alert'>Alert message</div>"),
+                Patchwork.HTML("<p>Another paragraph</p>"),
+                Patchwork.HTML("<code>Code snippet: x = 42</code>"),
             ],
         ),
     ],
