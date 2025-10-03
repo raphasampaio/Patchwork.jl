@@ -45,7 +45,7 @@ test/
 ```julia
 abstract type Plugin end
 
-struct Html <: Plugin
+struct HTML <: Plugin
     content::String
 end
 

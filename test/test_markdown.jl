@@ -84,7 +84,7 @@ Links work too: [Patchwork](https://github.com)
             "Mixed Content",
             [
                 Patchwork.Markdown("## Introduction\n\nThis tab combines markdown with HTML."),
-                Patchwork.Html("<hr>"),
+                Patchwork.HTML("<hr>"),
                 Patchwork.Markdown("### Details\n\nMore markdown content here."),
             ],
         ),
