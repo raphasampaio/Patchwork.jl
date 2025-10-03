@@ -108,7 +108,7 @@ using Patchwork
         @test occursin("three", html)
     end
 
-    @testset "HTML contains multiple items per tab" begin
+    @testset "HTML contains multiple plugins per tab" begin
         dashboard = Patchwork.Dashboard(
             "Multi",
             [

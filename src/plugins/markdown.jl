@@ -1,15 +1,15 @@
 module MarkdownPlugin
 
 import Markdown as MD
-import ..Item, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
+import ..Plugin, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
 
 export Markdown
 
-struct Markdown <: Item
+struct Markdown <: Plugin
     content::String
 end
 
-to_html(item::Markdown) = MD.html(MD.parse(item.content))
+to_html(plugin::Markdown) = MD.html(MD.parse(plugin.content))
 
 css_deps(::Type{Markdown}) = [
     "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-light.min.css",

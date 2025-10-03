@@ -6,7 +6,7 @@ using Patchwork
 @testset "Core Types" begin
     @testset "Html" begin
         html = Patchwork.Html("<p>test</p>")
-        @test html isa Patchwork.Item
+        @test html isa Patchwork.Plugin
         @test to_html(html) == "<p>test</p>"
         @test css_deps(Patchwork.Html) == String[]
         @test js_deps(Patchwork.Html) == String[]
@@ -17,8 +17,8 @@ using Patchwork
     @testset "Tab" begin
         tab = Patchwork.Tab("Test", [Patchwork.Html("<p>content</p>")])
         @test tab.label == "Test"
-        @test length(tab.items) == 1
-        @test tab.items[1] isa Patchwork.Html
+        @test length(tab.plugins) == 1
+        @test tab.plugins[1] isa Patchwork.Html
     end
 
     @testset "Dashboard" begin
@@ -52,7 +52,7 @@ dashboard = Patchwork.Dashboard(
                 Patchwork.Html(
                     "<p>This demonstrates the Html content type with <strong>inline formatting</strong>.</p>",
                 ),
-                Patchwork.Html("<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>"),
+                Patchwork.Html("<ul><li>Plugin 1</li><li>Plugin 2</li><li>Plugin 3</li></ul>"),
             ],
         ),
         Patchwork.Tab(

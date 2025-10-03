@@ -6,7 +6,7 @@ import JSON
 export save, to_html, css_deps, js_deps, init_script, css
 
 include("string.jl")
-include("item.jl")
+include("plugin.jl")
 include("html.jl")
 include("tab.jl")
 include("dashboard.jl")

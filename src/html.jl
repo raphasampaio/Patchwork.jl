@@ -1,8 +1,8 @@
-struct Html <: Item
+struct Html <: Plugin
     content::String
 end
 
-to_html(item::Html) = item.content
+to_html(plugin::Html) = plugin.content
 css_deps(::Type{Html}) = String[]
 js_deps(::Type{Html}) = String[]
 init_script(::Type{Html}) = ""

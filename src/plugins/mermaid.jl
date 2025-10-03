@@ -1,11 +1,11 @@
 module MermaidPlugin
 
-import ..Item, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
+import ..Plugin, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
 using UUIDs
 
 export Mermaid
 
-struct Mermaid <: Item
+struct Mermaid <: Plugin
     title::String
     diagram::String
     theme::String
@@ -19,14 +19,14 @@ struct Mermaid <: Item
     end
 end
 
-function to_html(item::Mermaid)
+function to_html(plugin::Mermaid)
     diagram_id = "mermaid-$(uuid4())"
 
     return """
     <div>
-        <h3 class="text-lg font-semibold mb-4">$(item.title)</h3>
-        <div class="mermaid-diagram" data-theme="$(item.theme)" style="display: flex; justify-content: center; padding: 1rem; background: white; border-radius: 0.5rem;">
-            <pre class="mermaid" id="$diagram_id">$(item.diagram)</pre>
+        <h3 class="text-lg font-semibold mb-4">$(plugin.title)</h3>
+        <div class="mermaid-diagram" data-theme="$(plugin.theme)" style="display: flex; justify-content: center; padding: 1rem; background: white; border-radius: 0.5rem;">
+            <pre class="mermaid" id="$diagram_id">$(plugin.diagram)</pre>
         </div>
     </div>
     """
