@@ -35,15 +35,12 @@ dashboard = Patchwork.Dashboard(
             "Overview",
             [
                 Patchwork.Markdown(
-"""
-# Welcome to Patchwork.jl
-
-This is a **simple** dashboard with:
-- Interactive tabs
-- Search functionality
-- Beautiful styling
-"""
-    ),
+                    "# Welcome to Patchwork.jl\n" *
+                    "This is a **simple** dashboard with:\n" *
+                    "- Interactive tabs\n" *
+                    "- Search functionality\n" *
+                    "- Beautiful styling",
+                ),
             ],
         ),
     ],
