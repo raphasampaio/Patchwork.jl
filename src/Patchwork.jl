@@ -142,6 +142,7 @@ include("plugins/highcharts.jl")
 include("plugins/plotly.jl")
 include("plugins/leaflet.jl")
 include("plugins/mermaid.jl")
+include("plugins/datatables.jl")
 
 using .HTMLPlugin: HTML
 using .MarkdownPlugin: Markdown
@@ -150,5 +151,6 @@ using .HighchartsPlugin: Highcharts
 using .PlotlyPlugin: Plotly
 using .LeafletPlugin: Leaflet
 using .MermaidPlugin: Mermaid
+using .DataTablesPlugin: DataTables
 
 end

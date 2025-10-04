@@ -22,7 +22,8 @@
       "WebFetch(domain:cdnjs.com)",
       "WebFetch(domain:github.com)",
       "WebSearch",
-      "Bash(docs.bat)"
+      "Bash(docs.bat)",
+      "WebFetch(domain:cdn.datatables.net)"
     ],
     "deny": [],
     "ask": [],
