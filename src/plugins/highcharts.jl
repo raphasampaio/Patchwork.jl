@@ -6,6 +6,64 @@ using UUIDs
 
 export Highcharts
 
+@doc """
+    Highcharts(title::String, config::Dict{String,Any})
+    Highcharts(title::String, config::AbstractString)
+
+Highcharts visualization plugin.
+
+Creates interactive charts using the Highcharts library. Supports the full Highcharts
+configuration API. Accepts configuration as either a dictionary or JSON string.
+
+# Fields
+- `title::String`: Chart title displayed above the visualization
+- `config::Dict{String,Any}`: Highcharts configuration object
+
+# Constructors
+- `Highcharts(title::String, config::Dict{String,Any})` - From dictionary
+- `Highcharts(title::String, config::AbstractString)` - From JSON string
+
+# Example: Line Chart
+```julia
+Patchwork.Highcharts(
+    "Monthly Performance",
+    Dict{String,Any}(
+        "chart" => Dict("type" => "line"),
+        "xAxis" => Dict("categories" => ["Jan", "Feb", "Mar"]),
+        "yAxis" => Dict("title" => Dict("text" => "Value")),
+        "series" => [
+            Dict("name" => "Series A", "data" => [29, 71, 106]),
+            Dict("name" => "Series B", "data" => [50, 80, 95]),
+        ],
+    ),
+)
+```
+
+# Example: Column Chart
+```julia
+Patchwork.Highcharts(
+    "Distribution",
+    Dict{String,Any}(
+        "chart" => Dict("type" => "column"),
+        "xAxis" => Dict("categories" => ["Alpha", "Beta", "Gamma"]),
+        "series" => [Dict("name" => "Values", "data" => [5, 3, 4])],
+    ),
+)
+```
+
+# Example: From JSON
+```julia
+config_json = \"\"\"
+{
+    "chart": {"type": "area"},
+    "series": [{"data": [1, 2, 3, 4]}]
+}
+\"\"\"
+Patchwork.Highcharts("Area Chart", config_json)
+```
+
+See also: `ChartJs`, `Plotly`, `Plugin`
+"""
 struct Highcharts <: Plugin
     title::String
     config::Dict{String, Any}

@@ -1,3 +1,35 @@
+@doc """
+    Dashboard(title::String, tabs::Vector{Tab}; custom_css::String = "")
+
+Main dashboard type containing all content to be rendered.
+
+A dashboard generates a self-contained HTML file with Vue.js reactivity, Tailwind CSS styling,
+and a responsive tabbed interface. It automatically collects and includes all necessary
+dependencies from the plugins used.
+
+# Fields
+- `title::String`: Dashboard title displayed in the header and browser tab
+- `tabs::Vector{Tab}`: Vector of tabs to display in the sidebar
+- `custom_css::String`: Optional custom CSS styles to apply globally
+
+# Example
+```julia
+dashboard = Patchwork.Dashboard(
+    "Analytics Dashboard",
+    [
+        Patchwork.Tab("Overview", [...]),
+        Patchwork.Tab("Details", [...]),
+    ],
+    custom_css = \"\"\"
+    .custom-header {
+        background: linear-gradient(to right, #667eea, #764ba2);
+    }
+    \"\"\"
+)
+```
+
+See also: [`Tab`](@ref), [`save`](@ref), [`generate_html`](@ref)
+"""
 struct Dashboard
     title::String
     tabs::Vector{Tab}
@@ -8,12 +40,72 @@ struct Dashboard
     end
 end
 
+@doc """
+    save(dashboard::Dashboard, path::String) -> String
+
+Generate complete HTML and save to file.
+
+This function generates a self-contained HTML file from the dashboard and writes it to
+the specified path. The generated file includes all necessary CSS and JavaScript dependencies,
+plugin content, and initialization code.
+
+# Arguments
+- `dashboard::Dashboard`: Dashboard to save
+- `path::String`: Output file path (absolute or relative)
+
+# Returns
+- `String`: Path to the saved file
+
+# Example
+```julia
+dashboard = Patchwork.Dashboard("Title", tabs)
+save(dashboard, "output.html")
+save(dashboard, "/path/to/dashboard.html")
+```
+
+See also: [`Dashboard`](@ref), [`generate_html`](@ref)
+"""
 function save(dashboard::Dashboard, path::String)
     html = generate_html(dashboard)
     write(path, html)
     return path
 end
 
+@doc """
+    generate_html(dashboard::Dashboard) -> String
+
+Generate complete HTML string for dashboard.
+
+This function generates a self-contained HTML document from the dashboard. It collects
+all unique plugin types, gathers their dependencies, and creates a Vue.js-powered
+single-page application with reactive tab switching and search functionality.
+
+The generation process:
+1. Collects unique plugin types from all tabs
+2. Gathers CSS dependencies (CDN URLs) from plugin types
+3. Gathers JavaScript dependencies (CDN URLs) from plugin types
+4. Gathers initialization scripts from plugin types
+5. Gathers custom CSS from plugin types
+6. Generates unique IDs for each plugin instance
+7. Converts plugins to HTML using `to_html`
+8. Embeds all data as JSON in Vue.js application
+9. Creates responsive UI with sidebar, search, and mobile support
+
+# Arguments
+- `dashboard::Dashboard`: Dashboard to generate HTML for
+
+# Returns
+- `String`: Complete HTML document as a string
+
+# Example
+```julia
+dashboard = Patchwork.Dashboard("Title", tabs)
+html = generate_html(dashboard)
+write("output.html", html)
+```
+
+See also: [`Dashboard`](@ref), [`save`](@ref)
+"""
 function generate_html(dashboard::Dashboard)
     all_types = unique([typeof(plugin) for tab in dashboard.tabs for plugin in tab.plugins])
 

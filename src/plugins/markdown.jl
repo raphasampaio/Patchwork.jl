@@ -5,6 +5,50 @@ import ..Plugin, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
 
 export Markdown
 
+@doc """
+    Markdown(content::String)
+
+Markdown content plugin with syntax highlighting.
+
+This plugin renders markdown content using Julia's built-in Markdown parser and includes
+Highlight.js for syntax highlighting of code blocks. Supports all standard markdown features
+including headers, lists, links, images, code blocks, and more.
+
+# Fields
+- `content::String`: Markdown content to render
+
+# Example
+```julia
+Patchwork.Markdown(\"\"\"
+# Title
+
+**Bold text** and *italic text*
+
+- List item 1
+- List item 2
+
+\`\`\`julia
+println("Code with syntax highlighting")
+\`\`\`
+\"\"\")
+```
+
+# Example: Documentation
+```julia
+Patchwork.Markdown(\"\"\"
+## API Reference
+
+### Functions
+
+- \`save(dashboard, path)\` - Save dashboard to HTML file
+- \`generate_html(dashboard)\` - Generate HTML string
+
+See the [documentation](https://example.com) for details.
+\"\"\")
+```
+
+See also: `Plugin`, `HTML`
+"""
 struct Markdown <: Plugin
     content::String
 end

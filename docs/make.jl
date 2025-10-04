@@ -21,6 +21,20 @@ Documenter.makedocs(
     ),
     pages = [
         "Home" => "index.md",
+        "Core" => [
+            "dashboard.md",
+            "tab.md",
+        ],
+        "Plugins" => [
+            "plugins.md",
+            "plugins/html.md",
+            "plugins/markdown.md",
+            "plugins/chartjs.md",
+            "plugins/highcharts.md",
+            "plugins/plotly.md",
+            "plugins/leaflet.md",
+            "plugins/mermaid.md",
+        ],
     ],
 )
 

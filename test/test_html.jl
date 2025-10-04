@@ -4,7 +4,17 @@ using Test
 using Patchwork
 
 @testset "HTML Generation" begin
-    @testset "render creates file" begin
+    @testset "HTML" begin
+        html = Patchwork.HTML("<p>test</p>")
+        @test html isa Patchwork.Plugin
+        @test to_html(html) == "<p>test</p>"
+        @test css_deps(Patchwork.HTML) == String[]
+        @test js_deps(Patchwork.HTML) == String[]
+        @test init_script(Patchwork.HTML) == ""
+        @test css(Patchwork.HTML) == ""
+    end
+
+    @testset "Render creates file" begin
         mktempdir() do dir
             path = joinpath(dir, "test.html")
 
