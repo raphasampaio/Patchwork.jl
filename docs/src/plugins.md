@@ -2,6 +2,16 @@
 
 Patchwork includes seven built-in plugins for common dashboard components. Each plugin is designed to work seamlessly with the dashboard system and requires no additional configuration.
 
+The built-in plugins are:
+
+- [HTML](plugins/html.md): Display raw HTML content. Perfect for custom components, alerts, or integrating HTML snippets.
+- [Markdown](plugins/markdown.md): Render markdown text with syntax highlighting. Ideal for documentation, notes, and formatted text.
+- [ChartJs](plugins/chartjs.md): Create responsive charts using Chart.js. Supports bar, line, pie, doughnut, and more.
+- [Highcharts](plugins/highcharts.md): Professional-grade charts with extensive customization. Great for complex visualizations.
+- [Plotly](plugins/plotly.md): Interactive 2D/3D plots and maps. Best for scientific visualizations and geographic data.
+- [Leaflet](plugins/leaflet.md): Interactive maps with markers and popups. Perfect for location-based dashboards.
+- [Mermaid](plugins/mermaid.md): Diagram generation from text. Create flowcharts, sequence diagrams, class diagrams, and more.
+
 # Creating Custom Plugins
 
 Extend Patchwork with any JavaScript library by creating custom plugins.
@@ -32,15 +42,6 @@ css(::Type{MyPlugin}) = ".myplugin { padding: 1rem; }"
 end
 ```
 
-## Integration
-
-Add to `src/Patchwork.jl`:
-
-```julia
-include("plugins/myplugin.jl")
-using .MyPluginModule
-```
-
 ## Best Practices
 
 1. **Use unique CSS classes** to avoid conflicts
@@ -50,3 +51,17 @@ using .MyPluginModule
 5. **Handle visibility** for libraries that need visible elements
 6. **Use different module/struct names** to avoid conflicts
 7. **Add error handling** in JavaScript initialization
+
+# API Reference
+
+```@autodocs
+Modules = [Patchwork]
+Pages   = ["plugin.jl"]
+Order   = [:type]
+```
+
+```@autodocs
+Modules = [Patchwork]
+Pages   = ["Patchwork.jl", "plugin.jl"]
+Order   = [:function]
+```

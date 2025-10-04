@@ -34,8 +34,6 @@ Documenter.makedocs(
             "plugins/plotly.md",
             "plugins/leaflet.md",
             "plugins/mermaid.md",
-            "custom_plugins.md",
-            "plugin_interface.md",
         ],
     ],
 )
