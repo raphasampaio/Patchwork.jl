@@ -21,6 +21,11 @@ Documenter.makedocs(
     ),
     pages = [
         "Home" => "index.md",
+        "Plugins" => [
+            "plugins.md",
+            "custom_plugins.md",
+        ],
+        "API" => "api.md",
     ],
 )
 
