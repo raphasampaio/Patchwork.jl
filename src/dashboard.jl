@@ -182,14 +182,22 @@ $(join(js_urls, "\n"))
 
             <div class="px-6 pb-4">
                 <div class="relative">
-                    <input v-model="searchQuery" type="text" class="w-full px-3 py-2 text-sm border border-gray-200 rounded focus:outline-none focus:border-gray-400 transition-colors" placeholder="Search...">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+                    <input v-model="searchQuery" type="text" class="w-full pl-10 pr-8 py-2 text-sm border border-gray-200 rounded focus:outline-none focus:border-gray-400 transition-colors" placeholder="Search...">
                     <div v-if="searchQuery" @click="searchQuery = ''" class="absolute right-2 top-2 cursor-pointer text-gray-400 hover:text-gray-600 text-lg leading-none">×</div>
                 </div>
             </div>
 
             <nav class="flex-1 overflow-y-auto px-4 space-y-1">
-                <button v-for="(tab, i) in tabs" :key="i" @click="activeTab = i; sidebarOpen = false" :class="['w-full text-left text-sm px-4 py-2.5 rounded transition-colors', activeTab === i ? 'bg-gray-900 text-white' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50']">
-                    {{ tab.label }}
+                <button v-for="(tab, i) in tabs" :key="i" @click="activeTab = i; sidebarOpen = false" :class="['w-full text-left text-sm px-4 py-2.5 rounded transition-colors flex items-center justify-between', activeTab === i ? 'bg-gray-900 text-white' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50']">
+                    <span>{{ tab.label }}</span>
+                    <span v-if="searchQuery && visibleCount(i) > 0" :class="['px-2 py-0.5 rounded-full text-xs font-medium', activeTab === i ? 'bg-white/20 text-white' : 'bg-blue-500 text-white']">
+                        {{ visibleCount(i) }}
+                    </span>
                 </button>
             </nav>
         </div>
@@ -206,8 +214,16 @@ $(join(js_urls, "\n"))
 
             <div class="flex-1 overflow-y-auto px-8 py-6">
                 <div v-for="(tab, tabIdx) in tabs" :key="tabIdx" v-show="activeTab === tabIdx" class="max-w-4xl mx-auto space-y-8">
-                    <div v-for="plugin in tab.plugins" :key="plugin.id" v-show="isVisible(plugin)" class="bg-white border border-gray-100 rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow" v-html="plugin.html"></div>
-                    <div v-if="searchQuery && visibleCount(tabIdx) === 0" class="text-center py-16 text-sm text-gray-400">No results found</div>
+                    <div v-for="plugin in tab.plugins" :key="plugin.id" v-show="isVisible(plugin)" class="bg-white border border-gray-100 rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow" :class="{'highlight-content': searchQuery}" v-html="plugin.html"></div>
+                    <div v-if="searchQuery && visibleCount(tabIdx) === 0" class="text-center py-16">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-base font-medium text-gray-900 mb-2">No results found</h3>
+                        <p class="text-sm text-gray-500">No content matches your search query "{{ searchQuery }}"</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -235,6 +251,13 @@ $(join(js_urls, "\n"))
                     this.initializeContent();
                 });
             },
+            watch: {
+                searchQuery() {
+                    this.\$nextTick(() => {
+                        this.highlightContent();
+                    });
+                }
+            },
             methods: {
                 initializeContent() {
                     $combined_init
@@ -246,6 +269,70 @@ $(join(js_urls, "\n"))
                 },
                 visibleCount(tabIdx) {
                     return this.tabs[tabIdx].plugins.filter(plugin => this.isVisible(plugin)).length;
+                },
+                highlightContent() {
+                    document.querySelectorAll('.highlight-match').forEach(el => {
+                        const parent = el.parentNode;
+                        parent.replaceChild(document.createTextNode(el.textContent), el);
+                        parent.normalize();
+                    });
+
+                    if (!this.searchQuery) return;
+
+                    const query = this.searchQuery.toLowerCase();
+                    document.querySelectorAll('.highlight-content').forEach(container => {
+                        const textElements = container.querySelectorAll('h3, p, span, div, td, th, li');
+
+                        textElements.forEach(el => {
+                            if (el.querySelector('canvas, svg, .highlight-match')) return;
+                            if (el.classList.contains('highlight-match')) return;
+
+                            const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+                                acceptNode: function(node) {
+                                    if (node.parentElement.closest('canvas, svg')) {
+                                        return NodeFilter.FILTER_REJECT;
+                                    }
+                                    return NodeFilter.FILTER_ACCEPT;
+                                }
+                            }, false);
+
+                            const nodesToReplace = [];
+                            while (walk.nextNode()) {
+                                const node = walk.currentNode;
+                                if (node.textContent.toLowerCase().includes(query)) {
+                                    nodesToReplace.push(node);
+                                }
+                            }
+
+                            nodesToReplace.forEach(node => {
+                                const text = node.textContent;
+                                const lowerText = text.toLowerCase();
+                                const fragments = [];
+                                let lastIndex = 0;
+                                let index = lowerText.indexOf(query);
+
+                                while (index !== -1) {
+                                    if (index > lastIndex) {
+                                        fragments.push(document.createTextNode(text.substring(lastIndex, index)));
+                                    }
+                                    const span = document.createElement('span');
+                                    span.className = 'highlight-match bg-yellow-200 text-yellow-800 px-1 rounded';
+                                    span.textContent = text.substring(index, index + query.length);
+                                    fragments.push(span);
+                                    lastIndex = index + query.length;
+                                    index = lowerText.indexOf(query, lastIndex);
+                                }
+
+                                if (lastIndex < text.length) {
+                                    fragments.push(document.createTextNode(text.substring(lastIndex)));
+                                }
+
+                                const parent = node.parentNode;
+                                fragments.forEach(frag => parent.insertBefore(frag, node));
+                                parent.removeChild(node);
+                            });
+                        });
+                    });
                 }
             }
         }).mount('#app');
