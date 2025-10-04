@@ -2,5 +2,5 @@
 
 ```@autodocs
 Modules = [Patchwork.HTMLPlugin]
-Pages   = ["html.jl"]
+Pages   = ["plugins/html.jl"]
 ```

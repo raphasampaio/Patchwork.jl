@@ -143,12 +143,12 @@ include("plugins/plotly.jl")
 include("plugins/leaflet.jl")
 include("plugins/mermaid.jl")
 
-using .HTMLPlugin
-using .MarkdownPlugin
-using .ChartJsPlugin
-using .HighchartsPlugin
-using .PlotlyPlugin
-using .LeafletPlugin
-using .MermaidPlugin
+using .HTMLPlugin: HTML
+using .MarkdownPlugin: Markdown
+using .ChartJsPlugin: ChartJs
+using .HighchartsPlugin: Highcharts
+using .PlotlyPlugin: Plotly
+using .LeafletPlugin: Leaflet
+using .MermaidPlugin: Mermaid
 
 end

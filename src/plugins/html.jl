@@ -37,7 +37,7 @@ Patchwork.HTML(\"\"\"
 \"\"\")
 ```
 
-See also: [`Plugin`](@ref), [`to_html`](@ref)
+See also: `Plugin`, `to_html`
 """
 struct HTML <: Plugin
     content::String
