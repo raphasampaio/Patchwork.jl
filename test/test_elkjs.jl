@@ -7,7 +7,7 @@ using Patchwork
     @testset "Basic graph" begin
         graph = Patchwork.ELKJs(
             "Flow Diagram",
-            Dict{String,Any}(
+            Dict{String, Any}(
                 "id" => "root",
                 "layoutOptions" => Dict("elk.algorithm" => "layered"),
                 "children" => [
@@ -45,7 +45,7 @@ using Patchwork
     @testset "Dashboard integration" begin
         graph = Patchwork.ELKJs(
             "Network Topology",
-            Dict{String,Any}(
+            Dict{String, Any}(
                 "id" => "root",
                 "layoutOptions" => Dict("elk.algorithm" => "layered", "elk.direction" => "DOWN"),
                 "children" => [
@@ -75,7 +75,7 @@ end
 # Generate demo
 graph1 = Patchwork.ELKJs(
     "Simple Flow",
-    Dict{String,Any}(
+    Dict{String, Any}(
         "id" => "root",
         "layoutOptions" => Dict("elk.algorithm" => "layered", "elk.direction" => "RIGHT"),
         "children" => [
@@ -92,7 +92,7 @@ graph1 = Patchwork.ELKJs(
 
 graph2 = Patchwork.ELKJs(
     "Multi-Level Hierarchy",
-    Dict{String,Any}(
+    Dict{String, Any}(
         "id" => "root",
         "layoutOptions" => Dict("elk.algorithm" => "layered", "elk.direction" => "DOWN"),
         "children" => [

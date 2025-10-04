@@ -1,8 +1,10 @@
 module ELKJsPlugin
 
 import ..Plugin, ..to_html, ..js_deps, ..init_script
+
 using UUIDs
 using JSON
+
 export ELKJs
 
 @doc """
@@ -41,7 +43,7 @@ save(dashboard, "output.html")
 """
 struct ELKJs <: Plugin
     title::String
-    graph::Dict{String,Any}
+    graph::Dict{String, Any}
 end
 
 function to_html(plugin::ELKJs)
@@ -57,7 +59,7 @@ function to_html(plugin::ELKJs)
 end
 
 js_deps(::Type{ELKJs}) = [
-    "https://cdn.jsdelivr.net/npm/elkjs@0.11.0/lib/elk.bundled.js"
+    "https://cdn.jsdelivr.net/npm/elkjs@0.11.0/lib/elk.bundled.js",
 ]
 
 init_script(::Type{ELKJs}) = """

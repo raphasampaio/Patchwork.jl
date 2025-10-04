@@ -1,7 +1,7 @@
 module Patchwork
 
 using UUIDs
-import JSON
+using JSON
 
 export save, to_html, css_deps, js_deps, init_script, css
 

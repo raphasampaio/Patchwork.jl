@@ -1,7 +1,8 @@
 module LeafletPlugin
 
-import JSON
 import ..Plugin, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
+
+using JSON
 using UUIDs
 
 export Leaflet

@@ -1,6 +1,7 @@
 module MermaidPlugin
 
 import ..Plugin, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
+
 using UUIDs
 
 export Mermaid

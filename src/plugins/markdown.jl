@@ -1,7 +1,8 @@
 module MarkdownPlugin
 
-import Markdown as MD
 import ..Plugin, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
+
+import Markdown as MD
 
 export Markdown
 

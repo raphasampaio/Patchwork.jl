@@ -1,7 +1,8 @@
 module ChartJsPlugin
 
-import JSON
 import ..Plugin, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
+
+using JSON
 
 export ChartJs
 

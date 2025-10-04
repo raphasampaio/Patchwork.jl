@@ -1,6 +1,7 @@
 module DataTablesPlugin
 
 import ..Plugin, ..to_html, ..css_deps, ..js_deps, ..init_script
+
 export DataTables
 
 @doc """
