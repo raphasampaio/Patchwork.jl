@@ -1,6 +1,6 @@
 # Highcharts
 
 ```@autodocs
-Modules = [Patchwork]
+Modules = [Patchwork.HighchartsPlugin]
 Pages   = ["plugins/highcharts.jl"]
 ```

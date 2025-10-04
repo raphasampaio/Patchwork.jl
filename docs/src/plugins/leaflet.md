@@ -1,6 +1,6 @@
 # Leaflet
 
 ```@autodocs
-Modules = [Patchwork]
+Modules = [Patchwork.LeafletPlugin]
 Pages   = ["plugins/leaflet.jl"]
 ```

@@ -1,6 +1,6 @@
 # Mermaid
 
 ```@autodocs
-Modules = [Patchwork]
+Modules = [Patchwork.MermaidPlugin]
 Pages   = ["plugins/mermaid.jl"]
 ```

@@ -23,7 +23,6 @@ Documenter.makedocs(
         "Home" => "index.md",
         "Plugins" => [
             "plugins.md",
-            "custom_plugins.md",
             "plugins/html.md",
             "plugins/markdown.md",
             "plugins/chartjs.md",

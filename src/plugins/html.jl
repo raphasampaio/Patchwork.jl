@@ -1,3 +1,10 @@
+module HTMLPlugin
+
+import JSON
+import ..Plugin, ..to_html, ..css_deps, ..js_deps, ..init_script, ..css
+
+export HTML
+
 @doc """
     HTML(content::String)
 
@@ -42,3 +49,5 @@ css_deps(::Type{HTML}) = String[]
 js_deps(::Type{HTML}) = String[]
 init_script(::Type{HTML}) = ""
 css(::Type{HTML}) = ""
+
+end

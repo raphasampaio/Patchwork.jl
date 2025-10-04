@@ -1,6 +1,6 @@
 # Plotly
 
 ```@autodocs
-Modules = [Patchwork]
+Modules = [Patchwork.PlotlyPlugin]
 Pages   = ["plugins/plotly.jl"]
 ```

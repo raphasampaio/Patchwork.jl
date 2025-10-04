@@ -132,10 +132,10 @@ See also: [`css_deps`](@ref), [`to_html`](@ref)
 """
 css(::Type{<:Plugin}) = ""
 
-include("html.jl")
 include("tab.jl")
 include("dashboard.jl")
 
+include("plugins/html.jl")
 include("plugins/markdown.jl")
 include("plugins/chartjs.jl")
 include("plugins/highcharts.jl")

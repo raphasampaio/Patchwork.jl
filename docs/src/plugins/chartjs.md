@@ -1,6 +1,6 @@
 # ChartJs
 
 ```@autodocs
-Modules = [Patchwork]
+Modules = [Patchwork.ChartJsPlugin]
 Pages   = ["plugins/chartjs.jl"]
 ```
