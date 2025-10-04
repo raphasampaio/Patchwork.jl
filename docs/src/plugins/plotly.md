@@ -1,0 +1,5 @@
+# Plotly
+
+```@docs
+Patchwork.Plotly
+```

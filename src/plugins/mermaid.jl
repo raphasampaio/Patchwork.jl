@@ -5,6 +5,100 @@ using UUIDs
 
 export Mermaid
 
+@doc """
+    Mermaid(
+        title::String,
+        diagram::String;
+        theme::String = "default"
+    )
+
+Diagram and flowchart plugin using Mermaid.
+
+Creates diagrams from text using Mermaid syntax. Supports flowcharts, sequence diagrams,
+class diagrams, state diagrams, ER diagrams, Gantt charts, and more.
+
+# Fields
+- `title::String`: Diagram title displayed above the visualization
+- `diagram::String`: Mermaid diagram syntax
+- `theme::String`: Diagram theme (default: "default")
+
+# Example: Flowchart
+```julia
+Patchwork.Mermaid(
+    "System Architecture",
+    \"\"\"
+    graph TD
+        A[Client] --> B[Load Balancer]
+        B --> C[Server 1]
+        B --> D[Server 2]
+    \"\"\",
+)
+```
+
+# Example: Sequence Diagram
+```julia
+Patchwork.Mermaid(
+    "Authentication Flow",
+    \"\"\"
+    sequenceDiagram
+        participant U as User
+        participant A as App
+        participant S as Server
+        U->>A: Login
+        A->>S: Authenticate
+        S-->>A: Token
+        A-->>U: Success
+    \"\"\",
+)
+```
+
+# Example: Class Diagram
+```julia
+Patchwork.Mermaid(
+    "Data Model",
+    \"\"\"
+    classDiagram
+        class User {
+            +String name
+            +String email
+            +login()
+        }
+        class Order {
+            +Date created
+            +process()
+        }
+        User "1" --> "*" Order
+    \"\"\",
+)
+```
+
+# Example: Gantt Chart
+```julia
+Patchwork.Mermaid(
+    "Project Timeline",
+    \"\"\"
+    gantt
+        title Project Schedule
+        dateFormat YYYY-MM-DD
+        section Phase 1
+        Design    :a1, 2024-01-01, 30d
+        Development :after a1, 45d
+    \"\"\",
+)
+```
+
+# Supported Diagram Types
+- Flowcharts (`graph` or `flowchart`)
+- Sequence diagrams (`sequenceDiagram`)
+- Class diagrams (`classDiagram`)
+- State diagrams (`stateDiagram`)
+- ER diagrams (`erDiagram`)
+- Gantt charts (`gantt`)
+- Pie charts (`pie`)
+- Git graphs (`gitGraph`)
+
+See also: `Plugin`
+"""
 struct Mermaid <: Plugin
     title::String
     diagram::String

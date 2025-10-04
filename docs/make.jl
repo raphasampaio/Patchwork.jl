@@ -24,6 +24,13 @@ Documenter.makedocs(
         "Plugins" => [
             "plugins.md",
             "custom_plugins.md",
+            "plugins/html.md",
+            "plugins/markdown.md",
+            "plugins/chartjs.md",
+            "plugins/highcharts.md",
+            "plugins/plotly.md",
+            "plugins/leaflet.md",
+            "plugins/mermaid.md",
         ],
         "API" => "api.md",
     ],

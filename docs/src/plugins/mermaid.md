@@ -1,0 +1,5 @@
+# Mermaid
+
+```@docs
+Patchwork.Mermaid
+```

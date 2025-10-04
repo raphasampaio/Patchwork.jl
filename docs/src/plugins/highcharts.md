@@ -1,0 +1,5 @@
+# Highcharts
+
+```@docs
+Patchwork.Highcharts
+```

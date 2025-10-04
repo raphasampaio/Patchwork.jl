@@ -21,7 +21,8 @@
       "mcp__playwright__browser_take_screenshot",
       "WebFetch(domain:cdnjs.com)",
       "WebFetch(domain:github.com)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(docs.bat)"
     ],
     "deny": [],
     "ask": [],

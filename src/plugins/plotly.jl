@@ -6,6 +6,85 @@ using UUIDs
 
 export Plotly
 
+@doc """
+    Plotly(
+        title::String,
+        data::Vector{Dict{String,Any}};
+        layout::Dict{String,Any} = Dict{String,Any}(),
+        config::Dict{String,Any} = Dict{String,Any}()
+    )
+
+Plotly visualization plugin.
+
+Creates interactive charts and visualizations using Plotly.js. Supports 2D/3D plots,
+scientific charts, maps, and statistical visualizations. Provides full access to
+Plotly's data, layout, and config options.
+
+# Fields
+- `title::String`: Chart title displayed above the visualization
+- `data::Vector{Dict{String,Any}}`: Vector of Plotly data traces
+- `layout::Dict{String,Any}`: Layout configuration (axes, title, etc.)
+- `config::Dict{String,Any}`: Plotly config options (responsive, displayModeBar, etc.)
+
+# Example: Scatter Plot
+```julia
+Patchwork.Plotly(
+    "Scatter Analysis",
+    [
+        Dict{String,Any}(
+            "x" => [1, 2, 3, 4, 5],
+            "y" => [1, 4, 9, 16, 25],
+            "mode" => "markers+lines",
+            "type" => "scatter",
+            "name" => "Quadratic",
+        ),
+    ],
+    layout = Dict{String,Any}(
+        "xaxis" => Dict("title" => "X"),
+        "yaxis" => Dict("title" => "Y²"),
+    ),
+)
+```
+
+# Example: 3D Surface
+```julia
+Patchwork.Plotly(
+    "3D Surface",
+    [
+        Dict{String,Any}(
+            "z" => [[1, 2, 3], [2, 3, 4], [3, 4, 5]],
+            "type" => "surface",
+        ),
+    ],
+    layout = Dict{String,Any}("title" => "Surface Plot"),
+)
+```
+
+# Example: Scattermap
+```julia
+Patchwork.Plotly(
+    "US Cities",
+    [
+        Dict{String,Any}(
+            "type" => "scattermapbox",
+            "lat" => [40.7128, 34.0522],
+            "lon" => [-74.0060, -118.2437],
+            "mode" => "markers",
+            "text" => ["NYC", "LA"],
+        ),
+    ],
+    layout = Dict{String,Any}(
+        "mapbox" => Dict(
+            "style" => "open-street-map",
+            "center" => Dict("lat" => 37, "lon" => -95),
+            "zoom" => 3,
+        ),
+    ),
+)
+```
+
+See also: `ChartJs`, `Highcharts`, `Leaflet`, `Plugin`
+"""
 struct Plotly <: Plugin
     title::String
     data::Vector{Dict{String, Any}}

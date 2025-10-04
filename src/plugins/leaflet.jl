@@ -6,6 +6,77 @@ using UUIDs
 
 export Leaflet
 
+@doc """
+    Leaflet(
+        title::String,
+        center::Tuple{Float64,Float64};
+        zoom::Int = 13,
+        markers::Vector{Dict{String,Any}} = Dict{String,Any}[],
+        options::Dict{String,Any} = Dict{String,Any}()
+    )
+
+Interactive map plugin using Leaflet.
+
+Creates interactive maps with markers and popups using the Leaflet library.
+Uses OpenStreetMap tiles by default. Supports custom map options and multiple markers.
+
+# Fields
+- `title::String`: Map title displayed above the visualization
+- `center::Tuple{Float64,Float64}`: Map center coordinates (latitude, longitude)
+- `zoom::Int`: Initial zoom level (1-19, default: 13)
+- `markers::Vector{Dict{String,Any}}`: Markers to display on the map
+- `options::Dict{String,Any}`: Optional Leaflet map options
+
+# Marker Format
+Each marker should be a dictionary with:
+- `"lat"::Float64` - Latitude
+- `"lng"::Float64` - Longitude
+- `"popup"::String` - Optional popup HTML content
+
+# Example: Simple Map
+```julia
+Patchwork.Leaflet(
+    "New York City",
+    (40.7128, -74.0060),
+    zoom = 12,
+)
+```
+
+# Example: Map with Markers
+```julia
+Patchwork.Leaflet(
+    "Major US Cities",
+    (39.8283, -98.5795),
+    zoom = 4,
+    markers = [
+        Dict{String,Any}(
+            "lat" => 40.7128,
+            "lng" => -74.0060,
+            "popup" => "<b>New York</b><br>Population: 8.3M",
+        ),
+        Dict{String,Any}(
+            "lat" => 34.0522,
+            "lng" => -118.2437,
+            "popup" => "<b>Los Angeles</b><br>Population: 4.0M",
+        ),
+    ],
+)
+```
+
+# Example: Custom Options
+```julia
+Patchwork.Leaflet(
+    "Map",
+    (51.505, -0.09),
+    zoom = 13,
+    options = Dict{String,Any}(
+        "scrollWheelZoom" => false,
+    ),
+)
+```
+
+See also: `Plotly`, `Plugin`
+"""
 struct Leaflet <: Plugin
     title::String
     center::Tuple{Float64, Float64}
