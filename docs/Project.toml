@@ -1,0 +1,6 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+Patchwork = "89290475-19d9-4972-8f76-8da21b5d05c1"
+
+[compat]
+Documenter = "1"
