@@ -1,5 +1,6 @@
 # Markdown
 
-```@docs
-Patchwork.Markdown
+```@autodocs
+Modules = [Patchwork]
+Pages   = ["plugins/markdown.jl"]
 ```

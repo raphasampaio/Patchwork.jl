@@ -1,5 +1,6 @@
 # HTML
 
-```@docs
-Patchwork.HTML
+```@autodocs
+Modules = [Patchwork]
+Pages   = ["html.jl"]
 ```

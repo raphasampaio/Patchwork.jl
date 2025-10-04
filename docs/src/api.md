@@ -2,32 +2,35 @@
 
 ## Core Types
 
-```@docs
-Patchwork.Plugin
-Patchwork.Tab
-Patchwork.Dashboard
+```@autodocs
+Modules = [Patchwork]
+Pages   = ["plugin.jl", "tab.jl", "dashboard.jl"]
+Order   = [:type]
 ```
 
 ## Core Functions
 
-```@docs
-Patchwork.save
-Patchwork.generate_html
+```@autodocs
+Modules = [Patchwork]
+Pages   = ["dashboard.jl", "string.jl"]
+Order   = [:function]
+Filter  = t -> t ∈ [Patchwork.save, Patchwork.generate_html, Patchwork.escape_html]
 ```
 
 ## Plugin Interface Functions
 
-```@docs
-Patchwork.to_html
-Patchwork.css_deps
-Patchwork.js_deps
-Patchwork.init_script
-Patchwork.css
+```@autodocs
+Modules = [Patchwork]
+Pages   = ["Patchwork.jl"]
+Order   = [:function]
+Filter  = t -> t ∈ [Patchwork.to_html, Patchwork.css_deps, Patchwork.js_deps, Patchwork.init_script, Patchwork.css]
 ```
 
 ## Utility Functions
 
-```@docs
-Patchwork.get_plugin_type
-Patchwork.escape_html
+```@autodocs
+Modules = [Patchwork]
+Pages   = ["plugin.jl"]
+Order   = [:function]
+Filter  = t -> t === Patchwork.get_plugin_type
 ```

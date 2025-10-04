@@ -1,5 +1,6 @@
-#  ChartJs
+# ChartJs
 
-```@docs
-Patchwork.ChartJs
+```@autodocs
+Modules = [Patchwork]
+Pages   = ["plugins/chartjs.jl"]
 ```
