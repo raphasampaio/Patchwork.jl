@@ -44,9 +44,3 @@ dashboard = Patchwork.Dashboard(
 
 save(dashboard, "dashboard.html")
 ```
-
-## Documentation
-
-- [Built-in Plugins](plugins.md) - Explore all available plugins
-- [Custom Plugins](custom_plugins.md) - Create your own plugins
-- [API Reference](api.md) - Complete API documentation
