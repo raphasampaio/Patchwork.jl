@@ -23,7 +23,9 @@
       "WebFetch(domain:github.com)",
       "WebSearch",
       "Bash(docs.bat)",
-      "WebFetch(domain:cdn.datatables.net)"
+      "WebFetch(domain:cdn.datatables.net)",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:cdn.jsdelivr.net)"
     ],
     "deny": [],
     "ask": [],

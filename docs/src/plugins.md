@@ -1,6 +1,6 @@
 # Overview
 
-Patchwork includes eight built-in plugins for common dashboard components. Each plugin is designed to work seamlessly with the dashboard system and requires no additional configuration. The built-in plugins are:
+Patchwork includes nine built-in plugins for common dashboard components. Each plugin is designed to work seamlessly with the dashboard system and requires no additional configuration. The built-in plugins are:
 
 - [HTML](plugins/html.md) - Raw HTML content
 - [Markdown](plugins/markdown.md) - Markdown rendering
@@ -10,6 +10,7 @@ Patchwork includes eight built-in plugins for common dashboard components. Each 
 - [Leaflet](plugins/leaflet.md) - Leaflet maps
 - [Mermaid](plugins/mermaid.md) - Mermaid diagrams
 - [DataTables](plugins/datatables.md) - Interactive tables
+- [ELKJs](plugins/elkjs.md) - Graph layouts
 
 # Creating Custom Plugins
 

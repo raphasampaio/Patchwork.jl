@@ -143,6 +143,7 @@ include("plugins/plotly.jl")
 include("plugins/leaflet.jl")
 include("plugins/mermaid.jl")
 include("plugins/datatables.jl")
+include("plugins/elkjs.jl")
 
 using .HTMLPlugin: HTML
 using .MarkdownPlugin: Markdown
@@ -152,5 +153,6 @@ using .PlotlyPlugin: Plotly
 using .LeafletPlugin: Leaflet
 using .MermaidPlugin: Mermaid
 using .DataTablesPlugin: DataTables
+using .ELKJsPlugin: ELKJs
 
 end

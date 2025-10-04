@@ -35,6 +35,7 @@ Documenter.makedocs(
             "plugins/leaflet.md",
             "plugins/mermaid.md",
             "plugins/datatables.md",
+            "plugins/elkjs.md",
         ],
     ],
 )
