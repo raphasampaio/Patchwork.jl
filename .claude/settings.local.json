@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(del:*)",
+      "Bash(dir:*)",
+      "Bash(find:*)",
+      "Bash(git checkout:*)",
+      "Bash(julia:*)",
+      "mcp__chrome-devtools__close_page",
+      "mcp__chrome-devtools__evaluate_script",
+      "mcp__chrome-devtools__list_console_messages",
+      "mcp__chrome-devtools__list_network_requests",
+      "mcp__chrome-devtools__list_pages",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__new_page",
+      "mcp__chrome-devtools__resize_page",
+      "mcp__chrome-devtools__take_screenshot",
+      "mcp__chrome-devtools__take_snapshot",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "WebFetch(domain:cdnjs.com)",
+      "WebFetch(domain:github.com)",
+      "WebSearch"
+    ],
+    "deny": [],
+    "ask": [],
+    "defaultMode": "plan"
+  }
+}
