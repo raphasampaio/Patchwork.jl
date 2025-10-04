@@ -1,16 +1,14 @@
 # Overview
 
-Patchwork includes seven built-in plugins for common dashboard components. Each plugin is designed to work seamlessly with the dashboard system and requires no additional configuration.
+Patchwork includes seven built-in plugins for common dashboard components. Each plugin is designed to work seamlessly with the dashboard system and requires no additional configuration. The built-in plugins are:
 
-The built-in plugins are:
-
-- [HTML](plugins/html.md): Display raw HTML content. Perfect for custom components, alerts, or integrating HTML snippets.
-- [Markdown](plugins/markdown.md): Render markdown text with syntax highlighting. Ideal for documentation, notes, and formatted text.
-- [ChartJs](plugins/chartjs.md): Create responsive charts using Chart.js. Supports bar, line, pie, doughnut, and more.
-- [Highcharts](plugins/highcharts.md): Professional-grade charts with extensive customization. Great for complex visualizations.
-- [Plotly](plugins/plotly.md): Interactive 2D/3D plots and maps. Best for scientific visualizations and geographic data.
-- [Leaflet](plugins/leaflet.md): Interactive maps with markers and popups. Perfect for location-based dashboards.
-- [Mermaid](plugins/mermaid.md): Diagram generation from text. Create flowcharts, sequence diagrams, class diagrams, and more.
+- [HTML](plugins/html.md) - Raw HTML content
+- [Markdown](plugins/markdown.md) - Markdown rendering
+- [ChartJs](plugins/chartjs.md) - Chart.js charts
+- [Highcharts](plugins/highcharts.md) - Highcharts charts
+- [Plotly](plugins/plotly.md) - Plotly charts and maps
+- [Leaflet](plugins/leaflet.md) - Leaflet maps
+- [Mermaid](plugins/mermaid.md) - Mermaid diagrams
 
 # Creating Custom Plugins
 
