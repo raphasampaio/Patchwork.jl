@@ -1,5 +1,6 @@
 name = "Patchwork"
 uuid = "89290475-19d9-4972-8f76-8da21b5d05c1"
+authors = ["raphasampaio"]
 version = "0.1.0"
 
 [deps]
