@@ -3,7 +3,7 @@ module Patchwork
 using UUIDs
 using JSON
 
-export save, to_html, css_deps, js_deps, init_script, css
+export save, to_html, css_deps, js_deps, init_script, css, Plugin
 
 include("string.jl")
 include("plugin.jl")
