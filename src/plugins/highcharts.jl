@@ -94,6 +94,8 @@ css_deps(::Type{Highcharts}) = String[]
 
 js_deps(::Type{Highcharts}) = [
     "https://code.highcharts.com/12.4.0/highcharts.js",
+    "https://code.highcharts.com/12.4.0/highcharts-more.js",
+    "https://code.highcharts.com/12.4.0/modules/exporting.js",
 ]
 
 init_script(::Type{Highcharts}) = """
