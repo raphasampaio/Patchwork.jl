@@ -213,7 +213,7 @@ $(join(js_urls, "\n"))
             </div>
 
             <div class="flex-1 overflow-y-auto px-8 py-6">
-                <div v-for="(tab, tabIdx) in tabs" :key="tabIdx" v-show="activeTab === tabIdx" class="max-w-4xl mx-auto space-y-8">
+                <div v-for="(tab, tabIdx) in tabs" :key="tabIdx" v-show="activeTab === tabIdx" class="space-y-8">
                     <div v-for="plugin in tab.plugins" :key="plugin.id" v-show="isVisible(plugin)" class="bg-white border border-gray-100 rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow" :class="{'highlight-content': searchQuery}" v-html="plugin.html"></div>
                     <div v-if="searchQuery && visibleCount(tabIdx) === 0" class="text-center py-16">
                         <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
