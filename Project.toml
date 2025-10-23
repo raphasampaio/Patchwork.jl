@@ -1,7 +1,7 @@
 name = "Patchwork"
 uuid = "89290475-19d9-4972-8f76-8da21b5d05c1"
 authors = ["raphasampaio"]
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
