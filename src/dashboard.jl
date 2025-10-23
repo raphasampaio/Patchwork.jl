@@ -176,16 +176,26 @@ $(join(js_urls, "\n"))
         <div v-if="!sidebarOpen" @click="sidebarOpen = true" class="fixed inset-0 z-20 bg-black/20 lg:hidden"></div>
 
         <div :class="['bg-white border-r border-gray-100 flex flex-col transition-all duration-300', sidebarOpen ? 'w-64' : 'w-16', 'fixed inset-y-0 left-0 z-30 lg:relative', !sidebarOpen ? '-translate-x-full lg:translate-x-0' : 'translate-x-0']">
-            <div class="px-8 py-6 flex items-center justify-between">
-                <h1 v-show="sidebarOpen" class="text-lg font-medium text-gray-900 tracking-tight">$(escape_html(dashboard.title))</h1>
-                <button @click="sidebarOpen = !sidebarOpen" class="hidden lg:block p-1.5 rounded hover:bg-gray-100 transition-colors" :class="!sidebarOpen ? 'mx-auto' : ''">
-                    <svg class="w-5 h-5 text-gray-600 transition-transform" :class="!sidebarOpen ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+            <div class="px-2 flex items-center gap-3" style="height: 56px;">
+                <button @click="sidebarOpen = !sidebarOpen" class="p-2 rounded-md hover:bg-gray-100 transition-colors flex-shrink-0">
+                    <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
                 </button>
+                <h1 v-show="sidebarOpen" class="text-lg font-medium text-gray-900 tracking-tight truncate">$(escape_html(dashboard.title))</h1>
             </div>
 
-            <div v-show="sidebarOpen" class="px-6 pb-4">
+            <nav class="flex-1 overflow-y-auto px-2 pt-2 space-y-1">
+                <button v-for="(tab, i) in tabs" :key="i" @click="activeTab = i" :class="['w-full text-sm rounded transition-colors flex items-center justify-center', activeTab === i ? 'bg-gray-900 text-white' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50']" :title="!sidebarOpen ? tab.label : ''" style="height: 40px;">
+                    <span v-show="sidebarOpen" class="flex-1 text-left px-4">{{ tab.label }}</span>
+                    <span v-show="!sidebarOpen" class="text-xs font-bold">{{ tab.label.charAt(0) }}</span>
+                    <span v-if="searchQuery && visibleCount(i) > 0 && sidebarOpen" :class="['px-2 py-0.5 rounded-full text-xs font-medium mr-4', activeTab === i ? 'bg-white/20 text-white' : 'bg-blue-500 text-white']">
+                        {{ visibleCount(i) }}
+                    </span>
+                </button>
+            </nav>
+
+            <div v-show="sidebarOpen" class="px-4 pb-4 pt-2 border-t border-gray-100">
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -196,20 +206,10 @@ $(join(js_urls, "\n"))
                     <div v-if="searchQuery" @click="searchQuery = ''" class="absolute right-2 top-2 cursor-pointer text-gray-400 hover:text-gray-600 text-lg leading-none">×</div>
                 </div>
             </div>
-
-            <nav class="flex-1 overflow-y-auto px-4 space-y-1">
-                <button v-for="(tab, i) in tabs" :key="i" @click="activeTab = i" :class="['w-full text-left text-sm px-4 py-2.5 rounded transition-colors flex items-center', !sidebarOpen ? 'justify-center' : 'justify-between', activeTab === i ? 'bg-gray-900 text-white' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50']" :title="!sidebarOpen ? tab.label : ''">
-                    <span v-show="sidebarOpen">{{ tab.label }}</span>
-                    <span v-show="!sidebarOpen" class="text-xs font-bold">{{ tab.label.charAt(0) }}</span>
-                    <span v-if="searchQuery && visibleCount(i) > 0 && sidebarOpen" :class="['px-2 py-0.5 rounded-full text-xs font-medium', activeTab === i ? 'bg-white/20 text-white' : 'bg-blue-500 text-white']">
-                        {{ visibleCount(i) }}
-                    </span>
-                </button>
-            </nav>
         </div>
 
         <div class="flex-1 flex flex-col overflow-hidden bg-gray-50">
-            <div class="bg-white border-b border-gray-100 px-8 py-3 flex plugins-center">
+            <div class="bg-white border-b border-gray-100 px-8 py-3 flex items-center">
                 <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden mr-4 p-1.5 rounded hover:bg-gray-100 transition-colors">
                     <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
