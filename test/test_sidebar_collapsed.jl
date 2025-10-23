@@ -19,7 +19,7 @@ dashboard_collapsed = Patchwork.Dashboard(
             ],
         ),
     ],
-    sidebar_open = false
+    sidebar_open = false,
 )
 
 output_collapsed = joinpath(@__DIR__, "output", "test_sidebar_collapsed.html")
