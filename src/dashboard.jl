@@ -173,14 +173,19 @@ $(join(js_urls, "\n"))
 </head>
 <body class="bg-white">
     <div id="app" class="flex h-screen">
-        <div v-if="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 z-20 bg-black/20 lg:hidden"></div>
+        <div v-if="!sidebarOpen" @click="sidebarOpen = true" class="fixed inset-0 z-20 bg-black/20 lg:hidden"></div>
 
-        <div :class="['bg-white border-r border-gray-100 w-64 flex flex-col transition-transform lg:translate-x-0', sidebarOpen ? 'translate-x-0 fixed inset-y-0 left-0 z-30' : '-translate-x-full fixed inset-y-0 left-0 z-30 lg:relative lg:translate-x-0']">
-            <div class="px-8 py-6">
-                <h1 class="text-lg font-medium text-gray-900 tracking-tight">$(escape_html(dashboard.title))</h1>
+        <div :class="['bg-white border-r border-gray-100 flex flex-col transition-all duration-300', sidebarOpen ? 'w-64' : 'w-16', 'fixed inset-y-0 left-0 z-30 lg:relative', !sidebarOpen ? '-translate-x-full lg:translate-x-0' : 'translate-x-0']">
+            <div class="px-8 py-6 flex items-center justify-between">
+                <h1 v-show="sidebarOpen" class="text-lg font-medium text-gray-900 tracking-tight">$(escape_html(dashboard.title))</h1>
+                <button @click="sidebarOpen = !sidebarOpen" class="hidden lg:block p-1.5 rounded hover:bg-gray-100 transition-colors" :class="!sidebarOpen ? 'mx-auto' : ''">
+                    <svg class="w-5 h-5 text-gray-600 transition-transform" :class="!sidebarOpen ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+                    </svg>
+                </button>
             </div>
 
-            <div class="px-6 pb-4">
+            <div v-show="sidebarOpen" class="px-6 pb-4">
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -193,9 +198,10 @@ $(join(js_urls, "\n"))
             </div>
 
             <nav class="flex-1 overflow-y-auto px-4 space-y-1">
-                <button v-for="(tab, i) in tabs" :key="i" @click="activeTab = i; sidebarOpen = false" :class="['w-full text-left text-sm px-4 py-2.5 rounded transition-colors flex items-center justify-between', activeTab === i ? 'bg-gray-900 text-white' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50']">
-                    <span>{{ tab.label }}</span>
-                    <span v-if="searchQuery && visibleCount(i) > 0" :class="['px-2 py-0.5 rounded-full text-xs font-medium', activeTab === i ? 'bg-white/20 text-white' : 'bg-blue-500 text-white']">
+                <button v-for="(tab, i) in tabs" :key="i" @click="activeTab = i" :class="['w-full text-left text-sm px-4 py-2.5 rounded transition-colors flex items-center', !sidebarOpen ? 'justify-center' : 'justify-between', activeTab === i ? 'bg-gray-900 text-white' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50']" :title="!sidebarOpen ? tab.label : ''">
+                    <span v-show="sidebarOpen">{{ tab.label }}</span>
+                    <span v-show="!sidebarOpen" class="text-xs font-bold">{{ tab.label.charAt(0) }}</span>
+                    <span v-if="searchQuery && visibleCount(i) > 0 && sidebarOpen" :class="['px-2 py-0.5 rounded-full text-xs font-medium', activeTab === i ? 'bg-white/20 text-white' : 'bg-blue-500 text-white']">
                         {{ visibleCount(i) }}
                     </span>
                 </button>
@@ -242,7 +248,7 @@ $(join(js_urls, "\n"))
                 return {
                     activeTab: 0,
                     searchQuery: '',
-                    sidebarOpen: false,
+                    sidebarOpen: true,
                     tabs: $tabs_json
                 }
             },
