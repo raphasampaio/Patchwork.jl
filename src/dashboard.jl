@@ -1,5 +1,5 @@
 @doc """
-    Dashboard(title::String, tabs::Vector{Tab}; custom_css::String = "")
+    Dashboard(title::String, tabs::Vector{Tab}; custom_css::String = "", sidebar_open::Bool = true)
 
 Main dashboard type containing all content to be rendered.
 
@@ -11,6 +11,7 @@ dependencies from the plugins used.
 - `title::String`: Dashboard title displayed in the header and browser tab
 - `tabs::Vector{Tab}`: Vector of tabs to display in the sidebar
 - `custom_css::String`: Optional custom CSS styles to apply globally
+- `sidebar_open::Bool`: Whether the sidebar should be initially expanded (default: true)
 
 # Example
 ```julia
@@ -24,7 +25,8 @@ dashboard = Patchwork.Dashboard(
     .custom-header {
         background: linear-gradient(to right, #667eea, #764ba2);
     }
-    \"\"\"
+    \"\"\",
+    sidebar_open = false  # Start with collapsed sidebar
 )
 ```
 
@@ -34,9 +36,10 @@ struct Dashboard
     title::String
     tabs::Vector{Tab}
     custom_css::String
+    sidebar_open::Bool
 
-    function Dashboard(title::String, tabs::Vector{Tab}; custom_css::String = "")
-        return new(title, tabs, custom_css)
+    function Dashboard(title::String, tabs::Vector{Tab}; custom_css::String = "", sidebar_open::Bool = true)
+        return new(title, tabs, custom_css, sidebar_open)
     end
 end
 
@@ -248,7 +251,7 @@ $(join(js_urls, "\n"))
                 return {
                     activeTab: 0,
                     searchQuery: '',
-                    sidebarOpen: true,
+                    sidebarOpen: $(dashboard.sidebar_open ? "true" : "false"),
                     tabs: $tabs_json
                 }
             },
