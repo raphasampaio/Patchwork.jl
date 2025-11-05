@@ -1,7 +1,7 @@
 name = "Patchwork"
 uuid = "89290475-19d9-4972-8f76-8da21b5d05c1"
 authors = ["raphasampaio"]
-version = "0.1.2"
+version = "0.1.3"
 
 [deps]
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
@@ -10,7 +10,7 @@ UUIDs = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
 
 [compat]
 Aqua = "0.8"
-JSON = "1"
+JSON = "0.21, 1.0"
 Markdown = "1.9 - 1.12"
 UUIDs = "1.9 - 1.12"
 Test = "1.9 - 1.12"

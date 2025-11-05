@@ -75,7 +75,7 @@ struct Highcharts <: Plugin
 end
 
 function Highcharts(title::String, config::AbstractString)
-    return Highcharts(title, JSON.parse(config))
+    return Highcharts(title, JSON.parse(config; dicttype = Dict{String,Any}))
 end
 
 function to_html(plugin::Highcharts)
