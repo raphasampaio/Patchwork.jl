@@ -179,6 +179,37 @@ hr {
     border-top: 1px solid #e5e7eb;
     margin: 2rem 0;
 }
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+th {
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    color: #111827;
+}
+
+td {
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem;
+    color: #374151;
+}
+
+tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+tr:hover {
+    background-color: #f3f4f6;
+}
 """
 
 end

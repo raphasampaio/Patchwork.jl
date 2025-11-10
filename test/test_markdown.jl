@@ -77,6 +77,14 @@ You can use *italic*, **bold**, and ***bold italic*** text.
 >
 
 Links work too: [Patchwork](https://github.com)
+
+## Tables
+| Feature | Status | Priority |
+|---------|--------|----------|
+| Markdown | ✅ Complete | High |
+| Tables | ✅ Styled | Medium |
+| Charts | ✅ Complete | High |
+| Maps | ✅ Complete | Medium |
 """),
             ],
         ),
