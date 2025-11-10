@@ -101,6 +101,42 @@ js_deps(::Type{Highcharts}) = [
 init_script(::Type{Highcharts}) = """
     document.querySelectorAll('.highcharts-chart').forEach(container => {
         const config = JSON.parse(container.getAttribute('data-config'));
+
+        config.navigation = { buttonOptions: { align: 'left' } };
+
+        config.exporting = {
+            enabled: true,
+            buttons: {
+                contextButton: {
+                    menuItems: [
+                        'downloadPNG',
+                        {
+                            text: 'Show All Series',
+                            onclick: function() {
+                                this.series.forEach(series => {
+                                    if (!series.visible) {
+                                        series.setVisible(true, false);
+                                    }
+                                });
+                                this.redraw();
+                            }
+                        },
+                        {
+                            text: 'Hide All Series',
+                            onclick: function() {
+                                this.series.forEach(series => {
+                                    if (series.visible) {
+                                        series.setVisible(false, false);
+                                    }
+                                });
+                                this.redraw();
+                            }
+                        }                        
+                    ]
+                }
+            }
+        };
+        
         Highcharts.chart(container.id, config);
     });
 """
