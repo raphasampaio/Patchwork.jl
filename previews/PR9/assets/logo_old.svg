@@ -1,0 +1,25 @@
+<svg id="" data-name="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <defs>
+        <style>
+            .purple {
+                fill: #9558b2;
+            }
+
+            .green {
+                fill: #389826;
+            }
+
+            .red {
+                fill: #cb3c33;
+            }
+
+            .blue {
+                fill: #4063d8;
+            }
+        </style>
+    </defs>
+    <rect class="blue" x="0" y="0" width="50" height="50" />
+    <rect class="red" x="0" y="50" width="50" height="50" />
+    <rect class="green" x="50" y="0" width="50" height="50" />
+    <rect class="purple" x="50" y="50" width="50" height="50" />
+</svg>
